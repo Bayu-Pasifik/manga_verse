@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:manga_verse/app/data/models/all_manga_model.dart';
+import 'package:manga_verse/app/data/models/genre_model.dart';
 import 'package:manga_verse/app/data/models/trending_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -10,20 +11,19 @@ class HomeController extends GetxController {
   // ! Greating
 
   String greeting() {
-  var hour = DateTime.now().hour;
+    var hour = DateTime.now().hour;
 
-  if (hour >= 0 && hour < 12) {
-    return "Selamat pagi";
-  } else if (hour >= 12 && hour < 15) {
-    return "Selamat siang";
-  } else if (hour >= 15 && hour < 18) {
-    return "Selamat sore";
-  } else {
-    return "Selamat malam";
+    if (hour >= 0 && hour < 12) {
+      return "Selamat pagi";
+    } else if (hour >= 12 && hour < 15) {
+      return "Selamat siang";
+    } else if (hour >= 15 && hour < 18) {
+      return "Selamat sore";
+    } else {
+      return "Selamat malam";
+    }
   }
-}
 
-  
   var currentIndex = 0.obs;
 
   Future<List<dynamic>> popularManga() async {
@@ -114,5 +114,15 @@ class HomeController extends GetxController {
     } else {
       return latestRefresh.loadNoData();
     }
+  }
+
+  // ! List Genre
+
+  Future<List<dynamic>> listGenre() async {
+    Uri url = Uri.parse('http://10.0.2.2:8000/genre');
+    var response = await http.get(url);
+    var data = json.decode(response.body)["genres"];
+    var tempData = data.map((e) => GenreModel.fromJson(e)).toList();
+    return tempData;
   }
 }
