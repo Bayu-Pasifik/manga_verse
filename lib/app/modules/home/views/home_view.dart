@@ -12,8 +12,7 @@ class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      
+    return Scaffold(  
         body: Container(
           child: Obx(
             () => IndexedStack(
@@ -24,6 +23,7 @@ class HomeView extends GetView<HomeController> {
         ),
         bottomNavigationBar: Obx(
           () => SalomonBottomBar(
+            
             currentIndex: controller.currentIndex.value,
             onTap: (i) {
               print(controller.currentIndex.value);

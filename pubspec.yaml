@@ -11,7 +11,8 @@ dependencies:
   salomon_bottom_bar: 3.2.0
   http: 0.13.6
   cached_network_image: 3.2.3
-  flutter: 
+  pull_to_refresh: 2.0.0
+  flutter:
     sdk: flutter
 
 dev_dependencies: 
@@ -20,5 +21,7 @@ dev_dependencies:
     sdk: flutter
 
 flutter: 
+  assets:
+    - assets/images/ 
   uses-material-design: true
 
