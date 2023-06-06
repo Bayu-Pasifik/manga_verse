@@ -12,7 +12,7 @@ class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(  
+    return Scaffold(
         body: Container(
           child: Obx(
             () => IndexedStack(
@@ -23,7 +23,6 @@ class HomeView extends GetView<HomeController> {
         ),
         bottomNavigationBar: Obx(
           () => SalomonBottomBar(
-            
             currentIndex: controller.currentIndex.value,
             onTap: (i) {
               print(controller.currentIndex.value);
@@ -34,21 +33,21 @@ class HomeView extends GetView<HomeController> {
               SalomonBottomBarItem(
                 icon: const Icon(Icons.home),
                 title: const Text("Home"),
-                selectedColor: Colors.purple,
+                selectedColor: const Color(0XFF54BAB9),
               ),
 
               /// Likes
               SalomonBottomBarItem(
                 icon: const Icon(Icons.movie),
                 title: const Text("Genre"),
-                selectedColor: Colors.pink,
+                selectedColor: const Color(0XFF54BAB9),
               ),
 
               /// Search
               SalomonBottomBarItem(
                 icon: const Icon(Icons.search),
                 title: const Text("Search"),
-                selectedColor: Colors.orange,
+                selectedColor: const Color(0XFF54BAB9),
               ),
             ],
           ),
