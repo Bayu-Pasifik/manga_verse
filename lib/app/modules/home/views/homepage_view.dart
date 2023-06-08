@@ -64,7 +64,7 @@ class HomepageView extends GetView<HomeController> {
                           AllMangaModel trending = snapshot.data![index];
                           return GestureDetector(
                             onTap: () => Get.toNamed(Routes.DETAIL_MANGA,
-                                arguments: trending),
+                                arguments: trending.endpoint),
                             child: Column(
                               children: [
                                 Container(
@@ -165,7 +165,7 @@ class HomepageView extends GetView<HomeController> {
                                       child: ListTile(
                                         onTap: () => Get.toNamed(
                                             Routes.DETAIL_MANGA,
-                                            arguments: manga),
+                                            arguments: manga.endpoint),
                                         leading: ConstrainedBox(
                                           constraints: const BoxConstraints(
                                             maxHeight: 200,
@@ -244,7 +244,7 @@ class HomepageView extends GetView<HomeController> {
                                       child: ListTile(
                                         onTap: () => Get.toNamed(
                                             Routes.DETAIL_MANGA,
-                                            arguments: manga),
+                                            arguments: manga.endpoint),
                                         leading: ConstrainedBox(
                                           constraints: const BoxConstraints(
                                             maxHeight: 200,

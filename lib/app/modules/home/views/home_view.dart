@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:manga_verse/app/modules/home/views/genre_view.dart';
 import 'package:manga_verse/app/modules/home/views/homepage_view.dart';
 import 'package:manga_verse/app/modules/home/views/search_view.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -13,6 +12,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         body: Container(
           child: Obx(
             () => IndexedStack(
