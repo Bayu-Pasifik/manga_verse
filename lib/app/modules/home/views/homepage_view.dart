@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:manga_verse/app/data/models/all_manga_model.dart';
-import 'package:manga_verse/app/data/models/trending_model.dart';
 import 'package:manga_verse/app/modules/home/controllers/home_controller.dart';
+import 'package:manga_verse/app/routes/app_pages.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomepageView extends GetView<HomeController> {
@@ -23,15 +23,17 @@ class HomepageView extends GetView<HomeController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("${controller.greeting()} , Pembaca",
-                    style: GoogleFonts.poppins(fontSize: 14)),
+                    style: GoogleFonts.poppins(
+                        fontSize: 14, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 5),
                 Text("Siap untuk menjelajahi dunia manga?",
-                    style: GoogleFonts.poppins(fontSize: 14)),
+                    style: GoogleFonts.poppins(
+                        fontSize: 14, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 15),
                 Text(
                   "Weekly Trending",
                   style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w500, fontSize: 14),
+                      fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 const SizedBox(height: 10),
                 Container(
@@ -59,49 +61,53 @@ class HomepageView extends GetView<HomeController> {
                         scrollDirection: Axis.horizontal,
                         itemCount: snapshot.data?.length ?? 0,
                         itemBuilder: (context, index) {
-                          TrendingModel trending = snapshot.data![index];
-                          return Column(
-                            children: [
-                              Container(
-                                width: 150,
-                                height: 150,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: CachedNetworkImage(
-                                  imageUrl: "${trending.thumbnail}",
-                                  imageBuilder: (context, imageProvider) =>
-                                      Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover,
+                          AllMangaModel trending = snapshot.data![index];
+                          return GestureDetector(
+                            onTap: () => Get.toNamed(Routes.DETAIL_MANGA,
+                                arguments: trending),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 150,
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: CachedNetworkImage(
+                                    imageUrl: "${trending.thumbnail}",
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  placeholder: (context, url) =>
-                                      const CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) =>
-                                      Image.asset(
-                                    "assets/images/no-image.png",
-                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
+                                      "assets/images/no-image.png",
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 10),
-                              Expanded(
-                                child: SizedBox(
-                                    width: 80,
-                                    height: 50,
-                                    child: Text("${trending.title}",
-                                        style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                            textStyle: const TextStyle(
-                                                overflow:
-                                                    TextOverflow.ellipsis)))),
-                              )
-                            ],
+                                const SizedBox(height: 10),
+                                Expanded(
+                                  child: SizedBox(
+                                      width: 80,
+                                      height: 50,
+                                      child: Text("${trending.title}",
+                                          style: GoogleFonts.inter(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 14,
+                                              textStyle: const TextStyle(
+                                                  overflow:
+                                                      TextOverflow.ellipsis)))),
+                                )
+                              ],
+                            ),
                           );
                         },
                       );
@@ -133,8 +139,10 @@ class HomepageView extends GetView<HomeController> {
                     color: const Color(0XFF54BAB9),
                   ),
                 ),
+                const SizedBox(height: 15),
                 Expanded(
                   child: TabBarView(children: [
+                    // ! all manga
                     GetBuilder<HomeController>(
                       builder: (c) {
                         return SmartRefresher(
@@ -143,70 +151,77 @@ class HomepageView extends GetView<HomeController> {
                           enablePullUp: true,
                           onRefresh: () => c.refreshData(c.hal.value),
                           onLoading: () => c.loadData(c.hal.value),
-                          child: ListView.separated(
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 10),
-                            itemBuilder: (context, index) {
-                              AllMangaModel manga = c.allManga[index];
-                              return Material(
-                                elevation: 2,
-                                color: const Color(0XFFFFFFFF),
-                                borderRadius: BorderRadius.circular(10),
-                                child: ListTile(
-                                  leading: ConstrainedBox(
-                                    constraints: const BoxConstraints(
-                                      maxHeight: 200,
-                                    ),
-                                    child: Container(
-                                      width: 50,
-                                      // color: Colors.red,
-                                      child: CachedNetworkImage(
-                                        imageUrl: "${manga.thumbnail}",
-                                        imageBuilder:
-                                            (context, imageProvider) =>
-                                                Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
+                          child: (c.allManga.isEmpty)
+                              ? const Center(child: CircularProgressIndicator())
+                              : ListView.separated(
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(height: 10),
+                                  itemBuilder: (context, index) {
+                                    AllMangaModel manga = c.allManga[index];
+                                    return Material(
+                                      elevation: 2,
+                                      color: const Color(0XFFFFFFFF),
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: ListTile(
+                                        onTap: () => Get.toNamed(
+                                            Routes.DETAIL_MANGA,
+                                            arguments: manga),
+                                        leading: ConstrainedBox(
+                                          constraints: const BoxConstraints(
+                                            maxHeight: 200,
+                                          ),
+                                          child: Container(
+                                            width: 50,
+                                            // color: Colors.red,
+                                            child: CachedNetworkImage(
+                                              imageUrl: "${manga.thumbnail}",
+                                              imageBuilder:
+                                                  (context, imageProvider) =>
+                                                      Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  image: DecorationImage(
+                                                    image: imageProvider,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+                                              placeholder: (context, url) =>
+                                                  const CircularProgressIndicator(),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Image.asset(
+                                                "assets/images/no-image.png",
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                        placeholder: (context, url) =>
-                                            const CircularProgressIndicator(),
-                                        errorWidget: (context, url, error) =>
-                                            Image.asset(
-                                          "assets/images/no-image.png",
-                                          fit: BoxFit.cover,
+                                        title: SizedBox(
+                                            width: context.width,
+                                            height: 20,
+                                            child: Text("${manga.title}",
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 14,
+                                                    textStyle: const TextStyle(
+                                                        overflow: TextOverflow
+                                                            .ellipsis)))),
+                                        subtitle: Text(
+                                          "${manga.latestChapter}",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 12,
+                                              color: const Color(0XFFFF6905)),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  title: SizedBox(
-                                      width: context.width,
-                                      height: 20,
-                                      child: Text("${manga.title}",
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 14,
-                                              textStyle: const TextStyle(
-                                                  overflow:
-                                                      TextOverflow.ellipsis)))),
-                                  subtitle: Text(
-                                    "${manga.latestChapter}",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 12,
-                                        color: const Color(0XFFFF6905)),
-                                  ),
+                                    );
+                                  },
+                                  itemCount: controller.allManga.length,
                                 ),
-                              );
-                            },
-                            itemCount: controller.allManga.length,
-                          ),
                         );
                       },
                     ),
+                    // ! New Manga
                     GetBuilder<HomeController>(
                       builder: (c) {
                         return SmartRefresher(
@@ -215,65 +230,72 @@ class HomepageView extends GetView<HomeController> {
                           enablePullUp: true,
                           onRefresh: () => c.refreshUpdate(c.hal.value),
                           onLoading: () => c.loadUpdate(c.hal.value),
-                          child: ListView.separated(
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 10),
-                            itemBuilder: (context, index) {
-                              AllMangaModel manga = c.latest[index];
-                              return Material(
-                                elevation: 2,
-                                color: const Color(0XFFFFFFFF),
-                                borderRadius: BorderRadius.circular(10),
-                                child: ListTile(
-                                  leading: ConstrainedBox(
-                                    constraints: const BoxConstraints(
-                                      maxHeight: 200,
-                                    ),
-                                    child: Container(
-                                      width: 50,
-                                      // color: Colors.red,
-                                      child: CachedNetworkImage(
-                                        imageUrl: "${manga.thumbnail}",
-                                        imageBuilder:
-                                            (context, imageProvider) =>
-                                                Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
+                          child: (c.latest.isEmpty)
+                              ? const Center(child: CircularProgressIndicator())
+                              : ListView.separated(
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(height: 10),
+                                  itemBuilder: (context, index) {
+                                    AllMangaModel manga = c.latest[index];
+                                    return Material(
+                                      elevation: 2,
+                                      color: const Color(0XFFFFFFFF),
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: ListTile(
+                                        onTap: () => Get.toNamed(
+                                            Routes.DETAIL_MANGA,
+                                            arguments: manga),
+                                        leading: ConstrainedBox(
+                                          constraints: const BoxConstraints(
+                                            maxHeight: 200,
+                                          ),
+                                          child: Container(
+                                            width: 50,
+                                            // color: Colors.red,
+                                            child: CachedNetworkImage(
+                                              imageUrl: "${manga.thumbnail}",
+                                              imageBuilder:
+                                                  (context, imageProvider) =>
+                                                      Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  image: DecorationImage(
+                                                    image: imageProvider,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+                                              placeholder: (context, url) =>
+                                                  const CircularProgressIndicator(),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Image.asset(
+                                                "assets/images/no-image.png",
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                        placeholder: (context, url) =>
-                                            const CircularProgressIndicator(),
-                                        errorWidget: (context, url, error) =>
-                                            Image.asset(
-                                          "assets/images/no-image.png",
-                                          fit: BoxFit.cover,
-                                        ),
+                                        title: SizedBox(
+                                            width: context.width,
+                                            height: 20,
+                                            child: Text("${manga.title}",
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 14,
+                                                    textStyle: const TextStyle(
+                                                        overflow: TextOverflow
+                                                            .ellipsis)))),
+                                        subtitle: Text("${manga.latestChapter}",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 12,
+                                                color:
+                                                    const Color(0XFFFF6905))),
                                       ),
-                                    ),
-                                  ),
-                                  title: SizedBox(
-                                      width: context.width,
-                                      height: 20,
-                                      child: Text("${manga.title}",
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 14,
-                                              textStyle: const TextStyle(
-                                                  overflow:
-                                                      TextOverflow.ellipsis)))),
-                                  subtitle: Text("${manga.latestChapter}",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 12,
-                                          color: const Color(0XFFFF6905))),
+                                    );
+                                  },
+                                  itemCount: controller.allManga.length,
                                 ),
-                              );
-                            },
-                            itemCount: controller.allManga.length,
-                          ),
                         );
                       },
                     ),

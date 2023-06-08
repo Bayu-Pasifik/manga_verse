@@ -17,7 +17,7 @@ class HomeView extends GetView<HomeController> {
           child: Obx(
             () => IndexedStack(
               index: controller.currentIndex.value,
-              children: const [HomepageView(), GenreView(), SearchView()],
+              children: const [HomepageView(), SearchView()],
             ),
           ),
         ),
@@ -25,7 +25,7 @@ class HomeView extends GetView<HomeController> {
           () => SalomonBottomBar(
             currentIndex: controller.currentIndex.value,
             onTap: (i) {
-              print(controller.currentIndex.value);
+              // print(controller.currentIndex.value);
               controller.currentIndex.value = i;
             },
             items: [
@@ -36,12 +36,12 @@ class HomeView extends GetView<HomeController> {
                 selectedColor: const Color(0XFF54BAB9),
               ),
 
-              /// Likes
-              SalomonBottomBarItem(
-                icon: const Icon(Icons.movie),
-                title: const Text("Genre"),
-                selectedColor: const Color(0XFF54BAB9),
-              ),
+              // /// Likes
+              // SalomonBottomBarItem(
+              //   icon: const Icon(Icons.movie),
+              //   title: const Text("Genre"),
+              //   selectedColor: const Color(0XFF54BAB9),
+              // ),
 
               /// Search
               SalomonBottomBarItem(

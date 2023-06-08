@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/detailManga/bindings/detail_manga_binding.dart';
+import '../modules/detailManga/views/detail_manga_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 
@@ -15,6 +17,11 @@ class AppPages {
       name: _Paths.HOME,
       page: () => const HomeView(),
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_MANGA,
+      page: () => const DetailMangaView(),
+      binding: DetailMangaBinding(),
     ),
   ];
 }
