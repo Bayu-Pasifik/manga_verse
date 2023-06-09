@@ -1,7 +1,5 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-import 'package:manga_verse/app/data/models/detail_model.dart';
 import 'package:manga_verse/app/data/models/read_model.dart';
 
 void main() async {

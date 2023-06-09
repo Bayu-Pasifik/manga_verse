@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:manga_verse/app/data/models/all_manga_model.dart';
 import 'package:manga_verse/app/data/models/genre_model.dart';
@@ -122,5 +124,68 @@ class HomeController extends GetxController {
     var data = json.decode(response.body)["genres"];
     var tempData = data.map((e) => GenreModel.fromJson(e)).toList();
     return tempData;
+  }
+
+  // ! search manga
+
+  late TextEditingController searchController;
+  var nextSearch = true.obs;
+  RefreshController searchRefresh = RefreshController(initialRefresh: true);
+  var halSearch = 1.obs;
+  List<dynamic> allSearch = [];
+  Future<List<dynamic>> getSearch(String keyword) async {
+    Uri url = Uri.parse('http://10.0.2.2:8000/search/$keyword/$halSearch');
+    var response = await http.get(url);
+    var data = json.decode(response.body)["data"];
+    nextSearch.value = json.decode(response.body)["next"];
+    update();
+    var tempData = data.map((e) => AllMangaModel.fromJson(e)).toList();
+    update();
+    allSearch.addAll(tempData);
+    update();
+    print(tempData);
+    return latest;
+  }
+
+  void refreshSearch(String query) async {
+    if (searchRefresh.initialRefresh == true) {
+      halSearch.value = 1;
+      allSearch.clear();
+      await getSearch(query);
+      update();
+      return searchRefresh.refreshCompleted();
+    } else {
+      return searchRefresh.refreshFailed();
+    }
+  }
+
+  void loadSearch(String query) async {
+    if (nextupdate.value == true) {
+      halSearch.value = halupdate.value + 1;
+      await getSearch(query);
+      update();
+      return searchRefresh.loadComplete();
+    } else {
+      return searchRefresh.loadNoData();
+    }
+  }
+
+  void clearSearch() {
+    halSearch.value = 1;
+    update();
+    allSearch.clear();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    searchController = SearchController();
+    // searchController.text = "naruto";
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    searchController.dispose();
   }
 }

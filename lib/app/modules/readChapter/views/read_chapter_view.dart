@@ -16,20 +16,20 @@ class ReadChapterView extends GetView<ReadChapterController> {
         body: FutureBuilder(
       future: controller.getChapter(url),
       builder: (context, snapshot) {
-        if (snapshot.data == null) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Please Wait",
-                style: GoogleFonts.poppins(
-                    color: const Color(0XFFB8B8D2), fontSize: 24),
-              ),
-              const CircularProgressIndicator(),
-            ],
-          );
-        }
+        // if (snapshot.data == null) {
+        //   return Column(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     // crossAxisAlignment: CrossAxisAlignment.center,
+        //     children: [
+        //       Text(
+        //         "Please Wait",
+        //         style: GoogleFonts.poppins(
+        //             color: const Color(0XFFB8B8D2), fontSize: 24),
+        //       ),
+        //       const CircularProgressIndicator(),
+        //     ],
+        //   );
+        // }
         if (snapshot.hasError) {
           return Center(child: Text("${snapshot.error}"));
         }
@@ -51,7 +51,7 @@ class ReadChapterView extends GetView<ReadChapterController> {
         }
 
         return SizedBox(
-          width: context.width,
+          width: context.width / 1,
           height: context.height,
           child: ListView.builder(
             itemBuilder: (context, index) {
@@ -60,7 +60,9 @@ class ReadChapterView extends GetView<ReadChapterController> {
                 // width: 500,
                 height: MediaQuery.of(context).size.height,
                 child: CachedNetworkImage(
-                  imageUrl: "${chapter.url}",
+                  imageUrl: chapter.url!.startsWith("https:///")
+                      ? chapter.url!.replaceFirst("https:///", "https://")
+                      : chapter.url!,
                   imageBuilder: (context, imageProvider) => Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),

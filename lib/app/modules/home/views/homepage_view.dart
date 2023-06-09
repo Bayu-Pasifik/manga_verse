@@ -73,7 +73,7 @@ class HomepageView extends GetView<HomeController> {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10)),
                                   child: CachedNetworkImage(
-                                    imageUrl: "${trending.thumbnail}",
+                                    imageUrl: trending.thumbnail!.startsWith("https:///") ? trending.thumbnail!.replaceFirst("https:///", "https://") : trending.thumbnail!,
                                     imageBuilder: (context, imageProvider) =>
                                         Container(
                                       decoration: BoxDecoration(
@@ -174,7 +174,7 @@ class HomepageView extends GetView<HomeController> {
                                             width: 50,
                                             // color: Colors.red,
                                             child: CachedNetworkImage(
-                                              imageUrl: "${manga.thumbnail}",
+                                              imageUrl: manga.thumbnail!.startsWith("https:///") ? manga.thumbnail!.replaceFirst("https:///", "https://") : manga.thumbnail!,
                                               imageBuilder:
                                                   (context, imageProvider) =>
                                                       Container(
@@ -253,7 +253,7 @@ class HomepageView extends GetView<HomeController> {
                                             width: 50,
                                             // color: Colors.red,
                                             child: CachedNetworkImage(
-                                              imageUrl: "${manga.thumbnail}",
+                                              imageUrl: manga.thumbnail!.startsWith("https:///") ? manga.thumbnail!.replaceFirst("https:///", "https://") : manga.thumbnail!,
                                               imageBuilder:
                                                   (context, imageProvider) =>
                                                       Container(
