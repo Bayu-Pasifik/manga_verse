@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -24,13 +25,26 @@ class SearchView extends GetView<HomeController> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("${c.greeting()} , Pembaca",
-                    style: GoogleFonts.poppins(
-                        fontSize: 14, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 5),
-                Text("mau cari manga apa hari ini?",
-                    style: GoogleFonts.poppins(
-                        fontSize: 14, fontWeight: FontWeight.bold)),
+                SizedBox(
+                  width: 250.0,
+                  child: AnimatedTextKit(
+                    repeatForever: true,
+                    animatedTexts: [
+                      TypewriterAnimatedText(
+                          '"${controller.greeting()} , Pembaca",',
+                          textStyle: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)),
+                      TypewriterAnimatedText(
+                          "Mau cari apa hari ini ?",
+                          textStyle: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)),
+                    ],
+                  ),
+                ),
                 const SizedBox(height: 10),
                 TextField(
                   controller: c.searchController,
@@ -105,7 +119,14 @@ class SearchView extends GetView<HomeController> {
                                                   width: 50,
                                                   // color: Colors.red,
                                                   child: CachedNetworkImage(
-                                                    imageUrl: manga.thumbnail!.startsWith("https:///") ? manga.thumbnail!.replaceFirst("https:///", "https://") : manga.thumbnail!,
+                                                    imageUrl: manga.thumbnail!
+                                                            .startsWith(
+                                                                "https:///")
+                                                        ? manga.thumbnail!
+                                                            .replaceFirst(
+                                                                "https:///",
+                                                                "https://")
+                                                        : manga.thumbnail!,
                                                     imageBuilder: (context,
                                                             imageProvider) =>
                                                         Container(

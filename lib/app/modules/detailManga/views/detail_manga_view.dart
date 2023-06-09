@@ -14,7 +14,6 @@ class DetailMangaView extends GetView<DetailMangaController> {
   @override
   Widget build(BuildContext context) {
     final String manga = Get.arguments;
-    print(manga);
     return Scaffold(
         backgroundColor: const Color(0XFFF4F3FD),
         body: SafeArea(

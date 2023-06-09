@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -22,13 +23,27 @@ class HomepageView extends GetView<HomeController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("${controller.greeting()} , Pembaca",
-                    style: GoogleFonts.poppins(
-                        fontSize: 14, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 5),
-                Text("Siap untuk menjelajahi dunia manga?",
-                    style: GoogleFonts.poppins(
-                        fontSize: 14, fontWeight: FontWeight.bold)),
+                SizedBox(
+                  width: 250.0,
+                  child: AnimatedTextKit(
+                    repeatForever: true,
+                    pause: const Duration(milliseconds: 1000),
+                    isRepeatingAnimation: true,
+                    animatedTexts: [
+                      TypewriterAnimatedText(
+                          '"${controller.greeting()} , Pembaca",',
+                          textStyle: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)),
+                      TypewriterAnimatedText("Mau baca apa hari ini?",
+                          textStyle: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)),
+                    ],
+                  ),
+                ),
                 const SizedBox(height: 15),
                 Text(
                   "Weekly Trending",
@@ -73,7 +88,11 @@ class HomepageView extends GetView<HomeController> {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10)),
                                   child: CachedNetworkImage(
-                                    imageUrl: trending.thumbnail!.startsWith("https:///") ? trending.thumbnail!.replaceFirst("https:///", "https://") : trending.thumbnail!,
+                                    imageUrl: trending.thumbnail!
+                                            .startsWith("https:///")
+                                        ? trending.thumbnail!.replaceFirst(
+                                            "https:///", "https://")
+                                        : trending.thumbnail!,
                                     imageBuilder: (context, imageProvider) =>
                                         Container(
                                       decoration: BoxDecoration(
@@ -174,7 +193,12 @@ class HomepageView extends GetView<HomeController> {
                                             width: 50,
                                             // color: Colors.red,
                                             child: CachedNetworkImage(
-                                              imageUrl: manga.thumbnail!.startsWith("https:///") ? manga.thumbnail!.replaceFirst("https:///", "https://") : manga.thumbnail!,
+                                              imageUrl: manga.thumbnail!
+                                                      .startsWith("https:///")
+                                                  ? manga.thumbnail!
+                                                      .replaceFirst("https:///",
+                                                          "https://")
+                                                  : manga.thumbnail!,
                                               imageBuilder:
                                                   (context, imageProvider) =>
                                                       Container(
@@ -253,7 +277,12 @@ class HomepageView extends GetView<HomeController> {
                                             width: 50,
                                             // color: Colors.red,
                                             child: CachedNetworkImage(
-                                              imageUrl: manga.thumbnail!.startsWith("https:///") ? manga.thumbnail!.replaceFirst("https:///", "https://") : manga.thumbnail!,
+                                              imageUrl: manga.thumbnail!
+                                                      .startsWith("https:///")
+                                                  ? manga.thumbnail!
+                                                      .replaceFirst("https:///",
+                                                          "https://")
+                                                  : manga.thumbnail!,
                                               imageBuilder:
                                                   (context, imageProvider) =>
                                                       Container(

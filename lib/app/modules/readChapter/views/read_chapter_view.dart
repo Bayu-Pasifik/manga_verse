@@ -16,28 +16,30 @@ class ReadChapterView extends GetView<ReadChapterController> {
         body: FutureBuilder(
       future: controller.getChapter(url),
       builder: (context, snapshot) {
-        // if (snapshot.data == null) {
-        //   return Column(
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     // crossAxisAlignment: CrossAxisAlignment.center,
-        //     children: [
-        //       Text(
-        //         "Please Wait",
-        //         style: GoogleFonts.poppins(
-        //             color: const Color(0XFFB8B8D2), fontSize: 24),
-        //       ),
-        //       const CircularProgressIndicator(),
-        //     ],
-        //   );
-        // }
+        if (snapshot.data == null) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Please Wait",
+                  style: GoogleFonts.poppins(
+                      color: const Color(0XFFB8B8D2), fontSize: 24),
+                ),
+                const CircularProgressIndicator(),
+              ],
+            ),
+          );
+        }
         if (snapshot.hasError) {
-          return Center(child: Text("${snapshot.error}"));
+          return Center(
+            child: Text("${snapshot.error}"),
+          );
         }
         if (snapshot.hasData) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   "Please Wait",
