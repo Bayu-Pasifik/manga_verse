@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:manga_verse/app/data/models/genre_model.dart';
+import 'package:manga_verse/app/data/models/komiku/genres_model.dart';
 import 'package:manga_verse/app/data/models/komiku/komiku_all_model.dart';
 import 'dart:convert';
 
@@ -115,10 +115,10 @@ class KomikuHomeController extends GetxController {
   // ! List Genre
 
   Future<List<dynamic>> listGenre() async {
-    Uri url = Uri.parse('http://10.0.2.2:3000/genres');
+    Uri url = Uri.parse('http://10.0.2.2:3000/api/genres');
     var response = await http.get(url);
     var data = json.decode(response.body)["list_genre"];
-    var tempData = data.map((e) => GenreModel.fromJson(e)).toList();
+    var tempData = data.map((e) => GenresModel.fromJson(e)).toList();
     return tempData;
   }
 
