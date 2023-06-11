@@ -132,8 +132,8 @@ class KomikuHomeController extends GetxController {
   Future<List<dynamic>> getSearch(String keyword) async {
     Uri url = Uri.parse('http://10.0.2.2:3000/api/search/$keyword/$halSearch');
     var response = await http.get(url);
-    var data = json.decode(response.body)["data"];
-    nextSearch.value = json.decode(response.body)["next"];
+    var data = json.decode(response.body)["manga_list"];
+    nextSearch.value = json.decode(response.body)["hasNextPage"];
     update();
     var tempData = data.map((e) => KomikuAll.fromJson(e)).toList();
     update();

@@ -9,11 +9,11 @@ import 'package:manga_verse/app/routes/app_pages.dart';
 
 class KomikuGenrePageView extends GetView<KomikuHomeController> {
   KomikuGenrePageView({Key? key}) : super(key: key);
-  final GlobalKey<ScaffoldState> stateGenre = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> statekomikuGenre = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: stateGenre,
+        key: statekomikuGenre,
         drawer: Drawer(
           child: ListView(
             // Important: Remove any padding from the ListView.
@@ -59,8 +59,8 @@ class KomikuGenrePageView extends GetView<KomikuHomeController> {
                             icon:
                                 Icon(Icons.menu, color: Colors.black, size: 30),
                             onPressed: () {
-                              print(stateGenre.currentState);
-                              stateGenre.currentState?.openDrawer();
+                              print(statekomikuGenre.currentState);
+                              statekomikuGenre.currentState?.openDrawer();
                             },
                           ),
                           SizedBox(

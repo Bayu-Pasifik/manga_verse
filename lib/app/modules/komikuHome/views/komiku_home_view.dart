@@ -21,7 +21,7 @@ class KomikuHomeView extends GetView<KomikuHomeController> {
               children: [
                 KomikuHomePageView(),
                 KomikuGenrePageView(),
-                const KomikuSearchPageView()
+                 KomikuSearchPageView()
               ],
             ),
           ),
