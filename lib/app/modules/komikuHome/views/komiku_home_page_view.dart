@@ -63,7 +63,7 @@ class KomikuHomePageView extends GetView<KomikuHomeController> {
                     IconButton(
                       icon: const Icon(Icons.menu, color: Colors.black, size: 30),
                       onPressed: () {
-                        print(statekomiku.currentState);
+                        
                         statekomiku.currentState?.openDrawer();
                       },
                     ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:manga_verse/app/data/models/komiku/detail_komiku.dart';
+import 'package:manga_verse/app/routes/app_pages.dart';
 import '../controllers/detail_manga_komiku_controller.dart';
 
 class DetailMangaKomikuView extends GetView<DetailMangaKomikuController> {
@@ -320,9 +321,19 @@ class DetailMangaKomikuView extends GetView<DetailMangaKomikuController> {
                                 itemBuilder: (context, index) {
                                   final chapter = detail.chapter![index];
                                   return ListTile(
-                                    // onTap: () => Get.toNamed(
-                                    //     Routes.READ_CHAPTER,
-                                    //     arguments: chapter.endpoint),
+                                    onTap: () {
+                                      var endpoint = (chapter.chapterEndpoint)!
+                                              .contains("httpsadmin-komiku-org")
+                                          ? chapter.chapterEndpoint?.replaceAll(
+                                              "httpsadmin-komiku-org", "")
+                                          : chapter.chapterEndpoint;
+                                      Get.toNamed(Routes.READ_KOMIKU,
+                                          arguments: endpoint);
+                                      print(
+                                          "Chapter endpoint sebelum : ${chapter.chapterEndpoint}");
+                                      print(
+                                          "Chapter endpoint sesudah : ${endpoint}");
+                                    },
                                     leading: (index + 1 < 10)
                                         ? Text(
                                             "0${index + 1}",

@@ -8,6 +8,7 @@ abstract class Routes {
   static const READ_CHAPTER = _Paths.READ_CHAPTER;
   static const KOMIKU_HOME = _Paths.KOMIKU_HOME;
   static const DETAIL_MANGA_KOMIKU = _Paths.DETAIL_MANGA_KOMIKU;
+  static const READ_KOMIKU = _Paths.READ_KOMIKU;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const READ_CHAPTER = '/read-chapter';
   static const KOMIKU_HOME = '/komiku-home';
   static const DETAIL_MANGA_KOMIKU = '/detail-manga-komiku';
+  static const READ_KOMIKU = '/read-komiku';
 }
