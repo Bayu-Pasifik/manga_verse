@@ -322,17 +322,15 @@ class DetailMangaKomikuView extends GetView<DetailMangaKomikuController> {
                                   final chapter = detail.chapter![index];
                                   return ListTile(
                                     onTap: () {
-                                      var endpoint = (chapter.chapterEndpoint)!
-                                              .contains("httpsadmin-komiku-org")
-                                          ? chapter.chapterEndpoint?.replaceAll(
-                                              "httpsadmin-komiku-org", "")
-                                          : chapter.chapterEndpoint;
+                                      // var endpoint = (chapter.chapterEndpoint)!
+                                      //         .contains("httpsadmin-komiku-org")
+                                      //     ? chapter.chapterEndpoint?.replaceAll(
+                                      //         "httpsadmin-komiku-org", "")
+                                      //     : chapter.chapterEndpoint;
                                       Get.toNamed(Routes.READ_KOMIKU,
-                                          arguments: endpoint);
+                                          arguments: chapter.chapterEndpoint);
                                       print(
                                           "Chapter endpoint sebelum : ${chapter.chapterEndpoint}");
-                                      print(
-                                          "Chapter endpoint sesudah : ${endpoint}");
                                     },
                                     leading: (index + 1 < 10)
                                         ? Text(
