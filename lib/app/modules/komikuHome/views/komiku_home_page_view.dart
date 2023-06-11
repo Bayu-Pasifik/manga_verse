@@ -61,7 +61,7 @@ class KomikuHomePageView extends GetView<KomikuHomeController> {
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.menu, color: Colors.black, size: 30),
+                      icon: const Icon(Icons.menu, color: Colors.black, size: 30),
                       onPressed: () {
                         print(statekomiku.currentState);
                         statekomiku.currentState?.openDrawer();
@@ -124,7 +124,7 @@ class KomikuHomePageView extends GetView<KomikuHomeController> {
                         itemBuilder: (context, index) {
                           Recommended trending = snapshot.data![index];
                           return GestureDetector(
-                            onTap: () => Get.toNamed(Routes.DETAIL_MANGA,
+                            onTap: () => Get.toNamed(Routes.DETAIL_MANGA_KOMIKU,
                                 arguments: trending.endpoint),
                             child: Column(
                               children: [
@@ -229,7 +229,7 @@ class KomikuHomePageView extends GetView<KomikuHomeController> {
                                       borderRadius: BorderRadius.circular(10),
                                       child: ListTile(
                                         onTap: () => Get.toNamed(
-                                            Routes.DETAIL_MANGA,
+                                            Routes.DETAIL_MANGA_KOMIKU,
                                             arguments: manga.endpoint),
                                         leading: ConstrainedBox(
                                           constraints: const BoxConstraints(
@@ -312,7 +312,7 @@ class KomikuHomePageView extends GetView<KomikuHomeController> {
                                       borderRadius: BorderRadius.circular(10),
                                       child: ListTile(
                                         onTap: () => Get.toNamed(
-                                            Routes.DETAIL_MANGA,
+                                            Routes.DETAIL_MANGA_KOMIKU,
                                             arguments: manga.endpoint),
                                         leading: ConstrainedBox(
                                           constraints: const BoxConstraints(

@@ -120,7 +120,8 @@ class KomikuSearchPageView extends GetView<KomikuHomeController> {
                                                     BorderRadius.circular(10),
                                                 child: ListTile(
                                                   onTap: () => Get.toNamed(
-                                                      Routes.DETAIL_MANGA,
+                                                      Routes
+                                                          .DETAIL_MANGA_KOMIKU,
                                                       arguments:
                                                           manga.endpoint),
                                                   leading: ConstrainedBox(
