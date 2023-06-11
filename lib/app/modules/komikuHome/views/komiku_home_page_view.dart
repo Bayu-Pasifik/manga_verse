@@ -4,18 +4,19 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:manga_verse/app/data/models/all_manga_model.dart';
-import 'package:manga_verse/app/modules/home/controllers/home_controller.dart';
+import 'package:manga_verse/app/data/models/komiku/komiku_all_model.dart';
+import 'package:manga_verse/app/data/models/komiku/recomended.dart';
+import 'package:manga_verse/app/modules/komikuHome/controllers/komiku_home_controller.dart';
 import 'package:manga_verse/app/routes/app_pages.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class HomepageView extends GetView<HomeController> {
-  final GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
-  HomepageView({Key? key}) : super(key: key);
+class KomikuHomePageView extends GetView<KomikuHomeController> {
+  final GlobalKey<ScaffoldState> statekomiku = GlobalKey<ScaffoldState>();
+  KomikuHomePageView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldState,
+      key: statekomiku,
       drawer: Drawer(
         child: ListView(
           // Important: Remove any padding from the ListView.
@@ -62,8 +63,8 @@ class HomepageView extends GetView<HomeController> {
                     IconButton(
                       icon: Icon(Icons.menu, color: Colors.black, size: 30),
                       onPressed: () {
-                        print(scaffoldState.currentState);
-                        scaffoldState.currentState?.openDrawer();
+                        print(statekomiku.currentState);
+                        statekomiku.currentState?.openDrawer();
                       },
                     ),
                     SizedBox(
@@ -121,7 +122,7 @@ class HomepageView extends GetView<HomeController> {
                         scrollDirection: Axis.horizontal,
                         itemCount: snapshot.data?.length ?? 0,
                         itemBuilder: (context, index) {
-                          AllMangaModel trending = snapshot.data![index];
+                          Recommended trending = snapshot.data![index];
                           return GestureDetector(
                             onTap: () => Get.toNamed(Routes.DETAIL_MANGA,
                                 arguments: trending.endpoint),
@@ -133,11 +134,11 @@ class HomepageView extends GetView<HomeController> {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10)),
                                   child: CachedNetworkImage(
-                                    imageUrl: trending.thumbnail!
-                                            .startsWith("https:///")
-                                        ? trending.thumbnail!.replaceFirst(
-                                            "https:///", "https://")
-                                        : trending.thumbnail!,
+                                    imageUrl:
+                                        trending.thumb!.startsWith("https:///")
+                                            ? trending.thumb!.replaceFirst(
+                                                "https:///", "https://")
+                                            : trending.thumb!,
                                     imageBuilder: (context, imageProvider) =>
                                         Container(
                                       decoration: BoxDecoration(
@@ -191,7 +192,7 @@ class HomepageView extends GetView<HomeController> {
                     Tab(
                       child: Align(
                         alignment: Alignment.center,
-                        child: Text("Baru",
+                        child: Text("Popular",
                             style: GoogleFonts.poppins(fontSize: 14)),
                       ),
                     ),
@@ -207,7 +208,7 @@ class HomepageView extends GetView<HomeController> {
                 Expanded(
                   child: TabBarView(children: [
                     // ! all manga
-                    GetBuilder<HomeController>(
+                    GetBuilder<KomikuHomeController>(
                       builder: (c) {
                         return SmartRefresher(
                           controller: c.allRefresh,
@@ -221,7 +222,7 @@ class HomepageView extends GetView<HomeController> {
                                   separatorBuilder: (context, index) =>
                                       const SizedBox(height: 10),
                                   itemBuilder: (context, index) {
-                                    AllMangaModel manga = c.allManga[index];
+                                    KomikuAll manga = c.allManga[index];
                                     return Material(
                                       elevation: 2,
                                       color: const Color(0XFFFFFFFF),
@@ -238,12 +239,11 @@ class HomepageView extends GetView<HomeController> {
                                             width: 50,
                                             // color: Colors.red,
                                             child: CachedNetworkImage(
-                                              imageUrl: manga.thumbnail!
+                                              imageUrl: manga.thumb!
                                                       .startsWith("https:///")
-                                                  ? manga.thumbnail!
-                                                      .replaceFirst("https:///",
-                                                          "https://")
-                                                  : manga.thumbnail!,
+                                                  ? manga.thumb!.replaceFirst(
+                                                      "https:///", "https://")
+                                                  : manga.thumb!,
                                               imageBuilder:
                                                   (context, imageProvider) =>
                                                       Container(
@@ -277,7 +277,7 @@ class HomepageView extends GetView<HomeController> {
                                                         overflow: TextOverflow
                                                             .ellipsis)))),
                                         subtitle: Text(
-                                          "${manga.latestChapter}",
+                                          "${manga.updatedOn}",
                                           style: GoogleFonts.poppins(
                                               fontSize: 12,
                                               color: const Color(0XFFFF6905)),
@@ -291,7 +291,7 @@ class HomepageView extends GetView<HomeController> {
                       },
                     ),
                     // ! New Manga
-                    GetBuilder<HomeController>(
+                    GetBuilder<KomikuHomeController>(
                       builder: (c) {
                         return SmartRefresher(
                           controller: c.latestRefresh,
@@ -305,7 +305,7 @@ class HomepageView extends GetView<HomeController> {
                                   separatorBuilder: (context, index) =>
                                       const SizedBox(height: 10),
                                   itemBuilder: (context, index) {
-                                    AllMangaModel manga = c.latest[index];
+                                    KomikuAll manga = c.latest[index];
                                     return Material(
                                       elevation: 2,
                                       color: const Color(0XFFFFFFFF),
@@ -322,12 +322,11 @@ class HomepageView extends GetView<HomeController> {
                                             width: 50,
                                             // color: Colors.red,
                                             child: CachedNetworkImage(
-                                              imageUrl: manga.thumbnail!
+                                              imageUrl: manga.thumb!
                                                       .startsWith("https:///")
-                                                  ? manga.thumbnail!
-                                                      .replaceFirst("https:///",
-                                                          "https://")
-                                                  : manga.thumbnail!,
+                                                  ? manga.thumb!.replaceFirst(
+                                                      "https:///", "https://")
+                                                  : manga.thumb!,
                                               imageBuilder:
                                                   (context, imageProvider) =>
                                                       Container(
@@ -360,7 +359,7 @@ class HomepageView extends GetView<HomeController> {
                                                     textStyle: const TextStyle(
                                                         overflow: TextOverflow
                                                             .ellipsis)))),
-                                        subtitle: Text("${manga.latestChapter}",
+                                        subtitle: Text("${manga.updatedOn}",
                                             style: GoogleFonts.poppins(
                                                 fontSize: 12,
                                                 color:
@@ -368,7 +367,7 @@ class HomepageView extends GetView<HomeController> {
                                       ),
                                     );
                                   },
-                                  itemCount: controller.allManga.length,
+                                  itemCount: controller.latest.length,
                                 ),
                         );
                       },

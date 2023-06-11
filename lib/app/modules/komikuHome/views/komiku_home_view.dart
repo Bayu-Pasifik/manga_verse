@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:manga_verse/app/modules/home/views/homepage_view.dart';
-import 'package:manga_verse/app/modules/home/views/search_view.dart';
+import 'package:manga_verse/app/modules/komikuHome/views/komiku_genre_page_view.dart';
+import 'package:manga_verse/app/modules/komikuHome/views/komiku_home_page_view.dart';
+import 'package:manga_verse/app/modules/komikuHome/views/komiku_search_page_view.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
-import '../controllers/home_controller.dart';
+import '../controllers/komiku_home_controller.dart';
 
-class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+class KomikuHomeView extends GetView<KomikuHomeController> {
+  const KomikuHomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +18,11 @@ class HomeView extends GetView<HomeController> {
           child: Obx(
             () => IndexedStack(
               index: controller.currentIndex.value,
-              children: [HomepageView(), const SearchView()],
+              children: [
+                KomikuHomePageView(),
+                KomikuGenrePageView(),
+                const KomikuSearchPageView()
+              ],
             ),
           ),
         ),
@@ -36,12 +41,12 @@ class HomeView extends GetView<HomeController> {
                 selectedColor: const Color(0XFF54BAB9),
               ),
 
-              // /// Likes
-              // SalomonBottomBarItem(
-              //   icon: const Icon(Icons.movie),
-              //   title: const Text("Genre"),
-              //   selectedColor: const Color(0XFF54BAB9),
-              // ),
+              /// Likes
+              SalomonBottomBarItem(
+                icon: const Icon(Icons.movie),
+                title: const Text("Genre"),
+                selectedColor: const Color(0XFF54BAB9),
+              ),
 
               /// Search
               SalomonBottomBarItem(
