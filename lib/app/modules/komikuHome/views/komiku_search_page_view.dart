@@ -61,7 +61,6 @@ class KomikuSearchPageView extends GetView<KomikuHomeController> {
                     TextField(
                       controller: c.searchController,
                       onChanged: (value) {
-                        // Batalkan timer sebelumnya (jika ada)
                         searchTimer?.cancel();
 
                         if (value.isEmpty) {
