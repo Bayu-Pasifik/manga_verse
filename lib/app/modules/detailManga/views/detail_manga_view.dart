@@ -95,8 +95,10 @@ class DetailMangaView extends GetView<DetailMangaController> {
                         ),
                       ),
                       background: CachedNetworkImage(
-                        imageUrl: detail.thumbnail!.startsWith("https:///") ? detail.thumbnail!.replaceFirst("https:///", "https://") : detail.thumbnail!,
-
+                        imageUrl: detail.thumbnail!.startsWith("https:///")
+                            ? detail.thumbnail!
+                                .replaceFirst("https:///", "https://")
+                            : detail.thumbnail!,
                         imageBuilder: (context, imageProvider) => Container(
                           decoration: BoxDecoration(
                             // borderRadius: BorderRadius.circular(8),
@@ -335,8 +337,9 @@ class DetailMangaView extends GetView<DetailMangaController> {
                                   final chapter = detail.chapters![index];
                                   return ListTile(
                                     onTap: () => Get.toNamed(
-                                        Routes.READ_CHAPTER,
-                                        arguments: chapter.endpoint),
+                                      Routes.READ_CHAPTER,
+                                      arguments: chapter.endpoint,
+                                    ),
                                     leading: (index + 1 < 10)
                                         ? Text(
                                             "0${index + 1}",

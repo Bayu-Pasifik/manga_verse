@@ -10,11 +10,9 @@ class ReadKomikuController extends GetxController {
     Uri url = Uri.parse('http://10.0.2.2:3000/api/chapter/$endPoint');
     var response = await http.get(url);
     var data = json.decode(response.body)["chapter_image"];
-    update();
     var tempData = data.map((e) => ReadKomiku.fromJson(e)).toList();
-    update();
+    allchapter.clear();
     allchapter.addAll(tempData);
-    update();
     print(allchapter.length);
     return allchapter;
   }
