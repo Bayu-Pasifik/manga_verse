@@ -56,10 +56,9 @@ class KomikuGenrePageView extends GetView<KomikuHomeController> {
                       Row(
                         children: [
                           IconButton(
-                            icon:
-                                Icon(Icons.menu, color: Colors.black, size: 30),
+                            icon: const Icon(Icons.menu,
+                                color: Colors.black, size: 30),
                             onPressed: () {
-                              print(statekomikuGenre.currentState);
                               statekomikuGenre.currentState?.openDrawer();
                             },
                           ),
@@ -141,6 +140,9 @@ class KomikuGenrePageView extends GetView<KomikuHomeController> {
                                   color: const Color(0XFFFFFFFF),
                                   borderRadius: BorderRadius.circular(10),
                                   child: ListTile(
+                                    onTap: () => Get.toNamed(
+                                        Routes.GENRE_KOMIKU,
+                                        arguments: genre.endpoint),
                                     title: Text("${genre.genreName}"),
                                   ),
                                 );

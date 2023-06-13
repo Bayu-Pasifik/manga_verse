@@ -21,7 +21,7 @@ class KomikuHomeView extends GetView<KomikuHomeController> {
               children: [
                 KomikuHomePageView(),
                 KomikuGenrePageView(),
-                 KomikuSearchPageView()
+                KomikuSearchPageView()
               ],
             ),
           ),
@@ -30,7 +30,11 @@ class KomikuHomeView extends GetView<KomikuHomeController> {
           () => SalomonBottomBar(
             currentIndex: controller.currentIndex.value,
             onTap: (i) {
-              // print(controller.currentIndex.value);
+              if (i < 3) {
+                controller.allSearch.clear();
+                controller.searchController.clear();
+              }
+
               controller.currentIndex.value = i;
             },
             items: [
