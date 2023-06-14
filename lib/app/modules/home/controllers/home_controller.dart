@@ -119,7 +119,7 @@ class HomeController extends GetxController {
   // ! List Genre
 
   Future<List<dynamic>> listGenre() async {
-    Uri url = Uri.parse('http://10.0.2.2:8000/genre');
+    Uri url = Uri.parse('http://10.0.2.2:8000/genres');
     var response = await http.get(url);
     var data = json.decode(response.body)["genres"];
     var tempData = data.map((e) => GenreModel.fromJson(e)).toList();

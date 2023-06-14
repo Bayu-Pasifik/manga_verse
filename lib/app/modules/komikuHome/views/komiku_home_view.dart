@@ -47,7 +47,10 @@ class KomikuHomeView extends GetView<KomikuHomeController> {
 
               /// Likes
               SalomonBottomBarItem(
-                icon: const Icon(Icons.movie),
+                icon: Container(
+                    width: 40,
+                    height: 30,
+                    child: Image.asset("assets/images/genre.png")),
                 title: const Text("Genre"),
                 selectedColor: const Color(0XFF54BAB9),
               ),

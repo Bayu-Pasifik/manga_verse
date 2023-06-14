@@ -6,6 +6,8 @@ import '../modules/detailMangaKomiku/bindings/detail_manga_komiku_binding.dart';
 import '../modules/detailMangaKomiku/views/detail_manga_komiku_view.dart';
 import '../modules/genreKomiku/bindings/genre_komiku_binding.dart';
 import '../modules/genreKomiku/views/genre_komiku_view.dart';
+import '../modules/genreManhwaindo/bindings/genre_manhwaindo_binding.dart';
+import '../modules/genreManhwaindo/views/genre_manhwaindo_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/komikuHome/bindings/komiku_home_binding.dart';
@@ -57,6 +59,11 @@ class AppPages {
       name: _Paths.GENRE_KOMIKU,
       page: () => const GenreKomikuView(),
       binding: GenreKomikuBinding(),
+    ),
+    GetPage(
+      name: _Paths.GENRE_MANHWAINDO,
+      page: () => const GenreManhwaindoView(),
+      binding: GenreManhwaindoBinding(),
     ),
   ];
 }

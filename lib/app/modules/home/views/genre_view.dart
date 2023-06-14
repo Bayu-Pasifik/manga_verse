@@ -1,26 +1,56 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:manga_verse/app/data/models/genre_model.dart';
 import 'package:manga_verse/app/modules/home/controllers/home_controller.dart';
+import 'package:manga_verse/app/routes/app_pages.dart';
 
 class GenreView extends GetView<HomeController> {
-  const GenreView({Key? key}) : super(key: key);
+  GenreView({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState> genreState = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: genreState,
         backgroundColor: const Color(0XFFF4F3FD),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(18.0),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text("${controller.greeting()} , Pembaca",
-                  style: GoogleFonts.poppins(fontSize: 14)),
-              const SizedBox(height: 5),
-              Text("Siap untuk menjelajahi dunia manga?",
-                  style: GoogleFonts.poppins(fontSize: 14)),
-              const SizedBox(height: 15),
+              Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.menu, color: Colors.black, size: 30),
+                    onPressed: () {
+                      genreState.currentState?.openDrawer();
+                    },
+                  ),
+                  SizedBox(
+                    width: 250.0,
+                    child: AnimatedTextKit(
+                      repeatForever: true,
+                      pause: const Duration(milliseconds: 1000),
+                      isRepeatingAnimation: true,
+                      animatedTexts: [
+                        TypewriterAnimatedText(
+                            '"${controller.greeting()} , Pembaca",',
+                            textStyle: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black)),
+                        TypewriterAnimatedText("Cari Genre Kesukaan mu disini",
+                            textStyle: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
               Expanded(
                 child: Container(
                   width: context.width,
@@ -40,20 +70,26 @@ class GenreView extends GetView<HomeController> {
                         }
                       }
                       return ListView.separated(
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 10),
-                        itemCount: snapshot.data?.length ?? 0,
-                        itemBuilder: (context, index) => Material(
-                          elevation: 2,
-                          borderRadius: BorderRadius.circular(10),
-                          child: ListTile(
-                            title: Text(
-                              "${snapshot.data![index].name}",
-                              style: GoogleFonts.poppins(),
-                            ),
-                          ),
-                        ),
-                      );
+                          physics: const BouncingScrollPhysics(),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 10),
+                          itemCount: snapshot.data?.length ?? 0,
+                          itemBuilder: (context, index) {
+                            GenreModel genre = snapshot.data?[index];
+                            return Material(
+                              elevation: 2,
+                              borderRadius: BorderRadius.circular(10),
+                              child: ListTile(
+                                onTap: () => Get.toNamed(
+                                    Routes.GENRE_MANHWAINDO,
+                                    arguments: genre.endpoint),
+                                title: Text(
+                                  "${genre.name}",
+                                  style: GoogleFonts.poppins(),
+                                ),
+                              ),
+                            );
+                          });
                     },
                   ),
                 ),

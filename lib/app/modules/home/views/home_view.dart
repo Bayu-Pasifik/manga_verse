@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:manga_verse/app/modules/home/views/genre_view.dart';
 import 'package:manga_verse/app/modules/home/views/homepage_view.dart';
 import 'package:manga_verse/app/modules/home/views/search_view.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -17,7 +18,7 @@ class HomeView extends GetView<HomeController> {
           child: Obx(
             () => IndexedStack(
               index: controller.currentIndex.value,
-              children: [HomepageView(), const SearchView()],
+              children: [HomepageView(), GenreView(), const SearchView()],
             ),
           ),
         ),
@@ -25,7 +26,10 @@ class HomeView extends GetView<HomeController> {
           () => SalomonBottomBar(
             currentIndex: controller.currentIndex.value,
             onTap: (i) {
-              // print(controller.currentIndex.value);
+              if (i < 3) {
+                controller.allSearch.clear();
+                controller.searchController.clear();
+              }
               controller.currentIndex.value = i;
             },
             items: [
@@ -36,12 +40,15 @@ class HomeView extends GetView<HomeController> {
                 selectedColor: const Color(0XFF54BAB9),
               ),
 
-              // /// Likes
-              // SalomonBottomBarItem(
-              //   icon: const Icon(Icons.movie),
-              //   title: const Text("Genre"),
-              //   selectedColor: const Color(0XFF54BAB9),
-              // ),
+              /// Genre
+              SalomonBottomBarItem(
+                icon: Container(
+                    width: 40,
+                    height: 30,
+                    child: Image.asset("assets/images/genre.png")),
+                title: const Text("Genre"),
+                selectedColor: const Color(0XFF54BAB9),
+              ),
 
               /// Search
               SalomonBottomBarItem(
