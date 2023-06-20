@@ -41,7 +41,7 @@ class KomicastHomeController extends GetxController {
 
   void fetchData(int pageKey) async {
     try {
-      Uri url = Uri.parse('http://10.0.2.2:8000/all/$pageKey');
+      Uri url = Uri.parse('http://10.0.2.2:8080/api/all/$pageKey');
       var response = await http.get(url);
       var tempData = json.decode(response.body)["data"];
       var data = tempData.map((e) => KomikcastAll.fromJson(e)).toList();
@@ -63,30 +63,30 @@ class KomicastHomeController extends GetxController {
   }
   // ! Latest Manga
 
-  // final PagingController<int, AllMangaModel> allLatestManga =
-  //     PagingController<int, AllMangaModel>(firstPageKey: 1);
+  final PagingController<int, KomikcastAll> allLatestManga =
+      PagingController<int, KomikcastAll>(firstPageKey: 1);
 
-  // void getLatest(int pageKey) async {
-  //   try {
-  //     Uri url = Uri.parse('http://10.0.2.2:8000/latest/$pageKey');
-  //     var response = await http.get(url);
-  //     var tempData = json.decode(response.body)["data"];
-  //     var data = tempData.map((e) => AllMangaModel.fromJson(e)).toList();
-  //     List<AllMangaModel> allLatest = List<AllMangaModel>.from(data);
+  void getLatest(int pageKey) async {
+    try {
+      Uri url = Uri.parse('http://10.0.2.2:8080/api/latest/$pageKey');
+      var response = await http.get(url);
+      var tempData = json.decode(response.body)["data"];
+      var data = tempData.map((e) => KomikcastAll.fromJson(e)).toList();
+      List<KomikcastAll> allLatest = List<KomikcastAll>.from(data);
 
-  //     final nextPage = json.decode(response.body)["next"];
-  //     final isLastPage = nextPage == false;
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
 
-  //     if (isLastPage) {
-  //       Get.snackbar("Error", "No more data");
-  //       allLatestManga.appendLastPage(allLatest);
-  //     } else {
-  //       allLatestManga.appendPage(allLatest, pageKey + 1);
-  //     }
-  //   } catch (e) {
-  //     allLatestManga.error = e;
-  //   }
-  // }
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        allLatestManga.appendLastPage(allLatest);
+      } else {
+        allLatestManga.appendPage(allLatest, pageKey + 1);
+      }
+    } catch (e) {
+      allLatestManga.error = e;
+    }
+  }
 
   // ! List Genre
 
@@ -188,8 +188,8 @@ class KomicastHomeController extends GetxController {
     allmangaController.addPageRequestListener((pageKey) {
       fetchData(pageKey);
     });
-    // allLatestManga.addPageRequestListener((pageKey) {
-    //   getLatest(pageKey);
-    // });
+    allLatestManga.addPageRequestListener((pageKey) {
+      getLatest(pageKey);
+    });
   }
 }
