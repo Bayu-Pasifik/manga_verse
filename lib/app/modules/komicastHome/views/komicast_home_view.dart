@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manga_verse/app/modules/komicastHome/views/komicast_genre_page_view.dart';
 import 'package:manga_verse/app/modules/komicastHome/views/komicast_home_page_view.dart';
+import 'package:manga_verse/app/modules/komicastHome/views/komicast_search_page_view.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../controllers/komicast_home_controller.dart';
@@ -20,7 +21,7 @@ class KomicastHomeView extends GetView<KomicastHomeController> {
               children: [
                 KomicastHomePageView(),
                 KomicastGenrePageView(),
-                // const SearchView()
+                KomicastSearchPageView()
               ],
             ),
           ),

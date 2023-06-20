@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -5,6 +6,7 @@ import 'package:manga_verse/app/data/models/komikcast/genre_komicast.dart';
 import 'dart:convert';
 
 import 'package:manga_verse/app/data/models/komikcast/komikcast_all.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class KomicastHomeController extends GetxController {
   // ! Greating
@@ -126,66 +128,66 @@ class KomicastHomeController extends GetxController {
   //   }
   // }
 
-  // late TextEditingController searchController;
-  // var nextSearch = true.obs;
-  // RefreshController searchRefresh = RefreshController(initialRefresh: true);
-  // var halSearch = 1.obs;
-  // List<dynamic> allSearch = [];
-  // Future<List<dynamic>> getSearch(String keyword) async {
-  //   Uri url = Uri.parse('http://10.0.2.2:8000/search/$keyword/$halSearch');
-  //   var response = await http.get(url);
-  //   var data = json.decode(response.body)["data"];
-  //   nextSearch.value = json.decode(response.body)["next"];
-  //   update();
-  //   var tempData = data.map((e) => AllMangaModel.fromJson(e)).toList();
-  //   update();
-  //   allSearch.addAll(tempData);
-  //   update();
-  //   print("data dari search : ${tempData.length}");
-  //   return allSearch;
-  // }
+  late TextEditingController searchController;
+  var nextSearch = true.obs;
+  RefreshController searchRefresh = RefreshController(initialRefresh: true);
+  var halSearch = 1.obs;
+  List<dynamic> allSearch = [];
+  Future<List<dynamic>> getSearch(String keyword) async {
+    Uri url = Uri.parse('http://10.0.2.2:8080/api/search/$keyword/$halSearch');
+    var response = await http.get(url);
+    var data = json.decode(response.body)["data"];
+    nextSearch.value = json.decode(response.body)["next"];
+    update();
+    var tempData = data.map((e) => KomikcastAll.fromJson(e)).toList();
+    update();
+    allSearch.addAll(tempData);
+    update();
+    print("data dari search : ${tempData.length}");
+    return allSearch;
+  }
 
-  // void refreshSearch(String query) async {
-  //   if (searchRefresh.initialRefresh == true) {
-  //     halSearch.value = 1;
-  //     allSearch.clear();
-  //     await getSearch(query);
-  //     update();
-  //     return searchRefresh.refreshCompleted();
-  //   } else {
-  //     return searchRefresh.refreshFailed();
-  //   }
-  // }
+  void refreshSearch(String query) async {
+    if (searchRefresh.initialRefresh == true) {
+      halSearch.value = 1;
+      allSearch.clear();
+      await getSearch(query);
+      update();
+      return searchRefresh.refreshCompleted();
+    } else {
+      return searchRefresh.refreshFailed();
+    }
+  }
 
-  // void loadSearch(String query) async {
-  //   if (nextSearch.value == true) {
-  //     halSearch.value = halSearch.value + 1;
-  //     await getSearch(query);
-  //     update();
-  //     return searchRefresh.loadComplete();
-  //   } else {
-  //     return searchRefresh.loadNoData();
-  //   }
-  // }
+  void loadSearch(String query) async {
+    if (nextSearch.value == true) {
+      halSearch.value = halSearch.value + 1;
+      await getSearch(query);
+      update();
+      return searchRefresh.loadComplete();
+    } else {
+      return searchRefresh.loadNoData();
+    }
+  }
 
-  // void clearSearch() {
-  //   halSearch.value = 1;
-  //   update();
-  //   allSearch.clear();
-  // }
+  void clearSearch() {
+    halSearch.value = 1;
+    update();
+    allSearch.clear();
+  }
 
   @override
   void dispose() {
     super.dispose();
     // allLatestManga.dispose();
     allmangaController.dispose();
-    // searchController.dispose();
+    searchController.dispose();
   }
 
   @override
   void onInit() {
     super.onInit();
-    // searchController = SearchController();
+    searchController = SearchController();
     allmangaController.addPageRequestListener((pageKey) {
       fetchData(pageKey);
     });

@@ -102,7 +102,7 @@ class HomeController extends GetxController {
 
   // ! search manga
 
-  final PagingController<int, AllMangaModel> searchManga =
+  final PagingController<int, AllMangaModel> searchMangaController =
       PagingController<int, AllMangaModel>(firstPageKey: 1);
 
   void searchMangaAPI(String keyword, int pageKey) async {
@@ -118,12 +118,12 @@ class HomeController extends GetxController {
 
       if (isLastPage) {
         Get.snackbar("Error", "No more data");
-        allLatestManga.appendLastPage(allLatest);
+        searchMangaController.appendLastPage(allLatest);
       } else {
-        allLatestManga.appendPage(allLatest, pageKey + 1);
+        searchMangaController.appendPage(allLatest, pageKey + 1);
       }
     } catch (e) {
-      allLatestManga.error = e;
+      searchMangaController.error = e;
     }
   }
 
@@ -170,9 +170,11 @@ class HomeController extends GetxController {
   }
 
   void clearSearch() {
-    halSearch.value = 1;
+    // halSearch.value = 1;
+    searchMangaController.itemList?.clear();
     update();
-    allSearch.clear();
+    // allSearch.clear();
+    searchMangaController.firstPageKey;
   }
 
   @override
@@ -181,6 +183,7 @@ class HomeController extends GetxController {
     allLatestManga.dispose();
     allmangaController.dispose();
     searchController.dispose();
+    searchMangaController.dispose();
   }
 
   @override
@@ -192,6 +195,9 @@ class HomeController extends GetxController {
     });
     allLatestManga.addPageRequestListener((pageKey) {
       getLatest(pageKey);
+    });
+    searchMangaController.addPageRequestListener((pageKey) {
+      searchMangaAPI(searchController.text, pageKey);
     });
   }
 }
