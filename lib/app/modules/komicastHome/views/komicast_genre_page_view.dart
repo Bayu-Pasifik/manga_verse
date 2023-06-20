@@ -142,7 +142,7 @@ class KomicastGenrePageView extends GetView<KomicastHomeController> {
                                   borderRadius: BorderRadius.circular(10),
                                   child: ListTile(
                                     onTap: () => Get.toNamed(
-                                        Routes.GENRE_KOMIKU,
+                                        Routes.GENRE_KOMICAST,
                                         arguments: genre.endpoint),
                                     title: Text("${genre.genre}"),
                                   ),

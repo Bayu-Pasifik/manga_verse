@@ -273,8 +273,7 @@ class DetailMangaKomicastView extends GetView<DetailMangaKomicastController> {
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
-                                              "${detail.author}"
-                                                  .replaceAll("Author:", ""),
+                                              "${detail.author}",
                                               style: GoogleFonts.poppins(),
                                             ),
                                           )
@@ -290,8 +289,7 @@ class DetailMangaKomicastView extends GetView<DetailMangaKomicastController> {
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
-                                              "${detail.status}"
-                                                  .replaceAll("Status:", ""),
+                                              "${detail.status}",
                                               style: GoogleFonts.poppins(),
                                             ),
                                           )
