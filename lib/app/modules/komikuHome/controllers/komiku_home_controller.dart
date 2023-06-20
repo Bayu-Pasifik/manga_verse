@@ -184,4 +184,8 @@ class KomikuHomeController extends GetxController {
     super.dispose();
     searchController.dispose();
   }
+
+
+ 
+
 }

@@ -27,8 +27,7 @@ class HomeView extends GetView<HomeController> {
             currentIndex: controller.currentIndex.value,
             onTap: (i) {
               if (i < 3) {
-                controller.allSearch.clear();
-                controller.searchController.clear();
+                controller.clearSearch();
               }
               controller.currentIndex.value = i;
             },

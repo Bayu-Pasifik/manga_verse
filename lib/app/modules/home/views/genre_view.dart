@@ -20,37 +20,28 @@ class GenreView extends GetView<HomeController> {
             padding: const EdgeInsets.all(18.0),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.menu, color: Colors.black, size: 30),
-                    onPressed: () {
-                      genreState.currentState?.openDrawer();
-                    },
-                  ),
-                  SizedBox(
-                    width: 250.0,
-                    child: AnimatedTextKit(
-                      repeatForever: true,
-                      pause: const Duration(milliseconds: 1000),
-                      isRepeatingAnimation: true,
-                      animatedTexts: [
-                        TypewriterAnimatedText(
-                            '"${controller.greeting()} , Pembaca",',
-                            textStyle: GoogleFonts.poppins(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black)),
-                        TypewriterAnimatedText("Cari Genre Kesukaan mu disini",
-                            textStyle: GoogleFonts.poppins(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black)),
-                      ],
-                    ),
-                  ),
-                ],
+              SizedBox(
+                width: 250.0,
+                child: AnimatedTextKit(
+                  repeatForever: true,
+                  pause: const Duration(milliseconds: 1000),
+                  isRepeatingAnimation: true,
+                  animatedTexts: [
+                    TypewriterAnimatedText(
+                        '"${controller.greeting()} , Pembaca",',
+                        textStyle: GoogleFonts.poppins(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black)),
+                    TypewriterAnimatedText("Cari Genre Kesukaan mu disini",
+                        textStyle: GoogleFonts.poppins(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black)),
+                  ],
+                ),
               ),
+              const SizedBox(height: 20),
               Expanded(
                 child: Container(
                   width: context.width,

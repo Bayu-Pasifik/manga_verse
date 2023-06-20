@@ -89,7 +89,7 @@ class GenreManhwaindoView extends GetView<GenreManhwaindoController> {
                                                   BorderRadius.circular(10),
                                               child: ListTile(
                                                 onTap: () => Get.toNamed(
-                                                    Routes.DETAIL_MANGA_KOMIKU,
+                                                    Routes.DETAIL_MANGA,
                                                     arguments: manga.endpoint),
                                                 leading: ConstrainedBox(
                                                   constraints:

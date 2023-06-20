@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:manga_verse/app/data/models/all_manga_model.dart';
 import 'package:manga_verse/app/data/models/genre_model.dart';
 import 'package:http/http.dart' as http;
@@ -37,82 +38,55 @@ class HomeController extends GetxController {
 
   // ! semua Manga
 
-  RefreshController allRefresh = RefreshController(initialRefresh: true);
-  var hal = 1.obs;
-  List<dynamic> allManga = [];
-  var next = true.obs;
+  final PagingController<int, AllMangaModel> allmangaController =
+      PagingController<int, AllMangaModel>(firstPageKey: 114);
 
-  Future<List<dynamic>> getmanga(int page) async {
-    Uri url = Uri.parse('http://10.0.2.2:8000/all/$page');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["data"];
-    next.value = json.decode(response.body)["next"];
-    var tempData = data.map((e) => AllMangaModel.fromJson(e)).toList();
-    allManga.addAll(tempData);
-    print(tempData);
-    return allManga;
-  }
+  void fetchData(int pageKey) async {
+    try {
+      Uri url = Uri.parse('http://10.0.2.2:8000/all/$pageKey');
+      var response = await http.get(url);
+      var tempData = json.decode(response.body)["data"];
+      var data = tempData.map((e) => AllMangaModel.fromJson(e)).toList();
+      print("Data dari fetchData all $data");
+      List<AllMangaModel> allMangaData = List<AllMangaModel>.from(data);
 
-  void refreshData(int id) async {
-    if (allRefresh.initialRefresh == true) {
-      hal.value = 1;
-      allManga.clear();
-      await getmanga(hal.value);
-      update();
-      return allRefresh.refreshCompleted();
-    } else {
-      return allRefresh.refreshFailed();
-    }
-  }
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
 
-  void loadData(int id) async {
-    if (next.value == true) {
-      hal.value = hal.value + 1;
-      await getmanga(hal.value);
-      update();
-      return allRefresh.loadComplete();
-    } else {
-      return allRefresh.loadNoData();
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        allmangaController.appendLastPage(allMangaData);
+      } else {
+        allmangaController.appendPage(allMangaData, pageKey + 1);
+      }
+    } catch (e) {
+      allmangaController.error = e;
     }
   }
   // ! Latest Manga
 
-  RefreshController latestRefresh = RefreshController(initialRefresh: true);
-  var halupdate = 1.obs;
-  List<dynamic> latest = [];
-  var nextupdate = true.obs;
+  final PagingController<int, AllMangaModel> allLatestManga =
+      PagingController<int, AllMangaModel>(firstPageKey: 1);
 
-  Future<List<dynamic>> getLatest(int page) async {
-    Uri url = Uri.parse('http://10.0.2.2:8000/latest/$page');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["data"];
-    next.value = json.decode(response.body)["next"];
-    var tempData = data.map((e) => AllMangaModel.fromJson(e)).toList();
-    latest.addAll(tempData);
-    print(tempData);
-    return latest;
-  }
+  void getLatest(int pageKey) async {
+    try {
+      Uri url = Uri.parse('http://10.0.2.2:8000/latest/$pageKey');
+      var response = await http.get(url);
+      var tempData = json.decode(response.body)["data"];
+      var data = tempData.map((e) => AllMangaModel.fromJson(e)).toList();
+      List<AllMangaModel> allLatest = List<AllMangaModel>.from(data);
 
-  void refreshUpdate(int id) async {
-    if (latestRefresh.initialRefresh == true) {
-      halupdate.value = 1;
-      latest.clear();
-      await getLatest(halupdate.value);
-      update();
-      return latestRefresh.refreshCompleted();
-    } else {
-      return latestRefresh.refreshFailed();
-    }
-  }
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
 
-  void loadUpdate(int id) async {
-    if (nextupdate.value == true) {
-      halupdate.value = halupdate.value + 1;
-      await getLatest(halupdate.value);
-      update();
-      return latestRefresh.loadComplete();
-    } else {
-      return latestRefresh.loadNoData();
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        allLatestManga.appendLastPage(allLatest);
+      } else {
+        allLatestManga.appendPage(allLatest, pageKey + 1);
+      }
+    } catch (e) {
+      allLatestManga.error = e;
     }
   }
 
@@ -127,6 +101,31 @@ class HomeController extends GetxController {
   }
 
   // ! search manga
+
+  final PagingController<int, AllMangaModel> searchManga =
+      PagingController<int, AllMangaModel>(firstPageKey: 1);
+
+  void searchMangaAPI(String keyword, int pageKey) async {
+    try {
+      Uri url = Uri.parse('http://10.0.2.2:8000/search/$keyword/$pageKey');
+      var response = await http.get(url);
+      var tempData = json.decode(response.body)["data"];
+      var data = tempData.map((e) => AllMangaModel.fromJson(e)).toList();
+      List<AllMangaModel> allLatest = List<AllMangaModel>.from(data);
+
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        allLatestManga.appendLastPage(allLatest);
+      } else {
+        allLatestManga.appendPage(allLatest, pageKey + 1);
+      }
+    } catch (e) {
+      allLatestManga.error = e;
+    }
+  }
 
   late TextEditingController searchController;
   var nextSearch = true.obs;
@@ -143,8 +142,8 @@ class HomeController extends GetxController {
     update();
     allSearch.addAll(tempData);
     update();
-    print(tempData);
-    return latest;
+    print("data dari search : ${tempData.length}");
+    return allSearch;
   }
 
   void refreshSearch(String query) async {
@@ -160,8 +159,8 @@ class HomeController extends GetxController {
   }
 
   void loadSearch(String query) async {
-    if (nextupdate.value == true) {
-      halSearch.value = halupdate.value + 1;
+    if (nextSearch.value == true) {
+      halSearch.value = halSearch.value + 1;
       await getSearch(query);
       update();
       return searchRefresh.loadComplete();
@@ -177,15 +176,22 @@ class HomeController extends GetxController {
   }
 
   @override
-  void onInit() {
-    super.onInit();
-    searchController = SearchController();
-    // searchController.text = "naruto";
+  void dispose() {
+    super.dispose();
+    allLatestManga.dispose();
+    allmangaController.dispose();
+    searchController.dispose();
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    searchController.dispose();
+  void onInit() {
+    super.onInit();
+    searchController = SearchController();
+    allmangaController.addPageRequestListener((pageKey) {
+      fetchData(pageKey);
+    });
+    allLatestManga.addPageRequestListener((pageKey) {
+      getLatest(pageKey);
+    });
   }
 }
