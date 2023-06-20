@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:manga_verse/app/data/models/komikcast/genre_komicast.dart';
 import 'dart:convert';
 
 import 'package:manga_verse/app/data/models/komikcast/komikcast_all.dart';
@@ -90,13 +91,13 @@ class KomicastHomeController extends GetxController {
 
   // ! List Genre
 
-  // Future<List<dynamic>> listGenre() async {
-  //   Uri url = Uri.parse('http://10.0.2.2:8000/genres');
-  //   var response = await http.get(url);
-  //   var data = json.decode(response.body)["genres"];
-  //   var tempData = data.map((e) => GenreModel.fromJson(e)).toList();
-  //   return tempData;
-  // }
+  Future<List<dynamic>> listGenre() async {
+    Uri url = Uri.parse('http://10.0.2.2:8080/api/genre');
+    var response = await http.get(url);
+    var data = json.decode(response.body)["data"];
+    var tempData = data.map((e) => GenreKomicast.fromJson(e)).toList();
+    return tempData;
+  }
 
   // ! search manga
 
