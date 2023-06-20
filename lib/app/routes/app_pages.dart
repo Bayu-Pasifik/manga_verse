@@ -10,6 +10,8 @@ import '../modules/genreManhwaindo/bindings/genre_manhwaindo_binding.dart';
 import '../modules/genreManhwaindo/views/genre_manhwaindo_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/komicastHome/bindings/komicast_home_binding.dart';
+import '../modules/komicastHome/views/komicast_home_view.dart';
 import '../modules/komikuHome/bindings/komiku_home_binding.dart';
 import '../modules/komikuHome/views/komiku_home_view.dart';
 import '../modules/readChapter/bindings/read_chapter_binding.dart';
@@ -64,6 +66,11 @@ class AppPages {
       name: _Paths.GENRE_MANHWAINDO,
       page: () => const GenreManhwaindoView(),
       binding: GenreManhwaindoBinding(),
+    ),
+    GetPage(
+      name: _Paths.KOMICAST_HOME,
+      page: () => const KomicastHomeView(),
+      binding: KomicastHomeBinding(),
     ),
   ];
 }

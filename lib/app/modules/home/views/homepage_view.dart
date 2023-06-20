@@ -45,6 +45,15 @@ class HomepageView extends GetView<HomeController> {
                 Get.offNamed(Routes.KOMIKU_HOME);
               },
             ),
+            ListTile(
+              leading: const Icon(
+                Icons.home,
+              ),
+              title: const Text('Komicast'),
+              onTap: () {
+                Get.offNamed(Routes.KOMICAST_HOME);
+              },
+            ),
           ],
         ),
       ),
