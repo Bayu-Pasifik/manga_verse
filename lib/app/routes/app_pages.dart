@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/detailManga/bindings/detail_manga_binding.dart';
 import '../modules/detailManga/views/detail_manga_view.dart';
+import '../modules/detailMangaKomicast/bindings/detail_manga_komicast_binding.dart';
+import '../modules/detailMangaKomicast/views/detail_manga_komicast_view.dart';
 import '../modules/detailMangaKomiku/bindings/detail_manga_komiku_binding.dart';
 import '../modules/detailMangaKomiku/views/detail_manga_komiku_view.dart';
 import '../modules/genreKomiku/bindings/genre_komiku_binding.dart';
@@ -71,6 +73,11 @@ class AppPages {
       name: _Paths.KOMICAST_HOME,
       page: () => const KomicastHomeView(),
       binding: KomicastHomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_MANGA_KOMICAST,
+      page: () => const DetailMangaKomicastView(),
+      binding: DetailMangaKomicastBinding(),
     ),
   ];
 }

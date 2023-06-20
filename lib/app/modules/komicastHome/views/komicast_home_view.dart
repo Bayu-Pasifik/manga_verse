@@ -31,7 +31,7 @@ class KomicastHomeView extends GetView<KomicastHomeController> {
             currentIndex: controller.currentIndex.value,
             onTap: (i) {
               if (i < 3) {
-                // controller.clearSearch();
+                controller.clearSearch();
               }
               controller.currentIndex.value = i;
             },
@@ -45,7 +45,7 @@ class KomicastHomeView extends GetView<KomicastHomeController> {
 
               /// Genre
               SalomonBottomBarItem(
-                icon: Container(
+                icon: SizedBox(
                     width: 40,
                     height: 30,
                     child: Image.asset("assets/images/genre.png")),

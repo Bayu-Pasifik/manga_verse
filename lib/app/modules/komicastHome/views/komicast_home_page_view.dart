@@ -11,12 +11,12 @@ import 'package:manga_verse/app/modules/komicastHome/controllers/komicast_home_c
 import 'package:manga_verse/app/routes/app_pages.dart';
 
 class KomicastHomePageView extends GetView<KomicastHomeController> {
-   KomicastHomePageView({Key? key}) : super(key: key);
-    final GlobalKey<ScaffoldState> komicastHomeState = GlobalKey<ScaffoldState>();
+  KomicastHomePageView({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState> komicastHomeState = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: komicastHomeState,
+        key: komicastHomeState,
         drawer: Drawer(
           child: ListView(
             // Important: Remove any padding from the ListView.
@@ -70,9 +70,9 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                     Row(
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.menu, color: Colors.black, size: 30),
+                          icon: const Icon(Icons.menu,
+                              color: Colors.black, size: 30),
                           onPressed: () {
-        
                             komicastHomeState.currentState?.openDrawer();
                           },
                         ),
@@ -133,7 +133,8 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                             itemBuilder: (context, index) {
                               KomikcastAll trending = snapshot.data![index];
                               return GestureDetector(
-                                onTap: () => Get.toNamed(Routes.DETAIL_MANGA,
+                                onTap: () => Get.toNamed(
+                                    Routes.DETAIL_MANGA_KOMICAST,
                                     arguments: trending.endpoint),
                                 child: Column(
                                   children: [

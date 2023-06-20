@@ -12,6 +12,7 @@ abstract class Routes {
   static const GENRE_KOMIKU = _Paths.GENRE_KOMIKU;
   static const GENRE_MANHWAINDO = _Paths.GENRE_MANHWAINDO;
   static const KOMICAST_HOME = _Paths.KOMICAST_HOME;
+  static const DETAIL_MANGA_KOMICAST = _Paths.DETAIL_MANGA_KOMICAST;
 }
 
 abstract class _Paths {
@@ -25,4 +26,5 @@ abstract class _Paths {
   static const GENRE_KOMIKU = '/genre-komiku';
   static const GENRE_MANHWAINDO = '/genre-manhwaindo';
   static const KOMICAST_HOME = '/komicast-home';
+  static const DETAIL_MANGA_KOMICAST = '/detail-manga-komicast';
 }
