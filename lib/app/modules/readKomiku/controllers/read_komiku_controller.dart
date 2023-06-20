@@ -13,7 +13,6 @@ class ReadKomikuController extends GetxController {
     var tempData = data.map((e) => ReadKomiku.fromJson(e)).toList();
     allchapter.clear();
     allchapter.addAll(tempData);
-    print(allchapter.length);
     return allchapter;
   }
 }

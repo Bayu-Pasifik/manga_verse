@@ -12,14 +12,15 @@ import 'package:manga_verse/app/routes/app_pages.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class KomicastSearchPageView extends GetView<KomicastHomeController> {
-   KomicastSearchPageView({Key? key}) : super(key: key);
-  final GlobalKey<ScaffoldState> searchKomicastState = GlobalKey<ScaffoldState>();
+  KomicastSearchPageView({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState> searchKomicastState =
+      GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     Timer? searchTimer;
     return Scaffold(
         body: SafeArea(
-          key: searchKomicastState,
+      key: searchKomicastState,
       child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: GetBuilder<KomicastHomeController>(
@@ -30,7 +31,8 @@ class KomicastSearchPageView extends GetView<KomicastHomeController> {
                 Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.menu, color: Colors.black, size: 30),
+                      icon:
+                          const Icon(Icons.menu, color: Colors.black, size: 30),
                       onPressed: () {
                         searchKomicastState.currentState?.openDrawer();
                       },
@@ -117,7 +119,7 @@ class KomicastSearchPageView extends GetView<KomicastHomeController> {
                                                 BorderRadius.circular(10),
                                             child: ListTile(
                                               onTap: () => Get.toNamed(
-                                                  Routes.DETAIL_MANGA_KOMIKU,
+                                                  Routes.DETAIL_MANGA_KOMICAST,
                                                   arguments: manga.endpoint),
                                               leading: ConstrainedBox(
                                                 constraints:

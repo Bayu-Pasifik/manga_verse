@@ -18,6 +18,8 @@ import '../modules/komikuHome/bindings/komiku_home_binding.dart';
 import '../modules/komikuHome/views/komiku_home_view.dart';
 import '../modules/readChapter/bindings/read_chapter_binding.dart';
 import '../modules/readChapter/views/read_chapter_view.dart';
+import '../modules/readKomicast/bindings/read_komicast_binding.dart';
+import '../modules/readKomicast/views/read_komicast_view.dart';
 import '../modules/readKomiku/bindings/read_komiku_binding.dart';
 import '../modules/readKomiku/views/read_komiku_view.dart';
 
@@ -78,6 +80,11 @@ class AppPages {
       name: _Paths.DETAIL_MANGA_KOMICAST,
       page: () => const DetailMangaKomicastView(),
       binding: DetailMangaKomicastBinding(),
+    ),
+    GetPage(
+      name: _Paths.READ_KOMICAST,
+      page: () => const ReadKomicastView(),
+      binding: ReadKomicastBinding(),
     ),
   ];
 }

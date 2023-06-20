@@ -233,7 +233,7 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                                 color: const Color(0XFFFFFFFF),
                                 borderRadius: BorderRadius.circular(10),
                                 child: ListTile(
-                                  onTap: () => Get.toNamed(Routes.DETAIL_MANGA,
+                                  onTap: () => Get.toNamed(Routes.DETAIL_MANGA_KOMICAST,
                                       arguments: item.endpoint),
                                   leading: ConstrainedBox(
                                     constraints: const BoxConstraints(
@@ -323,14 +323,12 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                           builderDelegate:
                               PagedChildBuilderDelegate<KomikcastAll>(
                             animateTransitions: true,
-                            // noItemsFoundIndicatorBuilder: (context) =>
-                            //     Fluttertoast.showToast(msg: "TEST"),
                             itemBuilder: (context, item, index) => Material(
                                 elevation: 2,
                                 color: const Color(0XFFFFFFFF),
                                 borderRadius: BorderRadius.circular(10),
                                 child: ListTile(
-                                  onTap: () => Get.toNamed(Routes.DETAIL_MANGA,
+                                  onTap: () => Get.toNamed(Routes.DETAIL_MANGA_KOMICAST,
                                       arguments: item.endpoint),
                                   leading: ConstrainedBox(
                                     constraints: const BoxConstraints(

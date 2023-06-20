@@ -145,10 +145,7 @@ class DetailMangaKomicastView extends GetView<DetailMangaKomicastController> {
                                         SizedBox(
                                             width: 500,
                                             child: Text(
-                                              (detail.title!.contains("Komik"))
-                                                  ? "${detail.title}"
-                                                      .replaceAll("Komik", "")
-                                                  : "${detail.title}",
+                                              "${detail.title}",
                                               softWrap: true,
                                               style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.w600,
@@ -258,7 +255,9 @@ class DetailMangaKomicastView extends GetView<DetailMangaKomicastController> {
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
-                                              "${detail.nativeTitle}",
+                                              (detail.nativeTitle != "")
+                                                  ? "${detail.nativeTitle}"
+                                                  : "${detail.title}",
                                               style: GoogleFonts.poppins(),
                                             ),
                                           )
@@ -316,6 +315,21 @@ class DetailMangaKomicastView extends GetView<DetailMangaKomicastController> {
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
+                                              "Released",
+                                              style: GoogleFonts.poppins(),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "${detail.released}",
+                                            ),
+                                          )
+                                        ]),
+                                        TableRow(children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
                                               "Total Chapter",
                                               style: GoogleFonts.poppins(),
                                             ),
@@ -345,7 +359,7 @@ class DetailMangaKomicastView extends GetView<DetailMangaKomicastController> {
                                   return ListTile(
                                     onTap: () {
                                       Get.toNamed(
-                                        Routes.READ_KOMIKU,
+                                        Routes.READ_KOMICAST,
                                         arguments: chapter.chapterUrl,
                                       );
                                     },
@@ -374,7 +388,6 @@ class DetailMangaKomicastView extends GetView<DetailMangaKomicastController> {
                                           color: const Color(0XFF1F1F39),
                                           fontSize: 14),
                                     ),
-                                    isThreeLine: true,
                                     trailing: Container(
                                       height: 50,
                                       width: 50,

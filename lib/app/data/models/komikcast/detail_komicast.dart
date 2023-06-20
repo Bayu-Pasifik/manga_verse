@@ -18,6 +18,7 @@ class DetailKomicast {
   String? status;
   String? type;
   String? totalChapter;
+  String? released;
   DateTime? updatedOn;
   String? rating;
   String? synopsis;
@@ -32,6 +33,7 @@ class DetailKomicast {
     this.status,
     this.type,
     this.totalChapter,
+    this.released,
     this.updatedOn,
     this.rating,
     this.synopsis,
@@ -49,6 +51,7 @@ class DetailKomicast {
         status: json["status"],
         type: json["type"],
         totalChapter: json["totalChapter"],
+        released: json["released"],
         updatedOn: json["updatedOn"] == null
             ? null
             : DateTime.parse(json["updatedOn"]),
@@ -70,6 +73,7 @@ class DetailKomicast {
         "status": status,
         "type": type,
         "totalChapter": totalChapter,
+        "released": released,
         "updatedOn": updatedOn?.toIso8601String(),
         "rating": rating,
         "synopsis": synopsis,
