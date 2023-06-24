@@ -32,7 +32,7 @@ class GenreKomicastController extends GetxController {
   var next = true.obs;
 
   Future<List<dynamic>> getMangaBaseGenre(String genre) async {
-    Uri url = Uri.parse('http://10.0.2.2:8080/api/genre/$genre/$hal');
+    Uri url = Uri.parse('https://manga-api.kolektifhost.com/api/komikcast/genre/$genre/$hal');
     var response = await http.get(url);
     var data = json.decode(response.body)["data"];
     next.value = json.decode(response.body)["next"];

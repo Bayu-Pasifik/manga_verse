@@ -6,7 +6,7 @@ import 'dart:convert';
 class DetailMangaKomicastController extends GetxController {
   Future<DetailKomicast> getDetail(String name) async {
     try {
-      Uri url = Uri.parse('http://10.0.2.2:8080/api/detail/$name');
+      Uri url = Uri.parse('https://manga-api.kolektifhost.com/api/komikcast/detail/$name');
       var response = await http.get(url);
 
       if (response.statusCode == 200) {

@@ -1,14 +1,16 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:manga_verse/app/data/models/komiku/komiku_all_model.dart';
 import 'package:manga_verse/app/data/models/komiku/recomended.dart';
 import 'package:manga_verse/app/modules/komikuHome/controllers/komiku_home_controller.dart';
 import 'package:manga_verse/app/routes/app_pages.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class KomikuHomePageView extends GetView<KomikuHomeController> {
   final GlobalKey<ScaffoldState> statekomiku = GlobalKey<ScaffoldState>();
@@ -18,8 +20,8 @@ class KomikuHomePageView extends GetView<KomikuHomeController> {
     return Scaffold(
       key: statekomiku,
       drawer: Drawer(
+        elevation: 0,
         child: ListView(
-          // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
@@ -28,23 +30,50 @@ class KomikuHomePageView extends GetView<KomikuHomeController> {
               ),
               child: Text('Drawer Header'),
             ),
-            ListTile(
-              leading: const Icon(
-                Icons.home,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                // color: Colors.amber,
+                height: 200,
+                width: 200,
+                child: ExpandablePanel(
+                  header: Text(
+                    "Manga Indo",
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600, fontSize: 20),
+                  ),
+                  collapsed: Text(
+                    "====================",
+                    maxLines: 1,
+                    style: GoogleFonts.poppins(
+                        fontSize: 14, color: const Color(0XFF858597)),
+                  ),
+                  expanded: ListView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      ListTile(
+                        onTap: () => Get.toNamed(Routes.KOMIKU_HOME),
+                        leading: const Icon(Icons.home),
+                        title: Text("KOMIKU",
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600, fontSize: 12)),
+                      ),
+                      const Divider(
+                        // thickness: 2,
+                        color: Colors.black,
+                      ),
+                      ListTile(
+                        onTap: () => Get.toNamed(Routes.KOMICAST_HOME),
+                        leading: const Icon(Icons.home),
+                        title: Text("KOMIKCAST",
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600, fontSize: 12)),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              title: const Text('Manhwa Indo'),
-              onTap: () {
-                Get.offNamed(Routes.HOME);
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.home,
-              ),
-              title: const Text('Komiku indo'),
-              onTap: () {
-                Get.offNamed(Routes.KOMIKU_HOME);
-              },
             ),
           ],
         ),
@@ -61,9 +90,9 @@ class KomikuHomePageView extends GetView<KomikuHomeController> {
                 Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.menu, color: Colors.black, size: 30),
+                      icon:
+                          const Icon(Icons.menu, color: Colors.black, size: 30),
                       onPressed: () {
-                        
                         statekomiku.currentState?.openDrawer();
                       },
                     ),
@@ -179,7 +208,7 @@ class KomikuHomePageView extends GetView<KomikuHomeController> {
                     },
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 TabBar(
                   tabs: [
                     Tab(
@@ -204,173 +233,190 @@ class KomikuHomePageView extends GetView<KomikuHomeController> {
                     color: const Color(0XFF54BAB9),
                   ),
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 10),
                 Expanded(
                   child: TabBarView(children: [
                     // ! all manga
-                    GetBuilder<KomikuHomeController>(
-                      builder: (c) {
-                        return SmartRefresher(
-                          controller: c.allRefresh,
-                          enablePullDown: true,
-                          enablePullUp: true,
-                          onRefresh: () => c.refreshData(c.hal.value),
-                          onLoading: () => c.loadData(c.hal.value),
-                          child: (c.allManga.isEmpty)
-                              ? const Center(child: CircularProgressIndicator())
-                              : ListView.separated(
-                                  separatorBuilder: (context, index) =>
-                                      const SizedBox(height: 10),
-                                  itemBuilder: (context, index) {
-                                    KomikuAll manga = c.allManga[index];
-                                    return Material(
-                                      elevation: 2,
-                                      color: const Color(0XFFFFFFFF),
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: ListTile(
-                                        onTap: () => Get.toNamed(
-                                            Routes.DETAIL_MANGA_KOMIKU,
-                                            arguments: manga.endpoint),
-                                        leading: ConstrainedBox(
-                                          constraints: const BoxConstraints(
-                                            maxHeight: 200,
-                                          ),
-                                          child: Container(
-                                            width: 50,
-                                            // color: Colors.red,
-                                            child: CachedNetworkImage(
-                                              imageUrl: manga.thumb!
-                                                      .startsWith("https:///")
-                                                  ? manga.thumb!.replaceFirst(
-                                                      "https:///", "https://")
-                                                  : manga.thumb!,
-                                              imageBuilder:
-                                                  (context, imageProvider) =>
-                                                      Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  image: DecorationImage(
-                                                    image: imageProvider,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                              placeholder: (context, url) =>
-                                                  const CircularProgressIndicator(),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      Image.asset(
-                                                "assets/images/no-image.png",
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        title: SizedBox(
-                                            width: context.width,
-                                            height: 20,
-                                            child: Text("${manga.title}",
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 14,
-                                                    textStyle: const TextStyle(
-                                                        overflow: TextOverflow
-                                                            .ellipsis)))),
-                                        subtitle: Text(
-                                          "${manga.updatedOn}",
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 12,
-                                              color: const Color(0XFFFF6905)),
+                    PagedListView<int, KomikuAll>.separated(
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 10),
+                      pagingController: controller.allmangaController,
+                      builderDelegate: PagedChildBuilderDelegate<KomikuAll>(
+                        animateTransitions: true,
+                        itemBuilder: (context, item, index) => Material(
+                            elevation: 2,
+                            color: const Color(0XFFFFFFFF),
+                            borderRadius: BorderRadius.circular(10),
+                            child: ListTile(
+                              onTap: () => Get.toNamed(
+                                  Routes.DETAIL_MANGA_KOMIKU,
+                                  arguments: item.endpoint),
+                              leading: ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  maxHeight: 200,
+                                ),
+                                child: Container(
+                                  width: 50,
+                                  // color: Colors.red,
+                                  child: CachedNetworkImage(
+                                    imageUrl: item.thumb!,
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
-                                    );
-                                  },
-                                  itemCount: controller.allManga.length,
+                                    ),
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
+                                      "assets/images/no-image.png",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                                 ),
-                        );
-                      },
+                              ),
+                              title: SizedBox(
+                                  width: context.width,
+                                  height: 20,
+                                  child: Text("${item.title}",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          textStyle: const TextStyle(
+                                              overflow:
+                                                  TextOverflow.ellipsis)))),
+                              subtitle: Text(
+                                "${item.updatedOn}",
+                                style: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    color: const Color(0XFFFF6905)),
+                              ),
+                            )),
+                        firstPageErrorIndicatorBuilder: (_) {
+                          return Center(
+                              child: Text(
+                                  "${controller.allmangaController.error}"));
+                        },
+                        newPageErrorIndicatorBuilder: (context) =>
+                            Text("${controller.allmangaController.error}"),
+                        firstPageProgressIndicatorBuilder: (context) => Center(
+                          child: LoadingAnimationWidget.prograssiveDots(
+                              color: const Color(0XFF54BAB9), size: 50),
+                        ),
+                        transitionDuration: const Duration(seconds: 3),
+                        newPageProgressIndicatorBuilder: (context) => Center(
+                          child: LoadingAnimationWidget.inkDrop(
+                              color: const Color(0XFF54BAB9), size: 50),
+                        ),
+                        noItemsFoundIndicatorBuilder: (_) {
+                          Get.snackbar("Error", "No Data Found");
+                          return const Center(
+                            child: Text('No data found'),
+                          );
+                        },
+                        noMoreItemsIndicatorBuilder: (_) {
+                          Get.snackbar("Error", "No more Data");
+
+                          return const Center(
+                            child: Text('No data found'),
+                          );
+                        },
+                      ),
                     ),
                     // ! New Manga
-                    GetBuilder<KomikuHomeController>(
-                      builder: (c) {
-                        return SmartRefresher(
-                          controller: c.latestRefresh,
-                          enablePullDown: true,
-                          enablePullUp: true,
-                          onRefresh: () => c.refreshUpdate(c.hal.value),
-                          onLoading: () => c.loadUpdate(c.hal.value),
-                          child: (c.latest.isEmpty)
-                              ? const Center(child: CircularProgressIndicator())
-                              : ListView.separated(
-                                  separatorBuilder: (context, index) =>
-                                      const SizedBox(height: 10),
-                                  itemBuilder: (context, index) {
-                                    KomikuAll manga = c.latest[index];
-                                    return Material(
-                                      elevation: 2,
-                                      color: const Color(0XFFFFFFFF),
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: ListTile(
-                                        onTap: () => Get.toNamed(
-                                            Routes.DETAIL_MANGA_KOMIKU,
-                                            arguments: manga.endpoint),
-                                        leading: ConstrainedBox(
-                                          constraints: const BoxConstraints(
-                                            maxHeight: 200,
-                                          ),
-                                          child: Container(
-                                            width: 50,
-                                            // color: Colors.red,
-                                            child: CachedNetworkImage(
-                                              imageUrl: manga.thumb!
-                                                      .startsWith("https:///")
-                                                  ? manga.thumb!.replaceFirst(
-                                                      "https:///", "https://")
-                                                  : manga.thumb!,
-                                              imageBuilder:
-                                                  (context, imageProvider) =>
-                                                      Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  image: DecorationImage(
-                                                    image: imageProvider,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                              placeholder: (context, url) =>
-                                                  const CircularProgressIndicator(),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      Image.asset(
-                                                "assets/images/no-image.png",
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        title: SizedBox(
-                                            width: context.width,
-                                            height: 20,
-                                            child: Text("${manga.title}",
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 14,
-                                                    textStyle: const TextStyle(
-                                                        overflow: TextOverflow
-                                                            .ellipsis)))),
-                                        subtitle: Text("${manga.updatedOn}",
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 12,
-                                                color:
-                                                    const Color(0XFFFF6905))),
-                                      ),
-                                    );
-                                  },
-                                  itemCount: controller.latest.length,
+                    PagedListView<int, KomikuAll>.separated(
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 10),
+                      pagingController: controller.allLatestManga,
+                      builderDelegate: PagedChildBuilderDelegate<KomikuAll>(
+                        animateTransitions: true,
+                        itemBuilder: (context, item, index) => Material(
+                            elevation: 2,
+                            color: const Color(0XFFFFFFFF),
+                            borderRadius: BorderRadius.circular(10),
+                            child: ListTile(
+                              onTap: () => Get.toNamed(
+                                  Routes.DETAIL_MANGA_KOMIKU,
+                                  arguments: item.endpoint),
+                              leading: ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  maxHeight: 200,
                                 ),
-                        );
-                      },
+                                child: Container(
+                                  width: 50,
+                                  // color: Colors.red,
+                                  child: CachedNetworkImage(
+                                    imageUrl: item.thumb!,
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
+                                      "assets/images/no-image.png",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              title: SizedBox(
+                                  width: context.width,
+                                  height: 20,
+                                  child: Text("${item.title}",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          textStyle: const TextStyle(
+                                              overflow:
+                                                  TextOverflow.ellipsis)))),
+                              subtitle: Text(
+                                "${item.updatedOn}",
+                                style: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    color: const Color(0XFFFF6905)),
+                              ),
+                            )),
+                        firstPageErrorIndicatorBuilder: (_) {
+                          return Center(
+                              child:
+                                  Text("${controller.allLatestManga.error}"));
+                        },
+                        newPageErrorIndicatorBuilder: (context) =>
+                            Text("${controller.allLatestManga.error}"),
+                        firstPageProgressIndicatorBuilder: (context) => Center(
+                          child: LoadingAnimationWidget.prograssiveDots(
+                              color: const Color(0XFF54BAB9), size: 50),
+                        ),
+                        transitionDuration: const Duration(seconds: 3),
+                        newPageProgressIndicatorBuilder: (context) => Center(
+                          child: LoadingAnimationWidget.inkDrop(
+                              color: const Color(0XFF54BAB9), size: 50),
+                        ),
+                        noItemsFoundIndicatorBuilder: (_) {
+                          Get.snackbar("Error", "No Data Found");
+                          return const Center(
+                            child: Text('No data found'),
+                          );
+                        },
+                        noMoreItemsIndicatorBuilder: (_) {
+                          Get.snackbar("Error", "No more Data");
+
+                          return const Center(
+                            child: Text('No data found'),
+                          );
+                        },
+                      ),
                     ),
                   ]),
                 )

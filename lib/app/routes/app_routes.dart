@@ -4,6 +4,7 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
   static const HOME = _Paths.HOME;
+  // static const HOME = _Paths.DETAIL_MANGA_KOMIKU;
   static const DETAIL_MANGA = _Paths.DETAIL_MANGA;
   static const READ_CHAPTER = _Paths.READ_CHAPTER;
   static const KOMIKU_HOME = _Paths.KOMIKU_HOME;

@@ -6,7 +6,7 @@ import 'package:manga_verse/app/data/models/komiku/detail_komiku.dart';
 class DetailMangaKomikuController extends GetxController {
   Future<DetailKomiku> getDetail(String name) async {
     try {
-      Uri url = Uri.parse('http://10.0.2.2:3000/api/manga/detail/$name');
+      Uri url = Uri.parse('https://manga-api.kolektifhost.com/api/komiku/detail/$name');
       var response = await http.get(url);
 
       if (response.statusCode == 200) {

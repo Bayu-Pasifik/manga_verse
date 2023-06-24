@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -18,6 +19,7 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
     return Scaffold(
         key: komicastHomeState,
         drawer: Drawer(
+          elevation: 0,
           child: ListView(
             // Important: Remove any padding from the ListView.
             padding: EdgeInsets.zero,
@@ -28,32 +30,50 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                 ),
                 child: Text('Drawer Header'),
               ),
-              ListTile(
-                leading: const Icon(
-                  Icons.home,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  // color: Colors.amber,
+                  height: 200,
+                  width: 200,
+                  child: ExpandablePanel(
+                    header: Text(
+                      "Manga Indo",
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w600, fontSize: 20),
+                    ),
+                    collapsed: Text(
+                      "====================",
+                      maxLines: 1,
+                      style: GoogleFonts.poppins(
+                          fontSize: 14, color: const Color(0XFF858597)),
+                    ),
+                    expanded: ListView(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: [
+                        ListTile(
+                          onTap: () => Get.toNamed(Routes.KOMIKU_HOME),
+                          leading: const Icon(Icons.home),
+                          title: Text("KOMIKU",
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600, fontSize: 12)),
+                        ),
+                        const Divider(
+                          // thickness: 2,
+                          color: Colors.black,
+                        ),
+                        ListTile(
+                          onTap: () => Get.toNamed(Routes.KOMICAST_HOME),
+                          leading: const Icon(Icons.home),
+                          title: Text("KOMIKCAST",
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600, fontSize: 12)),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                title: const Text('Manhwa Indo'),
-                onTap: () {
-                  Get.offNamed(Routes.HOME);
-                },
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.home,
-                ),
-                title: const Text('Komiku indo'),
-                onTap: () {
-                  Get.offNamed(Routes.KOMIKU_HOME);
-                },
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.home,
-                ),
-                title: const Text('Komicast'),
-                onTap: () {
-                  Get.offNamed(Routes.KOMICAST_HOME);
-                },
               ),
             ],
           ),
@@ -126,6 +146,7 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                             }
                           }
                           return ListView.separated(
+                            physics: const BouncingScrollPhysics(),
                             separatorBuilder: (context, index) =>
                                 const SizedBox(width: 10),
                             scrollDirection: Axis.horizontal,
@@ -233,7 +254,8 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                                 color: const Color(0XFFFFFFFF),
                                 borderRadius: BorderRadius.circular(10),
                                 child: ListTile(
-                                  onTap: () => Get.toNamed(Routes.DETAIL_MANGA_KOMICAST,
+                                  onTap: () => Get.toNamed(
+                                      Routes.DETAIL_MANGA_KOMICAST,
                                       arguments: item.endpoint),
                                   leading: ConstrainedBox(
                                     constraints: const BoxConstraints(
@@ -328,7 +350,8 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                                 color: const Color(0XFFFFFFFF),
                                 borderRadius: BorderRadius.circular(10),
                                 child: ListTile(
-                                  onTap: () => Get.toNamed(Routes.DETAIL_MANGA_KOMICAST,
+                                  onTap: () => Get.toNamed(
+                                      Routes.DETAIL_MANGA_KOMICAST,
                                       arguments: item.endpoint),
                                   leading: ConstrainedBox(
                                     constraints: const BoxConstraints(

@@ -1,4 +1,4 @@
-import 'dart:async';
+
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -13,14 +13,11 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class KomicastSearchPageView extends GetView<KomicastHomeController> {
   KomicastSearchPageView({Key? key}) : super(key: key);
-  final GlobalKey<ScaffoldState> searchKomicastState =
-      GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
-    Timer? searchTimer;
     return Scaffold(
         body: SafeArea(
-      key: searchKomicastState,
       child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: GetBuilder<KomicastHomeController>(
@@ -28,64 +25,54 @@ class KomicastSearchPageView extends GetView<KomicastHomeController> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    IconButton(
-                      icon:
-                          const Icon(Icons.menu, color: Colors.black, size: 30),
-                      onPressed: () {
-                        searchKomicastState.currentState?.openDrawer();
-                      },
-                    ),
-                    SizedBox(
-                      width: 250.0,
-                      child: AnimatedTextKit(
-                        repeatForever: true,
-                        animatedTexts: [
-                          TypewriterAnimatedText(
-                              '"${controller.greeting()} , Pembaca",',
-                              textStyle: GoogleFonts.poppins(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black)),
-                          TypewriterAnimatedText("Mau cari apa hari ini ?",
-                              textStyle: GoogleFonts.poppins(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black)),
-                        ],
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  width: 250.0,
+                  child: AnimatedTextKit(
+                    repeatForever: true,
+                    animatedTexts: [
+                      TypewriterAnimatedText(
+                          '"${controller.greeting()} , Pembaca",',
+                          textStyle: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)),
+                      TypewriterAnimatedText("Mau cari apa hari ini ?",
+                          textStyle: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 10),
                 TextField(
                   controller: c.searchController,
-                  onChanged: (value) {
-                    searchTimer?.cancel();
+                  // onChanged: (value) {
+                  //   searchTimer?.cancel();
 
-                    if (value.isEmpty) {
-                      controller.clearSearch();
-                      controller.update(); // Perbarui UI menggunakan GetX
-                    } else if (value.length <= 3) {
-                      controller.clearSearch();
-                      controller.update();
-                    } else {
-                      // Mulai timer baru dengan delay 1 detik
-                      searchTimer =
-                          Timer(const Duration(milliseconds: 300), () {
-                        controller.clearSearch();
-                        controller.getSearch(value);
-                        print(value);
-                        controller.update(); // Perbarui UI menggunakan GetX
-                      });
-                    }
-                  },
+                  //   if (value.isEmpty) {
+                  //     controller.clearSearch();
+                  //     controller.update(); // Perbarui UI menggunakan GetX
+                  //   } else if (value.length <= 3) {
+                  //     controller.clearSearch();
+                  //     controller.update();
+                  //   } else {
+                  //     // Mulai timer baru dengan delay 1 detik
+                  //     searchTimer =
+                  //         Timer(const Duration(milliseconds: 300), () {
+                  //       controller.clearSearch();
+                  //       controller.getSearch(value);
+                  //       print(value);
+                  //       controller.update(); // Perbarui UI menggunakan GetX
+                  //     });
+                  //   }
+                  // },
                   maxLength: 20,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       suffixIcon: Icon(Icons.search)),
                 ),
+                ElevatedButton(onPressed: () {}, child: Text("Search")),
                 Expanded(
                     child: Container(
                         width: MediaQuery.of(context).size.width,

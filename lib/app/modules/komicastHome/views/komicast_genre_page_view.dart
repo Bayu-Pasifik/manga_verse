@@ -9,12 +9,9 @@ import 'package:manga_verse/app/routes/app_pages.dart';
 
 class KomicastGenrePageView extends GetView<KomicastHomeController> {
   KomicastGenrePageView({Key? key}) : super(key: key);
-  final GlobalKey<ScaffoldState> komicastGenreState =
-      GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: komicastGenreState,
         drawer: Drawer(
           child: ListView(
             // Important: Remove any padding from the ListView.
@@ -54,38 +51,27 @@ class KomicastGenrePageView extends GetView<KomicastHomeController> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.menu,
-                                color: Colors.black, size: 30),
-                            onPressed: () {
-                              komicastGenreState.currentState?.openDrawer();
-                            },
-                          ),
-                          SizedBox(
-                            width: 250.0,
-                            child: AnimatedTextKit(
-                              repeatForever: true,
-                              pause: const Duration(milliseconds: 1000),
-                              isRepeatingAnimation: true,
-                              animatedTexts: [
-                                TypewriterAnimatedText(
-                                    '"${controller.greeting()} , Pembaca",',
-                                    textStyle: GoogleFonts.poppins(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black)),
-                                TypewriterAnimatedText(
-                                    "Cari Genre Kesukaan mu disini",
-                                    textStyle: GoogleFonts.poppins(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black)),
-                              ],
-                            ),
-                          ),
-                        ],
+                      SizedBox(
+                        width: 250.0,
+                        child: AnimatedTextKit(
+                          repeatForever: true,
+                          pause: const Duration(milliseconds: 1000),
+                          isRepeatingAnimation: true,
+                          animatedTexts: [
+                            TypewriterAnimatedText(
+                                '"${controller.greeting()} , Pembaca",',
+                                textStyle: GoogleFonts.poppins(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black)),
+                            TypewriterAnimatedText(
+                                "Cari Genre Kesukaan mu disini",
+                                textStyle: GoogleFonts.poppins(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black)),
+                          ],
+                        ),
                       ),
                       Expanded(
                         child: FutureBuilder(

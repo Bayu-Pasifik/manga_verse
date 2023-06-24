@@ -33,7 +33,7 @@ class GenreKomikuController extends GetxController {
   var next = true.obs;
 
   Future<List<dynamic>> getMangaBaseGenre(String genre) async {
-    Uri url = Uri.parse('http://10.0.2.2:3000/api/genres/$genre/$hal');
+    Uri url = Uri.parse('https://manga-api.kolektifhost.com/api/komiku/genres/$genre/$hal');
     var response = await http.get(url);
     var data = json.decode(response.body)["manga_list"];
     next.value = json.decode(response.body)["hasNextPage"];

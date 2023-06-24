@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:manga_verse/app/data/models/komiku/genres_model.dart';
 import 'package:manga_verse/app/data/models/komiku/komiku_all_model.dart';
 import 'dart:convert';
@@ -25,7 +26,8 @@ class KomikuHomeController extends GetxController {
   }
 
   Future<List<dynamic>> popularManga() async {
-    Uri url = Uri.parse('http://10.0.2.2:3000/api/recommended');
+    Uri url =
+        Uri.parse('https://manga-api.kolektifhost.com/api/komiku/recommended');
     var response = await http.get(url);
     var data = json.decode(response.body)["manga_list"];
     var tempData = data.map((e) => Recommended.fromJson(e)).toList();
@@ -33,89 +35,63 @@ class KomikuHomeController extends GetxController {
   }
   // ! semua Manga
 
-  RefreshController allRefresh = RefreshController(initialRefresh: true);
-  var hal = 1.obs;
-  List<dynamic> allManga = [];
-  var next = true.obs;
+  final PagingController<int, KomikuAll> allmangaController =
+      PagingController<int, KomikuAll>(firstPageKey: 1);
 
-  Future<List<dynamic>> getmanga(int page) async {
-    Uri url = Uri.parse('http://10.0.2.2:3000/api/manga?page=$page');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["manga_list"];
-    next.value = json.decode(response.body)["hasNextPage"];
-    var tempData = data.map((e) => KomikuAll.fromJson(e)).toList();
-    allManga.addAll(tempData);
-    print(tempData);
-    return allManga;
-  }
+  void fetchData(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://manga-api.kolektifhost.com/api/komiku/all/$pageKey');
+      var response = await http.get(url);
+      var tempData = json.decode(response.body)["manga_list"];
+      var data = tempData.map((e) => KomikuAll.fromJson(e)).toList();
+      List<KomikuAll> allMangaData = List<KomikuAll>.from(data);
+      final nextPage = json.decode(response.body)["hasNextPage"];
+      final isLastPage = nextPage == false;
 
-  void refreshData(int id) async {
-    if (allRefresh.initialRefresh == true) {
-      hal.value = 1;
-      allManga.clear();
-      await getmanga(hal.value);
-      update();
-      return allRefresh.refreshCompleted();
-    } else {
-      return allRefresh.refreshFailed();
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        allmangaController.appendLastPage(allMangaData);
+      } else {
+        allmangaController.appendPage(allMangaData, pageKey + 1);
+      }
+    } catch (e) {
+      allmangaController.error = e;
     }
   }
 
-  void loadData(int id) async {
-    if (next.value == true) {
-      hal.value = hal.value + 1;
-      await getmanga(hal.value);
-      update();
-      return allRefresh.loadComplete();
-    } else {
-      return allRefresh.loadNoData();
-    }
-  }
   // ! Latest Manga
 
-  RefreshController latestRefresh = RefreshController(initialRefresh: true);
-  var halupdate = 1.obs;
-  List<dynamic> latest = [];
-  var nextupdate = true.obs;
+  final PagingController<int, KomikuAll> allLatestManga =
+      PagingController<int, KomikuAll>(firstPageKey: 1);
 
-  Future<List<dynamic>> getLatest(int page) async {
-    Uri url = Uri.parse('http://10.0.2.2:3000/api/manga/popular/$page');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["manga_list"];
-    next.value = json.decode(response.body)["hasNextPage"];
-    var tempData = data.map((e) => KomikuAll.fromJson(e)).toList();
-    latest.addAll(tempData);
-    print(tempData);
-    return latest;
-  }
+  void getLatest(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://manga-api.kolektifhost.com/api/komiku/popular/$pageKey');
+      var response = await http.get(url);
+      var tempData = json.decode(response.body)["manga_list"];
+      var data = tempData.map((e) => KomikuAll.fromJson(e)).toList();
+      List<KomikuAll> allLatest = List<KomikuAll>.from(data);
 
-  void refreshUpdate(int id) async {
-    if (latestRefresh.initialRefresh == true) {
-      halupdate.value = 1;
-      latest.clear();
-      await getLatest(halupdate.value);
-      update();
-      return latestRefresh.refreshCompleted();
-    } else {
-      return latestRefresh.refreshFailed();
-    }
-  }
+      final nextPage = json.decode(response.body)["hasNextPage"];
+      final isLastPage = nextPage == false;
 
-  void loadUpdate(int id) async {
-    if (nextupdate.value == true) {
-      halupdate.value = halupdate.value + 1;
-      await getLatest(halupdate.value);
-      update();
-      return latestRefresh.loadComplete();
-    } else {
-      return latestRefresh.loadNoData();
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        allLatestManga.appendLastPage(allLatest);
+      } else {
+        allLatestManga.appendPage(allLatest, pageKey + 1);
+      }
+    } catch (e) {
+      allLatestManga.error = e;
     }
   }
 
   // ! List Genre
 
   Future<List<dynamic>> listGenre() async {
-    Uri url = Uri.parse('http://10.0.2.2:3000/api/genres');
+    Uri url = Uri.parse('https://manga-api.kolektifhost.com/api/komiku/genres');
     var response = await http.get(url);
     var data = json.decode(response.body)["list_genre"];
     var tempData = data.map((e) => GenresModel.fromJson(e)).toList();
@@ -130,7 +106,8 @@ class KomikuHomeController extends GetxController {
   var halSearch = 1.obs;
   List<dynamic> allSearch = [];
   Future<List<dynamic>> getSearch(String keyword) async {
-    Uri url = Uri.parse('http://10.0.2.2:3000/api/search/$keyword/$halSearch');
+    Uri url = Uri.parse(
+        'https://manga-api.kolektifhost.com/api/komiku/search/$keyword/$halSearch');
     var response = await http.get(url);
     var data = json.decode(response.body)["manga_list"];
     nextSearch.value = json.decode(response.body)["hasNextPage"];
@@ -139,8 +116,7 @@ class KomikuHomeController extends GetxController {
     update();
     allSearch.addAll(tempData);
     update();
-    print(tempData);
-    return latest;
+    return allSearch;
   }
 
   void refreshSearch(String query) async {
@@ -156,8 +132,8 @@ class KomikuHomeController extends GetxController {
   }
 
   void loadSearch(String query) async {
-    if (nextupdate.value == true) {
-      halSearch.value = halupdate.value + 1;
+    if (nextSearch.value == true) {
+      halSearch.value = halSearch.value + 1;
       await getSearch(query);
       update();
       return searchRefresh.loadComplete();
@@ -176,16 +152,19 @@ class KomikuHomeController extends GetxController {
   void onInit() {
     super.onInit();
     searchController = SearchController();
-    // searchController.text = "naruto";
+    allmangaController.addPageRequestListener((pageKey) {
+      fetchData(pageKey);
+    });
+    allLatestManga.addPageRequestListener((pageKey) {
+      getLatest(pageKey);
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
     searchController.dispose();
+    allLatestManga.dispose();
+    allmangaController.dispose();
   }
-
-
- 
-
 }
