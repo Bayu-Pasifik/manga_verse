@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:manga_verse/app/data/models/all_manga_model.dart';
+import 'package:manga_verse/app/data/models/komikstation/komikstation_all.dart';
 import 'package:manga_verse/app/modules/home/controllers/home_controller.dart';
 import 'package:manga_verse/app/routes/app_pages.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -69,9 +70,9 @@ class HomepageView extends GetView<HomeController> {
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.menu, color: Colors.black, size: 30),
+                      icon:
+                          const Icon(Icons.menu, color: Colors.black, size: 30),
                       onPressed: () {
-                        print(scaffoldState.currentState);
                         scaffoldState.currentState?.openDrawer();
                       },
                     ),
@@ -125,12 +126,13 @@ class HomepageView extends GetView<HomeController> {
                         }
                       }
                       return ListView.separated(
+                        physics: const BouncingScrollPhysics(),
                         separatorBuilder: (context, index) =>
                             const SizedBox(width: 10),
                         scrollDirection: Axis.horizontal,
                         itemCount: snapshot.data?.length ?? 0,
                         itemBuilder: (context, index) {
-                          AllMangaModel trending = snapshot.data![index];
+                          KomikstationAll trending = snapshot.data![index];
                           return GestureDetector(
                             onTap: () => Get.toNamed(Routes.DETAIL_MANGA,
                                 arguments: trending.endpoint),
@@ -200,7 +202,7 @@ class HomepageView extends GetView<HomeController> {
                     Tab(
                       child: Align(
                         alignment: Alignment.center,
-                        child: Text("Baru",
+                        child: Text("Tamat",
                             style: GoogleFonts.poppins(fontSize: 14)),
                       ),
                     ),

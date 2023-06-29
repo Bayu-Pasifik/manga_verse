@@ -9,8 +9,8 @@ void main() {
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Application",
-      // initialRoute: AppPages.INITIAL,
-      initialRoute: Routes.KOMIKU_HOME,
+      initialRoute: AppPages.INITIAL,
+      // initialRoute: Routes.KOMIKU_HOME,
       getPages: AppPages.routes,
     ),
   );

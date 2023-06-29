@@ -5,12 +5,13 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:manga_verse/app/data/models/all_manga_model.dart';
 import 'package:manga_verse/app/data/models/genre_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:manga_verse/app/data/models/komikstation/komikstation_all.dart';
 import 'dart:convert';
 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeController extends GetxController {
-  // ! Greating
+  // ! Greting
 
   String greeting() {
     var hour = DateTime.now().hour;
@@ -29,10 +30,11 @@ class HomeController extends GetxController {
   var currentIndex = 0.obs;
 
   Future<List<dynamic>> popularManga() async {
-    Uri url = Uri.parse('http://10.0.2.2:8000/popular');
+    Uri url = Uri.parse(
+        'https://manga-api.kolektifhost.com/api/komikstation/popular/1');
     var response = await http.get(url);
-    var data = json.decode(response.body)["manhwas"];
-    var tempData = data.map((e) => AllMangaModel.fromJson(e)).toList();
+    var data = json.decode(response.body)["data"];
+    var tempData = data.map((e) => KomikstationAll.fromJson(e)).toList();
     return tempData;
   }
 
@@ -43,7 +45,8 @@ class HomeController extends GetxController {
 
   void fetchData(int pageKey) async {
     try {
-      Uri url = Uri.parse('http://10.0.2.2:8000/all/$pageKey');
+      Uri url = Uri.parse(
+          'https://manga-api.kolektifhost.com/api/komikstation/all/$pageKey');
       var response = await http.get(url);
       var tempData = json.decode(response.body)["data"];
       var data = tempData.map((e) => AllMangaModel.fromJson(e)).toList();
@@ -70,7 +73,8 @@ class HomeController extends GetxController {
 
   void getLatest(int pageKey) async {
     try {
-      Uri url = Uri.parse('http://10.0.2.2:8000/latest/$pageKey');
+      Uri url = Uri.parse(
+          'https://manga-api.kolektifhost.com/api/komikstation/completed/$pageKey');
       var response = await http.get(url);
       var tempData = json.decode(response.body)["data"];
       var data = tempData.map((e) => AllMangaModel.fromJson(e)).toList();
@@ -93,7 +97,8 @@ class HomeController extends GetxController {
   // ! List Genre
 
   Future<List<dynamic>> listGenre() async {
-    Uri url = Uri.parse('http://10.0.2.2:8000/genres');
+    Uri url =
+        Uri.parse('https://manga-api.kolektifhost.com/api/komikstation/genres');
     var response = await http.get(url);
     var data = json.decode(response.body)["genres"];
     var tempData = data.map((e) => GenreModel.fromJson(e)).toList();
@@ -107,7 +112,8 @@ class HomeController extends GetxController {
 
   void searchMangaAPI(String keyword, int pageKey) async {
     try {
-      Uri url = Uri.parse('http://10.0.2.2:8000/search/$keyword/$pageKey');
+      Uri url = Uri.parse(
+          'https://manga-api.kolektifhost.com/api/komikstation/search/$keyword/$pageKey');
       var response = await http.get(url);
       var tempData = json.decode(response.body)["data"];
       var data = tempData.map((e) => AllMangaModel.fromJson(e)).toList();
@@ -133,7 +139,8 @@ class HomeController extends GetxController {
   var halSearch = 1.obs;
   List<dynamic> allSearch = [];
   Future<List<dynamic>> getSearch(String keyword) async {
-    Uri url = Uri.parse('http://10.0.2.2:8000/search/$keyword/$halSearch');
+    Uri url = Uri.parse(
+        'https://manga-api.kolektifhost.com/api/komikstation/search/$keyword/$halSearch');
     var response = await http.get(url);
     var data = json.decode(response.body)["data"];
     nextSearch.value = json.decode(response.body)["next"];
