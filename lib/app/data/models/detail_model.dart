@@ -11,115 +11,91 @@ String detailMangaToJson(DetailManga data) => json.encode(data.toJson());
 class DetailManga {
     String? title;
     String? altTitle;
-    List<Genre>? genres;
-    String? synopsis;
     String? thumbnail;
-    List<Chapter>? chapters;
+    String? rating;
     String? status;
     String? type;
+    String? ilustrator;
+    String? synopsis;
     String? released;
     String? author;
-    String? postedBy;
-    DateTime? postedOn;
-    DateTime? updatedOn;
-    String? views;
-    String? rating;
+    String? publisher;
+    String? lastUpdate;
+    List<String>? genres;
+    List<Chapter>? chapters;
 
     DetailManga({
         this.title,
         this.altTitle,
-        this.genres,
-        this.synopsis,
         this.thumbnail,
-        this.chapters,
+        this.rating,
         this.status,
         this.type,
+        this.ilustrator,
+        this.synopsis,
         this.released,
         this.author,
-        this.postedBy,
-        this.postedOn,
-        this.updatedOn,
-        this.views,
-        this.rating,
+        this.publisher,
+        this.lastUpdate,
+        this.genres,
+        this.chapters,
     });
 
     factory DetailManga.fromJson(Map<String, dynamic> json) => DetailManga(
         title: json["title"],
         altTitle: json["altTitle"],
-        genres: json["genres"] == null ? [] : List<Genre>.from(json["genres"]!.map((x) => Genre.fromJson(x))),
-        synopsis: json["synopsis"],
         thumbnail: json["thumbnail"],
-        chapters: json["chapters"] == null ? [] : List<Chapter>.from(json["chapters"]!.map((x) => Chapter.fromJson(x))),
+        rating: json["rating"],
         status: json["status"],
         type: json["type"],
+        ilustrator: json["ilustrator"],
+        synopsis: json["synopsis"],
         released: json["released"],
         author: json["author"],
-        postedBy: json["postedBy"],
-        postedOn: json["postedOn"] == null ? null : DateTime.parse(json["postedOn"]),
-        updatedOn: json["updatedOn"] == null ? null : DateTime.parse(json["updatedOn"]),
-        views: json["views"],
-        rating: json["rating"],
+        publisher: json["publisher"],
+        lastUpdate: json["lastUpdate"],
+        genres: json["genres"] == null ? [] : List<String>.from(json["genres"]!.map((x) => x)),
+        chapters: json["chapters"] == null ? [] : List<Chapter>.from(json["chapters"]!.map((x) => Chapter.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
         "title": title,
         "altTitle": altTitle,
-        "genres": genres == null ? [] : List<dynamic>.from(genres!.map((x) => x.toJson())),
-        "synopsis": synopsis,
         "thumbnail": thumbnail,
-        "chapters": chapters == null ? [] : List<dynamic>.from(chapters!.map((x) => x.toJson())),
+        "rating": rating,
         "status": status,
         "type": type,
+        "ilustrator": ilustrator,
+        "synopsis": synopsis,
         "released": released,
         "author": author,
-        "postedBy": postedBy,
-        "postedOn": postedOn?.toIso8601String(),
-        "updatedOn": updatedOn?.toIso8601String(),
-        "views": views,
-        "rating": rating,
+        "publisher": publisher,
+        "lastUpdate": lastUpdate,
+        "genres": genres == null ? [] : List<dynamic>.from(genres!.map((x) => x)),
+        "chapters": chapters == null ? [] : List<dynamic>.from(chapters!.map((x) => x.toJson())),
     };
 }
 
 class Chapter {
-    String? name;
-    String? date;
-    String? endpoint;
+    String? chapterTitle;
+    String? chapterRelease;
+    String? chapterEndpoint;
 
     Chapter({
-        this.name,
-        this.date,
-        this.endpoint,
+        this.chapterTitle,
+        this.chapterRelease,
+        this.chapterEndpoint,
     });
 
     factory Chapter.fromJson(Map<String, dynamic> json) => Chapter(
-        name: json["name"],
-        date: json["date"],
-        endpoint: json["endpoint"],
+        chapterTitle: json["chapterTitle"],
+        chapterRelease: json["chapterRelease"],
+        chapterEndpoint: json["chapterEndpoint"],
     );
 
     Map<String, dynamic> toJson() => {
-        "name": name,
-        "date": date,
-        "endpoint": endpoint,
-    };
-}
-
-class Genre {
-    String? name;
-    String? endpoint;
-
-    Genre({
-        this.name,
-        this.endpoint,
-    });
-
-    factory Genre.fromJson(Map<String, dynamic> json) => Genre(
-        name: json["name"],
-        endpoint: json["endpoint"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "name": name,
-        "endpoint": endpoint,
+        "chapterTitle": chapterTitle,
+        "chapterRelease": chapterRelease,
+        "chapterEndpoint": chapterEndpoint,
     };
 }

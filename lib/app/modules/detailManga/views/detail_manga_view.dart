@@ -95,10 +95,7 @@ class DetailMangaView extends GetView<DetailMangaController> {
                         ),
                       ),
                       background: CachedNetworkImage(
-                        imageUrl: detail.thumbnail!.startsWith("https:///")
-                            ? detail.thumbnail!
-                                .replaceFirst("https:///", "https://")
-                            : detail.thumbnail!,
+                        imageUrl: detail.thumbnail ?? "",
                         imageBuilder: (context, imageProvider) => Container(
                           decoration: BoxDecoration(
                             // borderRadius: BorderRadius.circular(8),
@@ -158,20 +155,6 @@ class DetailMangaView extends GetView<DetailMangaController> {
                                         Row(
                                           children: [
                                             Text(
-                                              "${detail.views} Views ",
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 14,
-                                                  color:
-                                                      const Color(0XFF858597)),
-                                            ),
-                                            Text(
-                                              " | ",
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 14,
-                                                  color:
-                                                      const Color(0XFF858597)),
-                                            ),
-                                            Text(
                                               " ${detail.chapters?.length} Chapters ",
                                               style: GoogleFonts.poppins(
                                                   fontSize: 14,
@@ -204,7 +187,7 @@ class DetailMangaView extends GetView<DetailMangaController> {
                                     Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: Chip(
-                                        label: Text("${genres.name}"),
+                                        label: Text(genres),
                                         backgroundColor:
                                             const Color(0XFF61BFAD),
                                         labelStyle: GoogleFonts.poppins(
@@ -290,6 +273,54 @@ class DetailMangaView extends GetView<DetailMangaController> {
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
+                                              "Ilustrator",
+                                              style: GoogleFonts.poppins(),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "${detail.ilustrator}",
+                                              style: GoogleFonts.poppins(),
+                                            ),
+                                          )
+                                        ]),
+                                        TableRow(children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "Publisher",
+                                              style: GoogleFonts.poppins(),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "${detail.publisher}",
+                                              style: GoogleFonts.poppins(),
+                                            ),
+                                          )
+                                        ]),
+                                        TableRow(children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "Type",
+                                              style: GoogleFonts.poppins(),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "${detail.type} ",
+                                              style: GoogleFonts.poppins(),
+                                            ),
+                                          )
+                                        ]),
+                                        TableRow(children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
                                               "Status",
                                               style: GoogleFonts.poppins(),
                                             ),
@@ -320,6 +351,22 @@ class DetailMangaView extends GetView<DetailMangaController> {
                                             ),
                                           )
                                         ]),
+                                        TableRow(children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "Last Updated",
+                                              style: GoogleFonts.poppins(),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "${detail.lastUpdate}",
+                                              style: GoogleFonts.poppins(),
+                                            ),
+                                          )
+                                        ]),
                                       ],
                                     ),
                                   ],
@@ -338,7 +385,7 @@ class DetailMangaView extends GetView<DetailMangaController> {
                                   return ListTile(
                                     onTap: () => Get.toNamed(
                                       Routes.READ_CHAPTER,
-                                      arguments: chapter.endpoint,
+                                      arguments: chapter.chapterEndpoint,
                                     ),
                                     leading: (index + 1 < 10)
                                         ? Text(
@@ -354,13 +401,13 @@ class DetailMangaView extends GetView<DetailMangaController> {
                                                 fontSize: 24),
                                           ),
                                     title: Text(
-                                      "${chapter.name}",
+                                      "${chapter.chapterTitle}",
                                       style: GoogleFonts.poppins(
                                           color: const Color(0XFF1F1F39),
                                           fontSize: 14),
                                     ),
                                     subtitle: Text(
-                                      "${chapter.date}",
+                                      "${chapter.chapterRelease}",
                                       style: GoogleFonts.poppins(
                                           color: const Color(0XFF1F1F39),
                                           fontSize: 14),
