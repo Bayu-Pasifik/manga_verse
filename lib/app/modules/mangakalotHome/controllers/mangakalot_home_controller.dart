@@ -93,7 +93,7 @@ class MangakalotHomeController extends GetxController {
     Uri url =
         Uri.parse('https://manga-api.kolektifhost.com/api/mangakalot/genres');
     var response = await http.get(url);
-    var data = json.decode(response.body)["list_genre"];
+    var data = json.decode(response.body)["data"];
     var tempData = data.map((e) => MangakalotGenre.fromJson(e)).toList();
     return tempData;
   }
