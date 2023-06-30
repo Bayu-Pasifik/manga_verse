@@ -4,6 +4,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:http/http.dart' as http;
 import 'package:manga_verse/app/data/models/mangageko/mangageko_all.dart';
 import 'package:manga_verse/app/data/models/mangageko/mangageko_genre.dart';
+import 'package:manga_verse/app/data/models/mangageko/mangageko_latest.dart';
 import 'dart:convert';
 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -25,13 +26,11 @@ class MangagekoHomeController extends GetxController {
   }
 
   Future<List<dynamic>> popularManga() async {
-    Uri url =
-        Uri.parse('https://manga-api.kolektifhost.com/api/komiku/recommended');
+    Uri url = Uri.parse('https://manga-api.kolektifhost.com/api/mangageko/new');
     var response = await http.get(url);
     var data = json.decode(response.body)["data"];
-    // var tempData = data.map((e) => Recommended.fromJson(e)).toList();
-    // return tempData;
-    return data;
+    var tempData = data.map((e) => MangagekoAll.fromJson(e)).toList();
+    return tempData;
   }
   // ! semua Manga
 
@@ -62,19 +61,19 @@ class MangagekoHomeController extends GetxController {
 
   // ! Latest Manga
 
-  final PagingController<int, MangagekoAll> allLatestManga =
-      PagingController<int, MangagekoAll>(firstPageKey: 1);
+  final PagingController<int, MangagekoLatest> allLatestManga =
+      PagingController<int, MangagekoLatest>(firstPageKey: 1);
 
   void getLatest(int pageKey) async {
     try {
       Uri url = Uri.parse(
-          'https://manga-api.kolektifhost.com/api/komiku/popular/$pageKey');
+          'https://manga-api.kolektifhost.com/api/mangageko/latest/$pageKey');
       var response = await http.get(url);
-      var tempData = json.decode(response.body)["manga_list"];
-      var data = tempData.map((e) => MangagekoAll.fromJson(e)).toList();
-      List<MangagekoAll> allLatest = List<MangagekoAll>.from(data);
+      var tempData = json.decode(response.body)["data"];
+      var data = tempData.map((e) => MangagekoLatest.fromJson(e)).toList();
+      List<MangagekoLatest> allLatest = List<MangagekoLatest>.from(data);
 
-      final nextPage = json.decode(response.body)["hasNextPage"];
+      final nextPage = json.decode(response.body)["next"];
       final isLastPage = nextPage == false;
 
       if (isLastPage) {
@@ -91,7 +90,8 @@ class MangagekoHomeController extends GetxController {
   // ! List Genre
 
   Future<List<dynamic>> listGenre() async {
-    Uri url = Uri.parse('https://manga-api.kolektifhost.com/api/komiku/genres');
+    Uri url =
+        Uri.parse('https://manga-api.kolektifhost.com/api/mangageko/genres');
     var response = await http.get(url);
     var data = json.decode(response.body)["list_genre"];
     var tempData = data.map((e) => MangagekoGenre.fromJson(e)).toList();
@@ -107,7 +107,7 @@ class MangagekoHomeController extends GetxController {
   List<dynamic> allSearch = [];
   Future<List<dynamic>> getSearch(String keyword) async {
     Uri url = Uri.parse(
-        'https://manga-api.kolektifhost.com/api/komiku/search/$keyword/$halSearch');
+        'https://manga-api.kolektifhost.com/api/mangageko/search/$keyword/$halSearch');
     var response = await http.get(url);
     var data = json.decode(response.body)["data"];
     nextSearch.value = json.decode(response.body)["next"];

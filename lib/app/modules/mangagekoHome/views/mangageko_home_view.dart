@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:manga_verse/app/modules/mangagekoHome/views/mangageko_home_view_view.dart';
+import 'package:manga_verse/app/modules/mangagekoHome/views/mangageko_home_page_view.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../controllers/mangageko_home_controller.dart';
