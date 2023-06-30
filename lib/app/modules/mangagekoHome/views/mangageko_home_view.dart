@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:manga_verse/app/modules/mangagekoHome/views/mangageko_genre_page_view.dart';
 import 'package:manga_verse/app/modules/mangagekoHome/views/mangageko_home_page_view.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -18,7 +19,7 @@ class MangagekoHomeView extends GetView<MangagekoHomeController> {
               index: controller.currentIndex.value,
               children: [
                 MangagekoHomePageView(),
-                // KomikuGenrePageView(),
+                const MangagekoGenrePageView(),
                 // KomikuSearchPageView()
               ],
             ),

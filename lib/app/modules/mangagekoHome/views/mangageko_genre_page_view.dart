@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:manga_verse/app/data/models/komiku/genres_model.dart';
-import 'package:manga_verse/app/modules/komikuHome/controllers/komiku_home_controller.dart';
+import 'package:manga_verse/app/data/models/mangageko/mangageko_genre.dart';
+import 'package:manga_verse/app/modules/mangagekoHome/controllers/mangageko_home_controller.dart';
 import 'package:manga_verse/app/routes/app_pages.dart';
 
-class KomikuGenrePageView extends GetView<KomikuHomeController> {
-  const KomikuGenrePageView({Key? key}) : super(key: key);
+class MangagekoGenrePageView extends GetView<MangagekoHomeController> {
+  const MangagekoGenrePageView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +89,7 @@ class KomikuGenrePageView extends GetView<KomikuHomeController> {
                                   const SizedBox(height: 10),
                               itemCount: snapshot.data?.length ?? 0,
                               itemBuilder: (context, index) {
-                                GenresModel genre = snapshot.data![index];
+                                MangagekoGenre genre = snapshot.data![index];
                                 return Material(
                                   elevation: 2,
                                   color: const Color(0XFFFFFFFF),
