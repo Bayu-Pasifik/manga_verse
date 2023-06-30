@@ -340,7 +340,7 @@ class DetailMangagekoView extends GetView<DetailMangagekoController> {
                                   return ListTile(
                                     onTap: () {
                                       Get.toNamed(
-                                        Routes.READ_KOMICAST,
+                                        Routes.READ_MANGAGEKO,
                                         arguments: chapter.endpoint,
                                       );
                                     },

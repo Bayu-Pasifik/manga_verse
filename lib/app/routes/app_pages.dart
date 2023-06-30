@@ -30,6 +30,8 @@ import '../modules/readKomicast/bindings/read_komicast_binding.dart';
 import '../modules/readKomicast/views/read_komicast_view.dart';
 import '../modules/readKomiku/bindings/read_komiku_binding.dart';
 import '../modules/readKomiku/views/read_komiku_view.dart';
+import '../modules/readMangageko/bindings/read_mangageko_binding.dart';
+import '../modules/readMangageko/views/read_mangageko_view.dart';
 
 part 'app_routes.dart';
 
@@ -113,6 +115,11 @@ class AppPages {
       name: _Paths.DETAIL_MANGAGEKO,
       page: () => const DetailMangagekoView(),
       binding: DetailMangagekoBinding(),
+    ),
+    GetPage(
+      name: _Paths.READ_MANGAGEKO,
+      page: () => const ReadMangagekoView(),
+      binding: ReadMangagekoBinding(),
     ),
   ];
 }
