@@ -8,6 +8,8 @@ import '../modules/detailMangaKomiku/bindings/detail_manga_komiku_binding.dart';
 import '../modules/detailMangaKomiku/views/detail_manga_komiku_view.dart';
 import '../modules/detailMangageko/bindings/detail_mangageko_binding.dart';
 import '../modules/detailMangageko/views/detail_mangageko_view.dart';
+import '../modules/detailMangakalot/bindings/detail_mangakalot_binding.dart';
+import '../modules/detailMangakalot/views/detail_mangakalot_view.dart';
 import '../modules/genreKomicast/bindings/genre_komicast_binding.dart';
 import '../modules/genreKomicast/views/genre_komicast_view.dart';
 import '../modules/genreKomikstation/bindings/genre_komikstation_binding.dart';
@@ -127,6 +129,11 @@ class AppPages {
       name: _Paths.GENRE_MANGAGEKO,
       page: () => const GenreMangagekoView(),
       binding: GenreMangagekoBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_MANGAKALOT,
+      page: () => const DetailMangakalotView(),
+      binding: DetailMangakalotBinding(),
     ),
   ];
 }
