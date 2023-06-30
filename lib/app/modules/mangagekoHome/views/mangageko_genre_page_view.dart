@@ -96,7 +96,7 @@ class MangagekoGenrePageView extends GetView<MangagekoHomeController> {
                                   borderRadius: BorderRadius.circular(10),
                                   child: ListTile(
                                     onTap: () => Get.toNamed(
-                                        Routes.GENRE_KOMIKU,
+                                        Routes.GENRE_MANGAGEKO,
                                         arguments: genre.endpoint),
                                     title: Text("${genre.genreName}"),
                                   ),

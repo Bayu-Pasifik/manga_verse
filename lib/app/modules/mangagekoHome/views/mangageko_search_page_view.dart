@@ -92,7 +92,7 @@ class MangagekoSearchPageView extends GetView<MangagekoHomeController> {
                                         borderRadius: BorderRadius.circular(10),
                                         child: ListTile(
                                           onTap: () => Get.toNamed(
-                                              Routes.DETAIL_MANGA_KOMIKU,
+                                              Routes.DETAIL_MANGAGEKO,
                                               arguments: manga.endpoint),
                                           leading: ConstrainedBox(
                                             constraints: const BoxConstraints(

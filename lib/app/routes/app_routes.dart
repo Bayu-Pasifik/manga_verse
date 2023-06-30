@@ -20,6 +20,7 @@ abstract class Routes {
   static const MANGAKALOT_HOME = _Paths.MANGAKALOT_HOME;
   static const DETAIL_MANGAGEKO = _Paths.DETAIL_MANGAGEKO;
   static const READ_MANGAGEKO = _Paths.READ_MANGAGEKO;
+  static const GENRE_MANGAGEKO = _Paths.GENRE_MANGAGEKO;
 }
 
 abstract class _Paths {
@@ -40,4 +41,5 @@ abstract class _Paths {
   static const MANGAKALOT_HOME = '/mangakalot-home';
   static const DETAIL_MANGAGEKO = '/detail-mangageko';
   static const READ_MANGAGEKO = '/read-mangageko';
+  static const GENRE_MANGAGEKO = '/genre-mangageko';
 }
