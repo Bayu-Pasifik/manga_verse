@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,6 +18,7 @@ class HomepageView extends GetView<HomeController> {
     return Scaffold(
       key: scaffoldState,
       drawer: Drawer(
+        elevation: 0,
         child: ListView(
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
@@ -27,32 +29,108 @@ class HomepageView extends GetView<HomeController> {
               ),
               child: Text('Drawer Header'),
             ),
-            ListTile(
-              leading: const Icon(
-                Icons.home,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    // color: Colors.amber,
+                    height: context.height / 2,
+                    width: context.width,
+                    child: ExpandablePanel(
+                      header: Text(
+                        "Manga Indo",
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600, fontSize: 20),
+                      ),
+                      collapsed: Text(
+                        "================================",
+                        maxLines: 1,
+                        style: GoogleFonts.poppins(
+                            fontSize: 14, color: const Color(0XFF858597)),
+                      ),
+                      expanded: Column(
+                        children: [
+                          ListTile(
+                            onTap: () => Get.toNamed(Routes.HOME),
+                            leading: const Icon(Icons.home),
+                            title: Text("KOMIK STATION",
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600, fontSize: 12)),
+                          ),
+                          const Divider(
+                            // thickness: 2,
+                            color: Colors.black,
+                          ),
+                          ListTile(
+                            onTap: () => Get.toNamed(Routes.KOMIKU_HOME),
+                            leading: const Icon(Icons.home),
+                            title: Text("KOMIKU",
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600, fontSize: 12)),
+                          ),
+                          const Divider(
+                            // thickness: 2,
+                            color: Colors.black,
+                          ),
+                          ListTile(
+                            onTap: () => Get.toNamed(Routes.KOMICAST_HOME),
+                            leading: const Icon(Icons.home),
+                            title: Text("KOMIKCAST",
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600, fontSize: 12)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: context.height / 2,
+                    width: context.width,
+                    child: ExpandablePanel(
+                      header: Text(
+                        "Manga Eng",
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600, fontSize: 20),
+                      ),
+                      collapsed: Text(
+                        "================================",
+                        maxLines: 1,
+                        style: GoogleFonts.poppins(
+                            fontSize: 14, color: const Color(0XFF858597)),
+                      ),
+                      expanded: Column(
+                        children: [
+                          ListTile(
+                            onTap: () => Get.toNamed(Routes.MANGAGEKO_HOME),
+                            leading: const Icon(Icons.home),
+                            title: Text("MANGAGEKO",
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600, fontSize: 12)),
+                          ),
+                          const Divider(
+                            // thickness: 2,
+                            color: Colors.black,
+                          ),
+                          ListTile(
+                            onTap: () => Get.toNamed(Routes.MANGAKALOT_HOME),
+                            leading: const Icon(Icons.home),
+                            title: Text("MANGAKALOT",
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600, fontSize: 12)),
+                          ),
+                          const Divider(
+                            // thickness: 2,
+                            color: Colors.black,
+                          ),
+                         
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              title: const Text('Manhwa Indo'),
-              onTap: () {
-                Get.offNamed(Routes.HOME);
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.home,
-              ),
-              title: const Text('Komiku indo'),
-              onTap: () {
-                Get.offNamed(Routes.KOMIKU_HOME);
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.home,
-              ),
-              title: const Text('Komicast'),
-              onTap: () {
-                Get.offNamed(Routes.KOMICAST_HOME);
-              },
             ),
           ],
         ),

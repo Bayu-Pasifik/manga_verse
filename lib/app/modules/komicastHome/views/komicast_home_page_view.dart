@@ -53,6 +53,13 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
                         ListTile(
+                          onTap: () => Get.toNamed(Routes.HOME),
+                          leading: const Icon(Icons.home),
+                          title: Text("Komik Station",
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600, fontSize: 12)),
+                        ),
+                        ListTile(
                           onTap: () => Get.toNamed(Routes.KOMIKU_HOME),
                           leading: const Icon(Icons.home),
                           title: Text("KOMIKU",

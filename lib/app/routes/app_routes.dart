@@ -16,6 +16,8 @@ abstract class Routes {
   static const DETAIL_MANGA_KOMICAST = _Paths.DETAIL_MANGA_KOMICAST;
   static const READ_KOMICAST = _Paths.READ_KOMICAST;
   static const GENRE_KOMICAST = _Paths.GENRE_KOMICAST;
+  static const MANGAGEKO_HOME = _Paths.MANGAGEKO_HOME;
+  static const MANGAKALOT_HOME = _Paths.MANGAKALOT_HOME;
 }
 
 abstract class _Paths {
@@ -32,4 +34,6 @@ abstract class _Paths {
   static const DETAIL_MANGA_KOMICAST = '/detail-manga-komicast';
   static const READ_KOMICAST = '/read-komicast';
   static const GENRE_KOMICAST = '/genre-komicast';
+  static const MANGAGEKO_HOME = '/mangageko-home';
+  static const MANGAKALOT_HOME = '/mangakalot-home';
 }

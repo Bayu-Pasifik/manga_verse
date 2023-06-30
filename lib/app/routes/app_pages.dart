@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:manga_verse/app/data/models/komikstation/genre_komikstation.dart';
 
 import '../modules/detailManga/bindings/detail_manga_binding.dart';
 import '../modules/detailManga/views/detail_manga_view.dart';
@@ -9,16 +8,20 @@ import '../modules/detailMangaKomiku/bindings/detail_manga_komiku_binding.dart';
 import '../modules/detailMangaKomiku/views/detail_manga_komiku_view.dart';
 import '../modules/genreKomicast/bindings/genre_komicast_binding.dart';
 import '../modules/genreKomicast/views/genre_komicast_view.dart';
-import '../modules/genreKomiku/bindings/genre_komiku_binding.dart';
-import '../modules/genreKomiku/views/genre_komiku_view.dart';
 import '../modules/genreKomikstation/bindings/genre_komikstation_binding.dart';
 import '../modules/genreKomikstation/views/genre_komikstation_view.dart';
+import '../modules/genreKomiku/bindings/genre_komiku_binding.dart';
+import '../modules/genreKomiku/views/genre_komiku_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/komicastHome/bindings/komicast_home_binding.dart';
 import '../modules/komicastHome/views/komicast_home_view.dart';
 import '../modules/komikuHome/bindings/komiku_home_binding.dart';
 import '../modules/komikuHome/views/komiku_home_view.dart';
+import '../modules/mangagekoHome/bindings/mangageko_home_binding.dart';
+import '../modules/mangagekoHome/views/mangageko_home_view.dart';
+import '../modules/mangakalotHome/bindings/mangakalot_home_binding.dart';
+import '../modules/mangakalotHome/views/mangakalot_home_view.dart';
 import '../modules/readChapter/bindings/read_chapter_binding.dart';
 import '../modules/readChapter/views/read_chapter_view.dart';
 import '../modules/readKomicast/bindings/read_komicast_binding.dart';
@@ -93,6 +96,16 @@ class AppPages {
       name: _Paths.GENRE_KOMICAST,
       page: () => const GenreKomicastView(),
       binding: GenreKomicastBinding(),
+    ),
+    GetPage(
+      name: _Paths.MANGAGEKO_HOME,
+      page: () => const MangagekoHomeView(),
+      binding: MangagekoHomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.MANGAKALOT_HOME,
+      page: () => const MangakalotHomeView(),
+      binding: MangakalotHomeBinding(),
     ),
   ];
 }

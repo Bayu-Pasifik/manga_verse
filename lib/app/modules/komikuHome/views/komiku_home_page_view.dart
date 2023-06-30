@@ -20,64 +20,72 @@ class KomikuHomePageView extends GetView<KomikuHomeController> {
     return Scaffold(
       key: statekomiku,
       drawer: Drawer(
-        elevation: 0,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
+          elevation: 0,
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Text('Drawer Header'),
               ),
-              child: Text('Drawer Header'),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                // color: Colors.amber,
-                height: 200,
-                width: 200,
-                child: ExpandablePanel(
-                  header: Text(
-                    "Manga Indo",
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600, fontSize: 20),
-                  ),
-                  collapsed: Text(
-                    "====================",
-                    maxLines: 1,
-                    style: GoogleFonts.poppins(
-                        fontSize: 14, color: const Color(0XFF858597)),
-                  ),
-                  expanded: ListView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      ListTile(
-                        onTap: () => Get.toNamed(Routes.KOMIKU_HOME),
-                        leading: const Icon(Icons.home),
-                        title: Text("KOMIKU",
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w600, fontSize: 12)),
-                      ),
-                      const Divider(
-                        // thickness: 2,
-                        color: Colors.black,
-                      ),
-                      ListTile(
-                        onTap: () => Get.toNamed(Routes.KOMICAST_HOME),
-                        leading: const Icon(Icons.home),
-                        title: Text("KOMIKCAST",
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w600, fontSize: 12)),
-                      ),
-                    ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  // color: Colors.amber,
+                  height: 200,
+                  width: 200,
+                  child: ExpandablePanel(
+                    header: Text(
+                      "Manga Indo",
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w600, fontSize: 20),
+                    ),
+                    collapsed: Text(
+                      "====================",
+                      maxLines: 1,
+                      style: GoogleFonts.poppins(
+                          fontSize: 14, color: const Color(0XFF858597)),
+                    ),
+                    expanded: ListView(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: [
+                        ListTile(
+                          onTap: () => Get.toNamed(Routes.HOME),
+                          leading: const Icon(Icons.home),
+                          title: Text("Komik Station",
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600, fontSize: 12)),
+                        ),
+                        ListTile(
+                          onTap: () => Get.toNamed(Routes.KOMIKU_HOME),
+                          leading: const Icon(Icons.home),
+                          title: Text("KOMIKU",
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600, fontSize: 12)),
+                        ),
+                        const Divider(
+                          // thickness: 2,
+                          color: Colors.black,
+                        ),
+                        ListTile(
+                          onTap: () => Get.toNamed(Routes.KOMICAST_HOME),
+                          leading: const Icon(Icons.home),
+                          title: Text("KOMIKCAST",
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600, fontSize: 12)),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
       backgroundColor: const Color(0XFFF4F3FD),
       body: DefaultTabController(
         length: 2,
