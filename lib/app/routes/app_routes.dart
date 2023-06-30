@@ -18,6 +18,7 @@ abstract class Routes {
   static const GENRE_KOMICAST = _Paths.GENRE_KOMICAST;
   static const MANGAGEKO_HOME = _Paths.MANGAGEKO_HOME;
   static const MANGAKALOT_HOME = _Paths.MANGAKALOT_HOME;
+  static const DETAIL_MANGAGEKO = _Paths.DETAIL_MANGAGEKO;
 }
 
 abstract class _Paths {
@@ -36,4 +37,5 @@ abstract class _Paths {
   static const GENRE_KOMICAST = '/genre-komicast';
   static const MANGAGEKO_HOME = '/mangageko-home';
   static const MANGAKALOT_HOME = '/mangakalot-home';
+  static const DETAIL_MANGAGEKO = '/detail-mangageko';
 }

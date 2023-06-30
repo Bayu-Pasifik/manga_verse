@@ -162,7 +162,7 @@ class MangagekoHomePageView extends GetView<MangagekoHomeController> {
                         itemBuilder: (context, index) {
                           MangagekoAll trending = snapshot.data![index];
                           return GestureDetector(
-                            onTap: () => Get.toNamed(Routes.DETAIL_MANGA_KOMIKU,
+                            onTap: () => Get.toNamed(Routes.DETAIL_MANGAGEKO,
                                 arguments: trending.endpoint),
                             child: Column(
                               children: [
@@ -254,13 +254,13 @@ class MangagekoHomePageView extends GetView<MangagekoHomeController> {
                             borderRadius: BorderRadius.circular(10),
                             child: ListTile(
                               onTap: () => Get.toNamed(
-                                  Routes.DETAIL_MANGA_KOMIKU,
+                                  Routes.DETAIL_MANGAGEKO,
                                   arguments: item.endpoint),
                               leading: ConstrainedBox(
                                 constraints: const BoxConstraints(
                                   maxHeight: 200,
                                 ),
-                                child: Container(
+                                child: SizedBox(
                                   width: 50,
                                   // color: Colors.red,
                                   child: CachedNetworkImage(
@@ -346,13 +346,13 @@ class MangagekoHomePageView extends GetView<MangagekoHomeController> {
                             borderRadius: BorderRadius.circular(10),
                             child: ListTile(
                               onTap: () => Get.toNamed(
-                                  Routes.DETAIL_MANGA_KOMIKU,
+                                  Routes.DETAIL_MANGAGEKO,
                                   arguments: item.endpoint),
                               leading: ConstrainedBox(
                                 constraints: const BoxConstraints(
                                   maxHeight: 200,
                                 ),
-                                child: Container(
+                                child: SizedBox(
                                   width: 50,
                                   // color: Colors.red,
                                   child: CachedNetworkImage(
