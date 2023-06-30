@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:manga_verse/app/data/models/all_manga_model.dart';
+import 'package:manga_verse/app/data/models/komikstation/komikstation_all.dart';
 import 'package:manga_verse/app/modules/home/controllers/home_controller.dart';
 
 class TestInfiniteView extends GetView<HomeController> {
@@ -14,9 +15,9 @@ class TestInfiniteView extends GetView<HomeController> {
         title: const Text('TestInfiniteView'),
         centerTitle: true,
       ),
-      body: PagedListView<int, AllMangaModel>(
+      body: PagedListView<int, KomikstationAll>(
         pagingController: controller.allmangaController,
-        builderDelegate: PagedChildBuilderDelegate<AllMangaModel>(
+        builderDelegate: PagedChildBuilderDelegate<KomikstationAll>(
           animateTransitions: true,
           noItemsFoundIndicatorBuilder: (context) => Container(
             width: 200,

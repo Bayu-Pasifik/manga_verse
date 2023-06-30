@@ -40,8 +40,8 @@ class HomeController extends GetxController {
 
   // ! semua Manga
 
-  final PagingController<int, AllMangaModel> allmangaController =
-      PagingController<int, AllMangaModel>(firstPageKey: 114);
+  final PagingController<int, KomikstationAll> allmangaController =
+      PagingController<int, KomikstationAll>(firstPageKey: 114);
 
   void fetchData(int pageKey) async {
     try {
@@ -49,9 +49,8 @@ class HomeController extends GetxController {
           'https://manga-api.kolektifhost.com/api/komikstation/all/$pageKey');
       var response = await http.get(url);
       var tempData = json.decode(response.body)["data"];
-      var data = tempData.map((e) => AllMangaModel.fromJson(e)).toList();
-      print("Data dari fetchData all $data");
-      List<AllMangaModel> allMangaData = List<AllMangaModel>.from(data);
+      var data = tempData.map((e) => KomikstationAll.fromJson(e)).toList();
+      List<KomikstationAll> allMangaData = List<KomikstationAll>.from(data);
 
       final nextPage = json.decode(response.body)["next"];
       final isLastPage = nextPage == false;
@@ -68,8 +67,8 @@ class HomeController extends GetxController {
   }
   // ! Latest Manga
 
-  final PagingController<int, AllMangaModel> allLatestManga =
-      PagingController<int, AllMangaModel>(firstPageKey: 1);
+  final PagingController<int, KomikstationAll> allLatestManga =
+      PagingController<int, KomikstationAll>(firstPageKey: 1);
 
   void getLatest(int pageKey) async {
     try {
@@ -77,8 +76,8 @@ class HomeController extends GetxController {
           'https://manga-api.kolektifhost.com/api/komikstation/completed/$pageKey');
       var response = await http.get(url);
       var tempData = json.decode(response.body)["data"];
-      var data = tempData.map((e) => AllMangaModel.fromJson(e)).toList();
-      List<AllMangaModel> allLatest = List<AllMangaModel>.from(data);
+      var data = tempData.map((e) => KomikstationAll.fromJson(e)).toList();
+      List<KomikstationAll> allLatest = List<KomikstationAll>.from(data);
 
       final nextPage = json.decode(response.body)["next"];
       final isLastPage = nextPage == false;
@@ -107,8 +106,8 @@ class HomeController extends GetxController {
 
   // ! search manga
 
-  final PagingController<int, AllMangaModel> searchMangaController =
-      PagingController<int, AllMangaModel>(firstPageKey: 1);
+  final PagingController<int, KomikstationAll> searchMangaController =
+      PagingController<int, KomikstationAll>(firstPageKey: 1);
 
   void searchMangaAPI(String keyword, int pageKey) async {
     try {
@@ -116,17 +115,17 @@ class HomeController extends GetxController {
           'https://manga-api.kolektifhost.com/api/komikstation/search/$keyword/$pageKey');
       var response = await http.get(url);
       var tempData = json.decode(response.body)["data"];
-      var data = tempData.map((e) => AllMangaModel.fromJson(e)).toList();
-      List<AllMangaModel> allLatest = List<AllMangaModel>.from(data);
+      print("data search:$tempData");
+      var data = tempData.map((e) => KomikstationAll.fromJson(e)).toList();
+      List<KomikstationAll> listSearch = List<KomikstationAll>.from(data);
 
       final nextPage = json.decode(response.body)["next"];
       final isLastPage = nextPage == false;
 
       if (isLastPage) {
-        Get.snackbar("Error", "No more data");
-        searchMangaController.appendLastPage(allLatest);
+        searchMangaController.appendLastPage(listSearch);
       } else {
-        searchMangaController.appendPage(allLatest, pageKey + 1);
+        searchMangaController.appendPage(listSearch, pageKey + 1);
       }
     } catch (e) {
       searchMangaController.error = e;
@@ -134,52 +133,10 @@ class HomeController extends GetxController {
   }
 
   late TextEditingController searchController;
-  var nextSearch = true.obs;
-  RefreshController searchRefresh = RefreshController(initialRefresh: true);
-  var halSearch = 1.obs;
-  List<dynamic> allSearch = [];
-  Future<List<dynamic>> getSearch(String keyword) async {
-    Uri url = Uri.parse(
-        'https://manga-api.kolektifhost.com/api/komikstation/search/$keyword/$halSearch');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["data"];
-    nextSearch.value = json.decode(response.body)["next"];
-    update();
-    var tempData = data.map((e) => AllMangaModel.fromJson(e)).toList();
-    update();
-    allSearch.addAll(tempData);
-    update();
-    print("data dari search : ${tempData.length}");
-    return allSearch;
-  }
-
-  void refreshSearch(String query) async {
-    if (searchRefresh.initialRefresh == true) {
-      halSearch.value = 1;
-      allSearch.clear();
-      await getSearch(query);
-      update();
-      return searchRefresh.refreshCompleted();
-    } else {
-      return searchRefresh.refreshFailed();
-    }
-  }
-
-  void loadSearch(String query) async {
-    if (nextSearch.value == true) {
-      halSearch.value = halSearch.value + 1;
-      await getSearch(query);
-      update();
-      return searchRefresh.loadComplete();
-    } else {
-      return searchRefresh.loadNoData();
-    }
-  }
 
   void clearSearch() {
     // halSearch.value = 1;
     searchMangaController.itemList?.clear();
-    update();
     // allSearch.clear();
     searchMangaController.firstPageKey;
   }

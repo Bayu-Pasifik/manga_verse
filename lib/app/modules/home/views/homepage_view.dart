@@ -218,11 +218,11 @@ class HomepageView extends GetView<HomeController> {
                 Expanded(
                   child: TabBarView(children: [
                     // ! all manga
-                    PagedListView<int, AllMangaModel>.separated(
+                    PagedListView<int, KomikstationAll>.separated(
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: 10),
                       pagingController: controller.allmangaController,
-                      builderDelegate: PagedChildBuilderDelegate<AllMangaModel>(
+                      builderDelegate: PagedChildBuilderDelegate<KomikstationAll>(
                         animateTransitions: true,
                         itemBuilder: (context, item, index) => Material(
                             elevation: 2,
@@ -297,26 +297,23 @@ class HomepageView extends GetView<HomeController> {
                               color: const Color(0XFF54BAB9), size: 50),
                         ),
                         noItemsFoundIndicatorBuilder: (_) {
-                          Get.snackbar("Error", "No Data Found");
                           return const Center(
                             child: Text('No data found'),
                           );
                         },
                         noMoreItemsIndicatorBuilder: (_) {
-                          Get.snackbar("Error", "No more Data");
-
                           return const Center(
                             child: Text('No data found'),
                           );
                         },
                       ),
                     ),
-                    // ! New Manga
-                    PagedListView<int, AllMangaModel>.separated(
+                    // ! completed Manga
+                    PagedListView<int, KomikstationAll>.separated(
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: 10),
                       pagingController: controller.allLatestManga,
-                      builderDelegate: PagedChildBuilderDelegate<AllMangaModel>(
+                      builderDelegate: PagedChildBuilderDelegate<KomikstationAll>(
                         animateTransitions: true,
                         // noItemsFoundIndicatorBuilder: (context) =>
                         //     Fluttertoast.showToast(msg: "TEST"),
