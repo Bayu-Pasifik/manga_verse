@@ -8,18 +8,18 @@ import 'package:manga_verse/app/data/models/komiku/komiku_all_model.dart';
 import 'dart:convert';
 
 import 'package:manga_verse/app/data/models/komiku/read_komiku.dart';
+import 'package:manga_verse/app/data/models/mangageko/mangageko_all.dart';
 
 // import 'package:manga_verse/app/data/models/komiku/detail_komiku.dart';
 // import 'package:manga_verse/app/data/models/read_model.dart';
 
 void main() async {
   Uri url = Uri.parse(
-      'https://manga-api.kolektifhost.com/api/komikstation/genres/action/1');
+      'https://manga-api.kolektifhost.com/api/mangageko/search/isekai');
   var response = await http.get(url);
-  var data = json.decode(response.body)["manga"];
-  // next.value = json.decode(response.body)["next"];
-  // var tempData = data.map((e) => KomikstationAll.fromJson(e)).toList();
-  // allManga.addAll(tempData);
-  // print(allManga[0].latestChapter);
-  print(data);
+  var tempData = json.decode(response.body)["data"];
+  // print("data search:$tempData");
+  var data = tempData.map((e) => MangagekoAll.fromJson(e)).toList();
+  List<MangagekoAll> listSearch = List<MangagekoAll>.from(data);
+  print(listSearch);
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manga_verse/app/modules/mangagekoHome/views/mangageko_genre_page_view.dart';
 import 'package:manga_verse/app/modules/mangagekoHome/views/mangageko_home_page_view.dart';
+import 'package:manga_verse/app/modules/mangagekoHome/views/mangageko_search_page_view.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../controllers/mangageko_home_controller.dart';
@@ -10,7 +11,7 @@ import '../controllers/mangageko_home_controller.dart';
 class MangagekoHomeView extends GetView<MangagekoHomeController> {
   const MangagekoHomeView({Key? key}) : super(key: key);
   @override
-   Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Container(
@@ -20,7 +21,7 @@ class MangagekoHomeView extends GetView<MangagekoHomeController> {
               children: [
                 MangagekoHomePageView(),
                 const MangagekoGenrePageView(),
-                // KomikuSearchPageView()
+                const MangagekoSearchPageView()
               ],
             ),
           ),
@@ -30,8 +31,7 @@ class MangagekoHomeView extends GetView<MangagekoHomeController> {
             currentIndex: controller.currentIndex.value,
             onTap: (i) {
               if (i < 3) {
-                controller.allSearch.clear();
-                controller.searchController.clear();
+                controller.clearSearch();
               }
 
               controller.currentIndex.value = i;

@@ -99,31 +99,36 @@ class MangagekoHomeController extends GetxController {
   }
 
   // ! search manga
-
   late TextEditingController searchController;
-  var nextSearch = true.obs;
-  RefreshController searchRefresh = RefreshController(initialRefresh: true);
-  var halSearch = 1.obs;
-  List<dynamic> allSearch = [];
-  Future<List<dynamic>> getSearch(String keyword) async {
+  List<MangagekoAll> listSearch = [];
+  RefreshController searchRefresh = RefreshController();
+  RxBool isSearchResultsLoaded = false.obs;
+  RxBool isSearch = false.obs;
+
+  void setSearchResultsLoaded(bool value) {
+    isSearchResultsLoaded.value = value;
+  }
+  void setIsSearching(bool value) {
+    isSearch.value = value;
+  }
+  Future<List<MangagekoAll>> searchmanga(String keyword) async {
     Uri url = Uri.parse(
-        'https://manga-api.kolektifhost.com/api/mangageko/search/$keyword/$halSearch');
+        'https://manga-api.kolektifhost.com/api/mangageko/search/$keyword');
     var response = await http.get(url);
-    var data = json.decode(response.body)["data"];
-    nextSearch.value = json.decode(response.body)["next"];
+    var tempData = json.decode(response.body)["data"];
     update();
-    var tempData = data.map((e) => MangagekoAll.fromJson(e)).toList();
+    var data = tempData.map((e) => MangagekoAll.fromJson(e)).toList();
     update();
-    allSearch.addAll(tempData);
+    listSearch = List<MangagekoAll>.from(data);
+    isSearchResultsLoaded.value = true;
     update();
-    return allSearch;
+    return listSearch;
   }
 
   void refreshSearch(String query) async {
     if (searchRefresh.initialRefresh == true) {
-      halSearch.value = 1;
-      allSearch.clear();
-      await getSearch(query);
+      listSearch.clear();
+      await searchmanga(query);
       update();
       return searchRefresh.refreshCompleted();
     } else {
@@ -131,21 +136,16 @@ class MangagekoHomeController extends GetxController {
     }
   }
 
-  void loadSearch(String query) async {
-    if (nextSearch.value == true) {
-      halSearch.value = halSearch.value + 1;
-      await getSearch(query);
-      update();
-      return searchRefresh.loadComplete();
-    } else {
-      return searchRefresh.loadNoData();
-    }
+  void clearSearch() {
+    listSearch.clear();
   }
 
-  void clearSearch() {
-    halSearch.value = 1;
-    update();
-    allSearch.clear();
+  @override
+  void dispose() {
+    super.dispose();
+    allLatestManga.dispose();
+    allmangaController.dispose();
+    searchController.dispose();
   }
 
   @override
@@ -158,13 +158,6 @@ class MangagekoHomeController extends GetxController {
     allLatestManga.addPageRequestListener((pageKey) {
       getLatest(pageKey);
     });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    searchController.dispose();
-    allLatestManga.dispose();
-    allmangaController.dispose();
+    
   }
 }
