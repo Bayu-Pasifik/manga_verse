@@ -14,16 +14,14 @@ class MangagekoHomeView extends GetView<MangagekoHomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Container(
-          child: Obx(
-            () => IndexedStack(
-              index: controller.currentIndex.value,
-              children: [
-                MangagekoHomePageView(),
-                const MangagekoGenrePageView(),
-                const MangagekoSearchPageView()
-              ],
-            ),
+        body: Obx(
+          () => IndexedStack(
+            index: controller.currentIndex.value,
+            children: [
+              MangagekoHomePageView(),
+              const MangagekoGenrePageView(),
+              const MangagekoSearchPageView()
+            ],
           ),
         ),
         bottomNavigationBar: Obx(
