@@ -188,7 +188,7 @@ class HomepageView extends GetView<HomeController> {
                     },
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 5),
                 TabBar(
                   tabs: [
                     Tab(
@@ -221,7 +221,8 @@ class HomepageView extends GetView<HomeController> {
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: 10),
                       pagingController: controller.allmangaController,
-                      builderDelegate: PagedChildBuilderDelegate<KomikstationAll>(
+                      builderDelegate:
+                          PagedChildBuilderDelegate<KomikstationAll>(
                         animateTransitions: true,
                         itemBuilder: (context, item, index) => Material(
                             elevation: 2,
@@ -312,7 +313,8 @@ class HomepageView extends GetView<HomeController> {
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: 10),
                       pagingController: controller.allLatestManga,
-                      builderDelegate: PagedChildBuilderDelegate<KomikstationAll>(
+                      builderDelegate:
+                          PagedChildBuilderDelegate<KomikstationAll>(
                         animateTransitions: true,
                         // noItemsFoundIndicatorBuilder: (context) =>
                         //     Fluttertoast.showToast(msg: "TEST"),

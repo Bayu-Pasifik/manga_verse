@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:manga_verse/app/data/models/all_manga_model.dart';
 import 'package:manga_verse/app/data/models/komikstation/komikstation_all.dart';
 import 'package:manga_verse/app/routes/app_pages.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
