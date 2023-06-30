@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:manga_verse/app/data/models/komikstation/genre_komikstation.dart';
 
 import '../modules/detailManga/bindings/detail_manga_binding.dart';
 import '../modules/detailManga/views/detail_manga_view.dart';
@@ -10,8 +11,8 @@ import '../modules/genreKomicast/bindings/genre_komicast_binding.dart';
 import '../modules/genreKomicast/views/genre_komicast_view.dart';
 import '../modules/genreKomiku/bindings/genre_komiku_binding.dart';
 import '../modules/genreKomiku/views/genre_komiku_view.dart';
-import '../modules/genreManhwaindo/bindings/genre_manhwaindo_binding.dart';
-import '../modules/genreManhwaindo/views/genre_manhwaindo_view.dart';
+import '../modules/genreKomikstation/bindings/genre_komikstation_binding.dart';
+import '../modules/genreKomikstation/views/genre_komikstation_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/komicastHome/bindings/komicast_home_binding.dart';
@@ -70,7 +71,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.GENRE_MANHWAINDO,
-      page: () => const GenreManhwaindoView(),
+      page: () => const GenreKomikstationView(),
       binding: GenreManhwaindoBinding(),
     ),
     GetPage(

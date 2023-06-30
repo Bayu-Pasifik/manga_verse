@@ -2,9 +2,10 @@ import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:manga_verse/app/data/models/all_manga_model.dart';
+import 'package:manga_verse/app/data/models/komikstation/komikstation_all.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class GenreManhwaindoController extends GetxController {
+class GenreKomikstationController extends GetxController {
   var isGrid = false.obs;
 
   void gridMode() {
@@ -32,11 +33,12 @@ class GenreManhwaindoController extends GetxController {
   var next = true.obs;
 
   Future<List<dynamic>> getMangaBaseGenre(String genre) async {
-    Uri url = Uri.parse('http://10.0.2.2:8000/genres/$genre/$hal');
+    Uri url = Uri.parse(
+        'https://manga-api.kolektifhost.com/api/komikstation/genres/$genre/${hal}');
     var response = await http.get(url);
-    var data = json.decode(response.body)["manhwas"];
-    next.value = json.decode(response.body)["hasNextPage"];
-    var tempData = data.map((e) => AllMangaModel.fromJson(e)).toList();
+    var data = json.decode(response.body)["manga"];
+    next.value = json.decode(response.body)["next"];
+    var tempData = data.map((e) => KomikstationAll.fromJson(e)).toList();
     allManga.addAll(tempData);
     print(allManga[0].latestChapter);
     return allManga;

@@ -13,11 +13,13 @@ import 'package:manga_verse/app/data/models/komiku/read_komiku.dart';
 // import 'package:manga_verse/app/data/models/read_model.dart';
 
 void main() async {
-  Uri url =
-      Uri.parse('https://manga-api.kolektifhost.com/api/komikstation/popular/1');
+  Uri url = Uri.parse(
+      'https://manga-api.kolektifhost.com/api/komikstation/genres/action/1');
   var response = await http.get(url);
-  var data = json.decode(response.body)["data"];
-
-  var tempData = data.map((e) => KomikstationAll.fromJson(e)).toList();
-  print(tempData);
+  var data = json.decode(response.body)["manga"];
+  // next.value = json.decode(response.body)["next"];
+  // var tempData = data.map((e) => KomikstationAll.fromJson(e)).toList();
+  // allManga.addAll(tempData);
+  // print(allManga[0].latestChapter);
+  print(data);
 }

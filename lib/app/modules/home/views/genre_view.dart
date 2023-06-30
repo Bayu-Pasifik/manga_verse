@@ -8,12 +8,10 @@ import 'package:manga_verse/app/modules/home/controllers/home_controller.dart';
 import 'package:manga_verse/app/routes/app_pages.dart';
 
 class GenreView extends GetView<HomeController> {
-  GenreView({Key? key}) : super(key: key);
-  final GlobalKey<ScaffoldState> genreState = GlobalKey<ScaffoldState>();
+  const GenreView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: genreState,
         backgroundColor: const Color(0XFFF4F3FD),
         body: SafeArea(
           child: Padding(

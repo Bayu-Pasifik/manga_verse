@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:manga_verse/app/data/models/all_manga_model.dart';
 import 'package:manga_verse/app/data/models/genre_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:manga_verse/app/data/models/komikstation/komikstation_all.dart';
 import 'dart:convert';
 
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+
 
 class HomeController extends GetxController {
   // ! Greting

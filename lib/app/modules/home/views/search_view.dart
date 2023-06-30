@@ -9,7 +9,6 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:manga_verse/app/data/models/komikstation/komikstation_all.dart';
 import 'package:manga_verse/app/modules/home/controllers/home_controller.dart';
 import 'package:manga_verse/app/routes/app_pages.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class SearchView extends GetView<HomeController> {
   const SearchView({Key? key}) : super(key: key);

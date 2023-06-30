@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:manga_verse/app/data/models/all_manga_model.dart';
+import 'package:manga_verse/app/data/models/komikstation/komikstation_all.dart';
 import 'package:manga_verse/app/routes/app_pages.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '../controllers/genre_manhwaindo_controller.dart';
+import '../controllers/genre_komikstation_controller.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
-class GenreManhwaindoView extends GetView<GenreManhwaindoController> {
-  const GenreManhwaindoView({Key? key}) : super(key: key);
+class GenreKomikstationView extends GetView<GenreKomikstationController> {
+  const GenreKomikstationView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final String genre = Get.arguments;
@@ -64,7 +65,7 @@ class GenreManhwaindoView extends GetView<GenreManhwaindoController> {
                       ],
                     ),
                     Expanded(
-                      child: GetBuilder<GenreManhwaindoController>(
+                      child: GetBuilder<GenreKomikstationController>(
                         builder: (c) {
                           return SmartRefresher(
                               controller: c.allRefresh,
@@ -80,7 +81,7 @@ class GenreManhwaindoView extends GetView<GenreManhwaindoController> {
                                           separatorBuilder: (context, index) =>
                                               const SizedBox(height: 10),
                                           itemBuilder: (context, index) {
-                                            AllMangaModel manga =
+                                            KomikstationAll manga =
                                                 c.allManga[index];
                                             return Material(
                                               elevation: 2,
@@ -166,7 +167,7 @@ class GenreManhwaindoView extends GetView<GenreManhwaindoController> {
                                               const SliverGridDelegateWithFixedCrossAxisCount(
                                                   crossAxisCount: 2),
                                           itemBuilder: (_, index) {
-                                            AllMangaModel manga =
+                                            KomikstationAll manga =
                                                 controller.allManga[index];
                                             return GestureDetector(
                                               onTap: () => Get.toNamed(
