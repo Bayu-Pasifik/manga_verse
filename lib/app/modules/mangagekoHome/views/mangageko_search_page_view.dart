@@ -123,7 +123,7 @@ class MangagekoSearchPageView extends GetView<MangagekoHomeController> {
                                                   ),
                                                 ),
                                                 placeholder: (context, url) =>
-                                                    const CircularProgressIndicator(),
+                                                  const  Center(child:  CircularProgressIndicator()),
                                                 errorWidget:
                                                     (context, url, error) =>
                                                         Image.asset(

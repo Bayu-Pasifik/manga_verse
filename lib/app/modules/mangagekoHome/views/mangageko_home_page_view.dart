@@ -25,11 +25,15 @@ class MangagekoHomePageView extends GetView<MangagekoHomeController> {
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                color: Color(0XFF54BAB9),
               ),
-              child: Text('Drawer Header'),
+              child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text('Manga Verse',
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w600, fontSize: 20))),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -186,7 +190,7 @@ class MangagekoHomePageView extends GetView<MangagekoHomeController> {
                 const SizedBox(height: 10),
                 Container(
                   width: context.width,
-                  height: 200,
+                  height: 150,
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(10)),
                   // color: Colors.amber,
@@ -217,8 +221,8 @@ class MangagekoHomePageView extends GetView<MangagekoHomeController> {
                             child: Column(
                               children: [
                                 Container(
-                                  width: 150,
-                                  height: 150,
+                                  width: 120,
+                                  height: 120,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10)),
                                   child: CachedNetworkImage(
@@ -233,8 +237,8 @@ class MangagekoHomePageView extends GetView<MangagekoHomeController> {
                                         ),
                                       ),
                                     ),
-                                    placeholder: (context, url) =>
-                                        const CircularProgressIndicator(),
+                                    placeholder: (context, url) => const Center(
+                                        child: CircularProgressIndicator()),
                                     errorWidget: (context, url, error) =>
                                         Image.asset(
                                       "assets/images/no-image.png",
@@ -324,8 +328,8 @@ class MangagekoHomePageView extends GetView<MangagekoHomeController> {
                                         ),
                                       ),
                                     ),
-                                    placeholder: (context, url) =>
-                                        const CircularProgressIndicator(),
+                                    placeholder: (context, url) => const Center(
+                                        child: CircularProgressIndicator()),
                                     errorWidget: (context, url, error) =>
                                         Image.asset(
                                       "assets/images/no-image.png",
@@ -415,8 +419,8 @@ class MangagekoHomePageView extends GetView<MangagekoHomeController> {
                                         ),
                                       ),
                                     ),
-                                    placeholder: (context, url) =>
-                                        const CircularProgressIndicator(),
+                                    placeholder: (context, url) => const Center(
+                                        child: CircularProgressIndicator()),
                                     errorWidget: (context, url, error) =>
                                         Image.asset(
                                       "assets/images/no-image.png",

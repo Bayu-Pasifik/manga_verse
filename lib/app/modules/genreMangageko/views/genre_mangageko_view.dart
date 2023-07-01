@@ -120,7 +120,7 @@ class GenreMangagekoView extends GetView<GenreMangagekoController> {
                                                       ),
                                                       placeholder: (context,
                                                               url) =>
-                                                          const CircularProgressIndicator(),
+                                                         const Center(child:  CircularProgressIndicator()),
                                                       errorWidget: (context,
                                                               url, error) =>
                                                           Image.asset(
@@ -157,7 +157,9 @@ class GenreMangagekoView extends GetView<GenreMangagekoController> {
                                           shrinkWrap: true,
                                           gridDelegate:
                                               const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2),
+                                                  crossAxisCount: 3,
+                                                  mainAxisExtent: 180,
+                                                  mainAxisSpacing: 10),
                                           itemBuilder: (_, index) {
                                             MangagekoAll manga =
                                                 controller.allManga[index];
@@ -194,7 +196,7 @@ class GenreMangagekoView extends GetView<GenreMangagekoController> {
                                                         ),
                                                         placeholder: (context,
                                                                 url) =>
-                                                            const CircularProgressIndicator(),
+                                                           const Center(child:  CircularProgressIndicator()),
                                                         errorWidget: (context,
                                                                 url, error) =>
                                                             Image.asset(
@@ -203,11 +205,22 @@ class GenreMangagekoView extends GetView<GenreMangagekoController> {
                                                         ),
                                                       ),
                                                     ),
-                                                    Text(
-                                                      "${manga.title}",
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                                    SizedBox(
+                                                      width: 100,
+                                                      height: 20,
+                                                      child: Text(
+                                                          "${manga.title}",
+                                                          maxLines: 1,
+                                                          style: GoogleFonts.inter(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 14,
+                                                              textStyle:
+                                                                  const TextStyle(
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis))),
                                                     )
                                                   ],
                                                 ),

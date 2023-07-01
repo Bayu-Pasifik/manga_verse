@@ -157,7 +157,9 @@ class GenreMangakalotView extends GetView<GenreMangakalotController> {
                                           shrinkWrap: true,
                                           gridDelegate:
                                               const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2),
+                                                  crossAxisCount: 3,
+                                                  mainAxisExtent: 180,
+                                                  mainAxisSpacing: 10),
                                           itemBuilder: (_, index) {
                                             MangakalotAll manga =
                                                 controller.allManga[index];
@@ -203,11 +205,22 @@ class GenreMangakalotView extends GetView<GenreMangakalotController> {
                                                         ),
                                                       ),
                                                     ),
-                                                    Text(
-                                                      "${manga.title}",
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                                    SizedBox(
+                                                      width: 100,
+                                                      height: 20,
+                                                      child: Text(
+                                                          "${manga.title}",
+                                                          maxLines: 1,
+                                                          style: GoogleFonts.inter(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 14,
+                                                              textStyle:
+                                                                  const TextStyle(
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis))),
                                                     )
                                                   ],
                                                 ),
