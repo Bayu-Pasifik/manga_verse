@@ -41,6 +41,7 @@ class KomikuGenrePageView extends GetView<KomikuHomeController> {
                           ],
                         ),
                       ),
+                      const SizedBox(height: 10),
                       Expanded(
                         child: FutureBuilder(
                           future: controller.listGenre(),
@@ -49,6 +50,7 @@ class KomikuGenrePageView extends GetView<KomikuHomeController> {
                               return Center(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
                                       "Please Wait",
@@ -71,6 +73,7 @@ class KomikuGenrePageView extends GetView<KomikuHomeController> {
                                   ConnectionState.waiting) {
                                 return Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
                                       "Please Wait",
@@ -86,7 +89,7 @@ class KomikuGenrePageView extends GetView<KomikuHomeController> {
 
                             return ListView.separated(
                               separatorBuilder: (context, index) =>
-                                  const SizedBox(height: 10),
+                                  const SizedBox(height: 20),
                               itemCount: snapshot.data?.length ?? 0,
                               itemBuilder: (context, index) {
                                 GenresModel genre = snapshot.data![index];
@@ -105,7 +108,8 @@ class KomikuGenrePageView extends GetView<KomikuHomeController> {
                             );
                           },
                         ),
-                      )
+                      ),
+                     
                     ]))));
   }
 }

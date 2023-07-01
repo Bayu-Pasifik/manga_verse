@@ -95,7 +95,7 @@ class GenreKomikuView extends GetView<GenreKomikuController> {
                                                       const BoxConstraints(
                                                     maxHeight: 200,
                                                   ),
-                                                  child: Container(
+                                                  child: SizedBox(
                                                     width: 50,
                                                     // color: Colors.red,
                                                     child: CachedNetworkImage(
@@ -163,7 +163,9 @@ class GenreKomikuView extends GetView<GenreKomikuController> {
                                           shrinkWrap: true,
                                           gridDelegate:
                                               const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2),
+                                                  crossAxisCount: 2,
+                                                  mainAxisExtent: 170,
+                                                  mainAxisSpacing: 10),
                                           itemBuilder: (_, index) {
                                             Recommended manga =
                                                 controller.allManga[index];
@@ -171,57 +173,66 @@ class GenreKomikuView extends GetView<GenreKomikuController> {
                                               onTap: () => Get.toNamed(
                                                   Routes.DETAIL_MANGA_KOMIKU,
                                                   arguments: manga.endpoint),
-                                              child: Card(
-                                                child: Column(
-                                                  children: [
-                                                    Container(
-                                                      width: 150,
-                                                      height: 150,
-                                                      child: CachedNetworkImage(
-                                                        imageUrl: manga.thumb!
-                                                                .startsWith(
-                                                                    "https:///")
-                                                            ? manga.thumb!
-                                                                .replaceFirst(
-                                                                    "https:///",
-                                                                    "https://")
-                                                            : manga.thumb!,
-                                                        imageBuilder: (context,
-                                                                imageProvider) =>
-                                                            Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8),
+                                              child: Column(
+                                                children: [
+                                                  SizedBox(
+                                                    width: 150,
+                                                    height: 150,
+                                                    child: CachedNetworkImage(
+                                                      imageUrl: manga
+                                                              .thumb!
+                                                              .startsWith(
+                                                                  "https:///")
+                                                          ? manga.thumb!
+                                                              .replaceFirst(
+                                                                  "https:///",
+                                                                  "https://")
+                                                          : manga.thumb!,
+                                                      imageBuilder: (context,
+                                                              imageProvider) =>
+                                                          Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          image:
+                                                              DecorationImage(
                                                             image:
-                                                                DecorationImage(
-                                                              image:
-                                                                  imageProvider,
-                                                              fit: BoxFit.cover,
-                                                            ),
+                                                                imageProvider,
+                                                            fit: BoxFit.cover,
                                                           ),
                                                         ),
-                                                        placeholder: (context,
-                                                                url) =>
-                                                            const CircularProgressIndicator(),
-                                                        errorWidget: (context,
-                                                                url, error) =>
-                                                            Image.asset(
-                                                          "assets/images/no-image.png",
-                                                          fit: BoxFit.cover,
-                                                        ),
+                                                      ),
+                                                      placeholder: (context,
+                                                              url) =>
+                                                          const Center(
+                                                              child:
+                                                                  CircularProgressIndicator()),
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          Image.asset(
+                                                        "assets/images/no-image.png",
+                                                        fit: BoxFit.cover,
                                                       ),
                                                     ),
-                                                    Text(
-                                                      "${manga.title}",
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    )
-                                                  ],
-                                                ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 100,
+                                                    height: 20,
+                                                    child: Text(
+                                                        "${manga.title}",
+                                                        maxLines: 1,
+                                                        style: GoogleFonts.inter(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: 14,
+                                                            textStyle: const TextStyle(
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis))),
+                                                  )
+                                                ],
                                               ),
                                             );
                                           },

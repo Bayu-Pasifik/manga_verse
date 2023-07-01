@@ -14,25 +14,23 @@ class KomikuHomeView extends GetView<KomikuHomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Container(
-          child: Obx(
-            () => IndexedStack(
-              index: controller.currentIndex.value,
-              children: [
-                KomikuHomePageView(),
-                KomikuGenrePageView(),
-                KomikuSearchPageView()
-              ],
-            ),
+        body: Obx(
+          () => IndexedStack(
+            index: controller.currentIndex.value,
+            children: [
+              KomikuHomePageView(),
+              const KomikuGenrePageView(),
+              const KomikuSearchPageView()
+            ],
           ),
         ),
         bottomNavigationBar: Obx(
           () => SalomonBottomBar(
             currentIndex: controller.currentIndex.value,
             onTap: (i) {
-              if (i < 3) {
-                controller.allSearch.clear();
+              if (i < 2) {
                 controller.searchController.clear();
+                controller.clearSearch();
               }
 
               controller.currentIndex.value = i;
@@ -47,7 +45,7 @@ class KomikuHomeView extends GetView<KomikuHomeController> {
 
               /// Likes
               SalomonBottomBarItem(
-                icon: Container(
+                icon: SizedBox(
                     width: 40,
                     height: 30,
                     child: Image.asset("assets/images/genre.png")),

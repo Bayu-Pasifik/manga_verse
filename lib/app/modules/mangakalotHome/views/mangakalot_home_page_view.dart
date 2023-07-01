@@ -24,11 +24,15 @@ class MangakalotHomePageView extends GetView<MangakalotHomeController> {
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                color: Color(0XFF54BAB9),
               ),
-              child: Text('Drawer Header'),
+              child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text('Manga Verse',
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w600, fontSize: 20))),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

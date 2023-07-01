@@ -138,6 +138,7 @@ class MangakalotHomeController extends GetxController {
   void clearSearch() {
     searchMangaController.itemList?.clear();
     searchMangaController.firstPageKey;
+    searchMangaController.refresh();
   }
 
   @override
@@ -146,6 +147,16 @@ class MangakalotHomeController extends GetxController {
     allLatestManga.dispose();
     allmangaController.dispose();
     searchController.dispose();
+    searchMangaController.dispose();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    allLatestManga.dispose();
+    allmangaController.dispose();
+    searchController.dispose();
+    searchMangaController.dispose();
   }
 
   @override
