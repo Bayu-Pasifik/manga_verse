@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:manga_verse/app/data/models/mangakalot/mangakalot_read.dart';
 
 import '../controllers/read_mangakalot_controller.dart';
 
@@ -8,16 +11,64 @@ class ReadMangakalotView extends GetView<ReadMangakalotController> {
   const ReadMangakalotView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final String url = Get.arguments;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ReadMangakalotView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'ReadMangakalotView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      body: FutureBuilder(
+        future: controller.getChapter(url),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Please Wait",
+                    style: GoogleFonts.poppins(
+                      color: const Color(0XFFB8B8D2),
+                      fontSize: 24,
+                    ),
+                  ),
+                  const CircularProgressIndicator(),
+                ],
+              ),
+            );
+          }
+          if (snapshot.hasError) {
+            return Center(
+              child: Text("${snapshot.error}"),
+            );
+          }
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            itemCount: controller.allchapter.length,
+            itemBuilder: (context, index) {
+              MangakalotRead chapter = controller.allchapter[index];
+              return CachedNetworkImage(
+                imageUrl: chapter.url ?? "",
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Please Wait",
+                      style: GoogleFonts.poppins(
+                        color: const Color(0XFFB8B8D2),
+                        fontSize: 24,
+                      ),
+                    ),
+                    const CircularProgressIndicator(),
+                  ],
+                ),
+                errorWidget: (context, url, error) => Image.asset(
+                  "assets/images/no-image.png",
+                  fit: BoxFit.cover,
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
