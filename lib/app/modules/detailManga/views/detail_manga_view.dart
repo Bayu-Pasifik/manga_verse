@@ -139,7 +139,7 @@ class DetailMangaView extends GetView<DetailMangaController> {
                                   Expanded(
                                     child: Column(
                                       children: [
-                                        Container(
+                                        SizedBox(
                                             width: 500,
                                             child: Text(
                                               "${detail.title}",

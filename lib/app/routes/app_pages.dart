@@ -38,6 +38,8 @@ import '../modules/readKomiku/bindings/read_komiku_binding.dart';
 import '../modules/readKomiku/views/read_komiku_view.dart';
 import '../modules/readMangageko/bindings/read_mangageko_binding.dart';
 import '../modules/readMangageko/views/read_mangageko_view.dart';
+import '../modules/readMangakalot/bindings/read_mangakalot_binding.dart';
+import '../modules/readMangakalot/views/read_mangakalot_view.dart';
 
 part 'app_routes.dart';
 
@@ -141,6 +143,11 @@ class AppPages {
       name: _Paths.GENRE_MANGAKALOT,
       page: () => const GenreMangakalotView(),
       binding: GenreMangakalotBinding(),
+    ),
+    GetPage(
+      name: _Paths.READ_MANGAKALOT,
+      page: () => const ReadMangakalotView(),
+      binding: ReadMangakalotBinding(),
     ),
   ];
 }
