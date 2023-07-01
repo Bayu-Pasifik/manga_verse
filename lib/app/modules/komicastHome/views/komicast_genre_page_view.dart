@@ -8,42 +8,10 @@ import 'package:manga_verse/app/modules/komicastHome/controllers/komicast_home_c
 import 'package:manga_verse/app/routes/app_pages.dart';
 
 class KomicastGenrePageView extends GetView<KomicastHomeController> {
-  KomicastGenrePageView({Key? key}) : super(key: key);
+  const KomicastGenrePageView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: Drawer(
-          child: ListView(
-            // Important: Remove any padding from the ListView.
-            padding: EdgeInsets.zero,
-            children: [
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-                child: Text('Drawer Header'),
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.home,
-                ),
-                title: const Text('Manhwa Indo'),
-                onTap: () {
-                  Get.offNamed(Routes.HOME);
-                },
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.home,
-                ),
-                title: const Text('Komiku indo'),
-                onTap: () {
-                  Get.offNamed(Routes.KOMIKU_HOME);
-                },
-              ),
-            ],
-          ),
-        ),
         backgroundColor: const Color(0XFFF4F3FD),
         body: SafeArea(
             child: Padding(
@@ -73,6 +41,7 @@ class KomicastGenrePageView extends GetView<KomicastHomeController> {
                           ],
                         ),
                       ),
+                      const SizedBox(height: 20),
                       Expanded(
                         child: FutureBuilder(
                           future: controller.listGenre(),
@@ -81,6 +50,7 @@ class KomicastGenrePageView extends GetView<KomicastHomeController> {
                               return Center(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
                                       "Please Wait",
@@ -103,6 +73,7 @@ class KomicastGenrePageView extends GetView<KomicastHomeController> {
                                   ConnectionState.waiting) {
                                 return Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
                                       "Please Wait",
@@ -117,8 +88,9 @@ class KomicastGenrePageView extends GetView<KomicastHomeController> {
                             }
 
                             return ListView.separated(
+                              physics: const BouncingScrollPhysics(),
                               separatorBuilder: (context, index) =>
-                                  const SizedBox(height: 10),
+                                  const SizedBox(height: 20),
                               itemCount: snapshot.data?.length ?? 0,
                               itemBuilder: (context, index) {
                                 GenreKomicast genre = snapshot.data![index];

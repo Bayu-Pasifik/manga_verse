@@ -4,9 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:manga_verse/app/data/models/komikcast/genre_komicast.dart';
 import 'dart:convert';
-
 import 'package:manga_verse/app/data/models/komikcast/komikcast_all.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class KomicastHomeController extends GetxController {
   // ! Greating
@@ -32,7 +30,6 @@ class KomicastHomeController extends GetxController {
         'https://manga-api.kolektifhost.com/api/komikcast/popular/1'); // Perbarui URL dengan menambahkan direktori 'api'
     var response = await http.get(url);
     var data = json.decode(response.body)["data"];
-    print(data);
     var tempData = data.map((e) => KomikcastAll.fromJson(e)).toList();
     return tempData;
   }
@@ -49,7 +46,6 @@ class KomicastHomeController extends GetxController {
       var response = await http.get(url);
       var tempData = json.decode(response.body)["data"];
       var data = tempData.map((e) => KomikcastAll.fromJson(e)).toList();
-      print("Data dari fetchData all $data");
       List<KomikcastAll> allMangaData = List<KomikcastAll>.from(data);
 
       final nextPage = json.decode(response.body)["next"];
@@ -104,60 +100,67 @@ class KomicastHomeController extends GetxController {
     return tempData;
   }
 
+  // ! search manga
+
+  final PagingController<int, KomikcastAll> searchMangaController =
+      PagingController<int, KomikcastAll>(firstPageKey: 1);
+  RxBool isSearchResultsLoaded = false.obs;
+  RxBool isSearch = false.obs;
+
+  void setSearchResultsLoaded(bool value) {
+    isSearchResultsLoaded.value = value;
+  }
+
+  void setIsSearching(bool value) {
+    isSearch.value = value;
+  }
+
+  void searchMangaAPI(String keyword, int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://manga-api.kolektifhost.com/api/komikcast/search/$keyword/$pageKey');
+      var response = await http.get(url);
+      var tempData = json.decode(response.body)["data"];
+      var data = tempData.map((e) => KomikcastAll.fromJson(e)).toList();
+      List<KomikcastAll> listSearch = List<KomikcastAll>.from(data);
+
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+
+      if (isLastPage) {
+        searchMangaController.appendLastPage(listSearch);
+      } else {
+        searchMangaController.appendPage(listSearch, pageKey + 1);
+      }
+    } catch (e) {
+      searchMangaController.error = e;
+    }
+  }
+
   late TextEditingController searchController;
-  var nextSearch = true.obs;
-  RefreshController searchRefresh = RefreshController(initialRefresh: true);
-  var halSearch = 1.obs;
-  List<dynamic> allSearch = [];
-  Future<List<dynamic>> getSearch(String keyword) async {
-    Uri url = Uri.parse(
-        'https://manga-api.kolektifhost.com/api/komikcast/search$keyword/$halSearch');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["data"];
-    nextSearch.value = json.decode(response.body)["next"];
-    update();
-    var tempData = data.map((e) => KomikcastAll.fromJson(e)).toList();
-    update();
-    allSearch.addAll(tempData);
-    update();
-    return allSearch;
-  }
-
-  void refreshSearch(String query) async {
-    if (searchRefresh.initialRefresh == true) {
-      halSearch.value = 1;
-      allSearch.clear();
-      await getSearch(query);
-      update();
-      return searchRefresh.refreshCompleted();
-    } else {
-      return searchRefresh.refreshFailed();
-    }
-  }
-
-  void loadSearch(String query) async {
-    if (nextSearch.value == true) {
-      halSearch.value = halSearch.value + 1;
-      await getSearch(query);
-      update();
-      return searchRefresh.loadComplete();
-    } else {
-      return searchRefresh.loadNoData();
-    }
-  }
 
   void clearSearch() {
-    halSearch.value = 1;
-    update();
-    allSearch.clear();
+    searchMangaController.itemList?.clear();
+    searchMangaController.firstPageKey;
+    searchMangaController.refresh();
   }
 
   @override
   void dispose() {
     super.dispose();
-    // allLatestManga.dispose();
+    allLatestManga.dispose();
     allmangaController.dispose();
     searchController.dispose();
+    searchMangaController.dispose();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    allLatestManga.dispose();
+    allmangaController.dispose();
+    searchController.dispose();
+    searchMangaController.dispose();
   }
 
   @override
@@ -169,6 +172,9 @@ class KomicastHomeController extends GetxController {
     });
     allLatestManga.addPageRequestListener((pageKey) {
       getLatest(pageKey);
+    });
+    searchMangaController.addPageRequestListener((pageKey) {
+      searchMangaAPI(searchController.text, pageKey);
     });
   }
 }

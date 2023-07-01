@@ -14,23 +14,22 @@ class KomicastHomeView extends GetView<KomicastHomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Container(
-          child: Obx(
-            () => IndexedStack(
-              index: controller.currentIndex.value,
-              children: [
-                KomicastHomePageView(),
-                KomicastGenrePageView(),
-                KomicastSearchPageView()
-              ],
-            ),
+        body: Obx(
+          () => IndexedStack(
+            index: controller.currentIndex.value,
+            children: [
+              KomicastHomePageView(),
+              const KomicastGenrePageView(),
+              const KomicastSearchPageView()
+            ],
           ),
         ),
         bottomNavigationBar: Obx(
           () => SalomonBottomBar(
             currentIndex: controller.currentIndex.value,
             onTap: (i) {
-              if (i < 3) {
+              if (i <= 2) {
+                controller.searchController.clear();
                 controller.clearSearch();
               }
               controller.currentIndex.value = i;

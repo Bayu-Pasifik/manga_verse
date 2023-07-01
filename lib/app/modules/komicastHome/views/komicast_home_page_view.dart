@@ -21,65 +21,121 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
         drawer: Drawer(
           elevation: 0,
           child: ListView(
-            // Important: Remove any padding from the ListView.
             padding: EdgeInsets.zero,
             children: [
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-                child: Text('Drawer Header'),
+              DrawerHeader(
+                decoration: const BoxDecoration(color: Color(0XFF54BAB9)),
+                child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Text('Manga Verse',
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600, fontSize: 20))),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  // color: Colors.amber,
-                  height: 200,
-                  width: 200,
-                  child: ExpandablePanel(
-                    header: Text(
-                      "Manga Indo",
-                      style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w600, fontSize: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      // color: Colors.amber,
+                      height: context.height / 2,
+                      width: context.width,
+                      child: ExpandablePanel(
+                        header: Text(
+                          "Manga Indo",
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w600, fontSize: 20),
+                        ),
+                        collapsed: Text(
+                          "================================",
+                          maxLines: 1,
+                          style: GoogleFonts.poppins(
+                              fontSize: 14, color: const Color(0XFF858597)),
+                        ),
+                        expanded: Column(
+                          children: [
+                            ListTile(
+                              onTap: () => Get.toNamed(Routes.HOME),
+                              leading: const Icon(Icons.home),
+                              title: Text("KOMIK STATION",
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12)),
+                            ),
+                            const Divider(
+                              // thickness: 2,
+                              color: Colors.black,
+                            ),
+                            ListTile(
+                              onTap: () => Get.toNamed(Routes.KOMIKU_HOME),
+                              leading: const Icon(Icons.home),
+                              title: Text("KOMIKU",
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12)),
+                            ),
+                            const Divider(
+                              // thickness: 2,
+                              color: Colors.black,
+                            ),
+                            ListTile(
+                              onTap: () => Get.toNamed(Routes.KOMICAST_HOME),
+                              leading: const Icon(Icons.home),
+                              title: Text("KOMIKCAST",
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12)),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    collapsed: Text(
-                      "====================",
-                      maxLines: 1,
-                      style: GoogleFonts.poppins(
-                          fontSize: 14, color: const Color(0XFF858597)),
+                    SizedBox(
+                      height: context.height / 2,
+                      width: context.width,
+                      child: ExpandablePanel(
+                        header: Text(
+                          "Manga Eng",
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w600, fontSize: 20),
+                        ),
+                        collapsed: Text(
+                          "================================",
+                          maxLines: 1,
+                          style: GoogleFonts.poppins(
+                              fontSize: 14, color: const Color(0XFF858597)),
+                        ),
+                        expanded: Column(
+                          children: [
+                            ListTile(
+                              onTap: () => Get.toNamed(Routes.MANGAGEKO_HOME),
+                              leading: const Icon(Icons.home),
+                              title: Text("MANGAGEKO",
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12)),
+                            ),
+                            const Divider(
+                              // thickness: 2,
+                              color: Colors.black,
+                            ),
+                            ListTile(
+                              onTap: () => Get.toNamed(Routes.MANGAKALOT_HOME),
+                              leading: const Icon(Icons.home),
+                              title: Text("MANGAKALOT",
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12)),
+                            ),
+                            const Divider(
+                              // thickness: 2,
+                              color: Colors.black,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    expanded: ListView(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: [
-                        ListTile(
-                          onTap: () => Get.toNamed(Routes.HOME),
-                          leading: const Icon(Icons.home),
-                          title: Text("Komik Station",
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w600, fontSize: 12)),
-                        ),
-                        ListTile(
-                          onTap: () => Get.toNamed(Routes.KOMIKU_HOME),
-                          leading: const Icon(Icons.home),
-                          title: Text("KOMIKU",
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w600, fontSize: 12)),
-                        ),
-                        const Divider(
-                          // thickness: 2,
-                          color: Colors.black,
-                        ),
-                        ListTile(
-                          onTap: () => Get.toNamed(Routes.KOMICAST_HOME),
-                          leading: const Icon(Icons.home),
-                          title: Text("KOMIKCAST",
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w600, fontSize: 12)),
-                        ),
-                      ],
-                    ),
-                  ),
+                  ],
                 ),
               ),
             ],
@@ -135,7 +191,7 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                     const SizedBox(height: 10),
                     Container(
                       width: context.width,
-                      height: 200,
+                      height: 150,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10)),
                       // color: Colors.amber,
@@ -167,8 +223,8 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                                 child: Column(
                                   children: [
                                     Container(
-                                      width: 150,
-                                      height: 150,
+                                      width: 120,
+                                      height: 120,
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10)),
@@ -191,7 +247,9 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                                           ),
                                         ),
                                         placeholder: (context, url) =>
-                                            const CircularProgressIndicator(),
+                                            const Center(
+                                                child:
+                                                    CircularProgressIndicator()),
                                         errorWidget: (context, url, error) =>
                                             Image.asset(
                                           "assets/images/no-image.png",
@@ -268,7 +326,7 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                                     constraints: const BoxConstraints(
                                       maxHeight: 200,
                                     ),
-                                    child: Container(
+                                    child: SizedBox(
                                       width: 50,
                                       // color: Colors.red,
                                       child: CachedNetworkImage(
@@ -286,7 +344,9 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                                           ),
                                         ),
                                         placeholder: (context, url) =>
-                                            const CircularProgressIndicator(),
+                                            const Center(
+                                                child:
+                                                    CircularProgressIndicator()),
                                         errorWidget: (context, url, error) =>
                                             Image.asset(
                                           "assets/images/no-image.png",
@@ -364,7 +424,7 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                                     constraints: const BoxConstraints(
                                       maxHeight: 200,
                                     ),
-                                    child: Container(
+                                    child: SizedBox(
                                       width: 50,
                                       // color: Colors.red,
                                       child: CachedNetworkImage(
@@ -382,7 +442,9 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                                           ),
                                         ),
                                         placeholder: (context, url) =>
-                                            const CircularProgressIndicator(),
+                                            const Center(
+                                                child:
+                                                    CircularProgressIndicator()),
                                         errorWidget: (context, url, error) =>
                                             Image.asset(
                                           "assets/images/no-image.png",
