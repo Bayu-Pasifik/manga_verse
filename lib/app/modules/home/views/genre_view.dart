@@ -41,7 +41,7 @@ class GenreView extends GetView<HomeController> {
               ),
               const SizedBox(height: 20),
               Expanded(
-                child: Container(
+                child: SizedBox(
                   width: context.width,
                   height: context.height,
                   // color: Colors.amber,
@@ -61,7 +61,7 @@ class GenreView extends GetView<HomeController> {
                       return ListView.separated(
                           physics: const BouncingScrollPhysics(),
                           separatorBuilder: (context, index) =>
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 20),
                           itemCount: snapshot.data?.length ?? 0,
                           itemBuilder: (context, index) {
                             GenreModel genre = snapshot.data?[index];

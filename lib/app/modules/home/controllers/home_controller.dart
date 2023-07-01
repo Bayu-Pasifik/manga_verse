@@ -6,8 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:manga_verse/app/data/models/komikstation/komikstation_all.dart';
 import 'dart:convert';
 
-
-
 class HomeController extends GetxController {
   // ! Greting
 
@@ -106,6 +104,16 @@ class HomeController extends GetxController {
 
   final PagingController<int, KomikstationAll> searchMangaController =
       PagingController<int, KomikstationAll>(firstPageKey: 1);
+  RxBool isSearchResultsLoaded = false.obs;
+  RxBool isSearch = false.obs;
+
+  void setSearchResultsLoaded(bool value) {
+    isSearchResultsLoaded.value = value;
+  }
+
+  void setIsSearching(bool value) {
+    isSearch.value = value;
+  }
 
   void searchMangaAPI(String keyword, int pageKey) async {
     try {
@@ -113,7 +121,6 @@ class HomeController extends GetxController {
           'https://manga-api.kolektifhost.com/api/komikstation/search/$keyword/$pageKey');
       var response = await http.get(url);
       var tempData = json.decode(response.body)["data"];
-      print("data search:$tempData");
       var data = tempData.map((e) => KomikstationAll.fromJson(e)).toList();
       List<KomikstationAll> listSearch = List<KomikstationAll>.from(data);
 
@@ -135,11 +142,21 @@ class HomeController extends GetxController {
   void clearSearch() {
     searchMangaController.itemList?.clear();
     searchMangaController.firstPageKey;
+    searchMangaController.refresh();
   }
 
   @override
   void dispose() {
     super.dispose();
+    allLatestManga.dispose();
+    allmangaController.dispose();
+    searchController.dispose();
+    searchMangaController.dispose();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
     allLatestManga.dispose();
     allmangaController.dispose();
     searchController.dispose();

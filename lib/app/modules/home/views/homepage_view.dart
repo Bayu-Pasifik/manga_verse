@@ -24,9 +24,7 @@ class HomepageView extends GetView<HomeController> {
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
+              decoration: BoxDecoration(color: Color(0XFF54BAB9)),
               child: Text('Drawer Header'),
             ),
             Padding(
@@ -124,7 +122,6 @@ class HomepageView extends GetView<HomeController> {
                             // thickness: 2,
                             color: Colors.black,
                           ),
-                         
                         ],
                       ),
                     ),
@@ -185,7 +182,7 @@ class HomepageView extends GetView<HomeController> {
                 const SizedBox(height: 10),
                 Container(
                   width: context.width,
-                  height: 200,
+                  height: 150,
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(10)),
                   // color: Colors.amber,
@@ -216,8 +213,8 @@ class HomepageView extends GetView<HomeController> {
                             child: Column(
                               children: [
                                 Container(
-                                  width: 150,
-                                  height: 150,
+                                  width: 120,
+                                  height: 120,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10)),
                                   child: CachedNetworkImage(
@@ -313,7 +310,7 @@ class HomepageView extends GetView<HomeController> {
                                 constraints: const BoxConstraints(
                                   maxHeight: 200,
                                 ),
-                                child: Container(
+                                child: SizedBox(
                                   width: 50,
                                   // color: Colors.red,
                                   child: CachedNetworkImage(

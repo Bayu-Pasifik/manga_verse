@@ -88,6 +88,7 @@ class KomikuGenrePageView extends GetView<KomikuHomeController> {
                             }
 
                             return ListView.separated(
+                              physics: const BouncingScrollPhysics(),
                               separatorBuilder: (context, index) =>
                                   const SizedBox(height: 20),
                               itemCount: snapshot.data?.length ?? 0,

@@ -26,7 +26,8 @@ class HomeView extends GetView<HomeController> {
           () => SalomonBottomBar(
             currentIndex: controller.currentIndex.value,
             onTap: (i) {
-              if (i < 3) {
+              if (i <= 2) {
+                controller.searchController.clear();
                 controller.clearSearch();
               }
               controller.currentIndex.value = i;
