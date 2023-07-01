@@ -6,7 +6,6 @@ import 'dart:convert';
 
 import 'package:manga_verse/app/data/models/mangakalot/mangakalot_all.dart';
 import 'package:manga_verse/app/data/models/mangakalot/mangakalot_genre.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class MangakalotHomeController extends GetxController {
   var currentIndex = 0.obs;
@@ -101,7 +100,6 @@ class MangakalotHomeController extends GetxController {
   // ! search manga
   late TextEditingController searchController;
   List<MangakalotAll> listSearch = [];
-  RefreshController searchRefresh = RefreshController();
   RxBool isSearchResultsLoaded = false.obs;
   RxBool isSearch = false.obs;
 
@@ -119,13 +117,11 @@ class MangakalotHomeController extends GetxController {
   void searchMangaAPI(String keyword, int pageKey) async {
     try {
       Uri url = Uri.parse(
-          'https://manga-api.kolektifhost.com/api/komikstation/search/$keyword/$pageKey');
+          'https://manga-api.kolektifhost.com/api/mangakalot/search/$keyword/$pageKey');
       var response = await http.get(url);
       var tempData = json.decode(response.body)["data"];
-      print("data search:$tempData");
       var data = tempData.map((e) => MangakalotAll.fromJson(e)).toList();
-      List<MangakalotAll> listSearch = List<MangakalotAll>.from(data);
-
+      listSearch = List<MangakalotAll>.from(data);
       final nextPage = json.decode(response.body)["next"];
       final isLastPage = nextPage == false;
 
@@ -140,7 +136,8 @@ class MangakalotHomeController extends GetxController {
   }
 
   void clearSearch() {
-    listSearch.clear();
+    searchMangaController.itemList?.clear();
+    searchMangaController.firstPageKey;
   }
 
   @override

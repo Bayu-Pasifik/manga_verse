@@ -133,9 +133,7 @@ class HomeController extends GetxController {
   late TextEditingController searchController;
 
   void clearSearch() {
-    // halSearch.value = 1;
     searchMangaController.itemList?.clear();
-    // allSearch.clear();
     searchMangaController.firstPageKey;
   }
 

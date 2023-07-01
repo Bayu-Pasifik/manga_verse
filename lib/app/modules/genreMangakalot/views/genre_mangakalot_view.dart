@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:manga_verse/app/data/models/mangageko/mangageko_all.dart';
 import 'package:manga_verse/app/data/models/mangakalot/mangakalot_all.dart';
 import 'package:manga_verse/app/routes/app_pages.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
