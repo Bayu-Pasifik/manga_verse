@@ -237,7 +237,7 @@ class HomepageView extends GetView<HomeController> {
                                       ),
                                     ),
                                     placeholder: (context, url) =>
-                                        const CircularProgressIndicator(),
+                                      const  Center(child:  CircularProgressIndicator()),
                                     errorWidget: (context, url, error) =>
                                         Image.asset(
                                       "assets/images/no-image.png",

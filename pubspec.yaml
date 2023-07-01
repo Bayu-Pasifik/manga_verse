@@ -19,6 +19,8 @@ dependencies:
   loading_animation_widget: 1.2.0+4
   fluttertoast: 8.2.2
   delayed_display: 2.0.0
+  flutter_native_splash: 2.3.1
+  flutter_launcher_icons: 0.13.1
   flutter: 
     sdk: flutter
 
@@ -32,3 +34,15 @@ flutter:
     - assets/images/
   uses-material-design: true
 
+flutter_launcher_icons: 
+  android: launcher_icon
+  image_path: assets/images/launcher.png
+  ios: true
+  min_sdk_android: 21
+
+flutter_native_splash: 
+  android: true
+  ios: true
+  web: true
+  image: "assets/images/launcher.png"
+  color: "#F9F5F6"
