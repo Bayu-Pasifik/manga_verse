@@ -373,11 +373,63 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                                 )),
                             firstPageErrorIndicatorBuilder: (_) {
                               return Center(
-                                  child: Text(
-                                      "${controller.allmangaController.error}"));
+                                  child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Ada Masalah Nih",
+                                    style: GoogleFonts.inter(fontSize: 18),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  SizedBox(
+                                    width: 100,
+                                    height: 50,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              const Color(0XFF54BAB9)),
+                                      onPressed: () => controller
+                                          .allmangaController
+                                          .retryLastFailedRequest(),
+                                      child: const Row(
+                                        children: [
+                                          Icon(Icons.restart_alt),
+                                          Text("Retry"),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ));
                             },
                             newPageErrorIndicatorBuilder: (context) =>
-                                Text("${controller.allmangaController.error}"),
+                                Center(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Ada Masalah Nih",
+                                style: GoogleFonts.inter(fontSize: 18),
+                              ),
+                              const SizedBox(height: 10),
+                              SizedBox(
+                                width: 100,
+                                height: 50,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0XFF54BAB9)),
+                                  onPressed: () => controller.allmangaController
+                                      .retryLastFailedRequest(),
+                                  child: const Row(
+                                    children: [
+                                      Icon(Icons.restart_alt),
+                                      Text("Retry"),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )),
                             firstPageProgressIndicatorBuilder: (context) =>
                                 Center(
                               child: LoadingAnimationWidget.prograssiveDots(
@@ -471,11 +523,61 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                                 )),
                             firstPageErrorIndicatorBuilder: (_) {
                               return Center(
-                                  child: Text(
-                                      "${controller.allLatestManga.error}"));
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Ada Masalah Nih",
+                                style: GoogleFonts.inter(fontSize: 18),
+                              ),
+                              const SizedBox(height: 10),
+                              SizedBox(
+                                width: 100,
+                                height: 50,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0XFF54BAB9)),
+                                  onPressed: () => controller.allLatestManga
+                                      .retryLastFailedRequest(),
+                                  child: const Row(
+                                    children: [
+                                      Icon(Icons.restart_alt),
+                                      Text("Retry"),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ));
                             },
                             newPageErrorIndicatorBuilder: (context) =>
-                                Text("${controller.allLatestManga.error}"),
+                                Center(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Ada Masalah Nih",
+                                style: GoogleFonts.inter(fontSize: 18),
+                              ),
+                              const SizedBox(height: 10),
+                              SizedBox(
+                                width: 100,
+                                height: 50,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0XFF54BAB9)),
+                                  onPressed: () => controller.allLatestManga
+                                      .retryLastFailedRequest(),
+                                  child: const Row(
+                                    children: [
+                                      Icon(Icons.restart_alt),
+                                      Text("Retry"),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )),
                             firstPageProgressIndicatorBuilder: (context) =>
                                 Center(
                               child: LoadingAnimationWidget.prograssiveDots(
@@ -488,14 +590,11 @@ class KomicastHomePageView extends GetView<KomicastHomeController> {
                                   color: const Color(0XFF54BAB9), size: 50),
                             ),
                             noItemsFoundIndicatorBuilder: (_) {
-                              Get.snackbar("Error", "No Data Found");
                               return const Center(
                                 child: Text('No data found'),
                               );
                             },
                             noMoreItemsIndicatorBuilder: (_) {
-                              Get.snackbar("Error", "No more Data");
-
                               return const Center(
                                 child: Text('No data found'),
                               );

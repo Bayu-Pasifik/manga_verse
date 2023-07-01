@@ -58,7 +58,6 @@ class DetailMangaKomicastView extends GetView<DetailMangaKomicastController> {
                 }
               }
               final DetailKomicast detail = snapshot.data!;
-              print(detail.imgeUrl);
               return CustomScrollView(
                 slivers: <Widget>[
                   SliverAppBar(

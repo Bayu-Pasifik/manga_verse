@@ -14,12 +14,10 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Container(
-          child: Obx(
-            () => IndexedStack(
-              index: controller.currentIndex.value,
-              children: [HomepageView(), GenreView(), const SearchView()],
-            ),
+        body: Obx(
+          () => IndexedStack(
+            index: controller.currentIndex.value,
+            children: [HomepageView(), const GenreView(), const SearchView()],
           ),
         ),
         bottomNavigationBar: Obx(
@@ -42,7 +40,7 @@ class HomeView extends GetView<HomeController> {
 
               /// Genre
               SalomonBottomBarItem(
-                icon: Container(
+                icon: SizedBox(
                     width: 40,
                     height: 30,
                     child: Image.asset("assets/images/genre.png")),

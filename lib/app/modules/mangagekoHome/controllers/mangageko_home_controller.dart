@@ -32,6 +32,7 @@ class MangagekoHomeController extends GetxController {
     var tempData = data.map((e) => MangagekoAll.fromJson(e)).toList();
     return tempData;
   }
+
   // ! semua Manga
 
   final PagingController<int, MangagekoAll> allmangaController =
@@ -108,9 +109,11 @@ class MangagekoHomeController extends GetxController {
   void setSearchResultsLoaded(bool value) {
     isSearchResultsLoaded.value = value;
   }
+
   void setIsSearching(bool value) {
     isSearch.value = value;
   }
+
   Future<List<MangagekoAll>> searchmanga(String keyword) async {
     Uri url = Uri.parse(
         'https://manga-api.kolektifhost.com/api/mangageko/search/$keyword');
@@ -158,6 +161,5 @@ class MangagekoHomeController extends GetxController {
     allLatestManga.addPageRequestListener((pageKey) {
       getLatest(pageKey);
     });
-    
   }
 }

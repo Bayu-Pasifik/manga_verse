@@ -19,7 +19,6 @@ class DetailMangagekoController extends GetxController {
         throw Exception('Failed to get data from server');
       }
     } catch (error) {
-      print('Error: $error');
       throw Exception('An error occurred');
     }
   }

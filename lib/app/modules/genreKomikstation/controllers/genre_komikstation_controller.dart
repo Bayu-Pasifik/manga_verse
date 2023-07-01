@@ -33,13 +33,12 @@ class GenreKomikstationController extends GetxController {
 
   Future<List<dynamic>> getMangaBaseGenre(String genre) async {
     Uri url = Uri.parse(
-        'https://manga-api.kolektifhost.com/api/komikstation/genres/$genre/${hal}');
+        'https://manga-api.kolektifhost.com/api/komikstation/genres/$genre/$hal');
     var response = await http.get(url);
     var data = json.decode(response.body)["manga"];
     next.value = json.decode(response.body)["next"];
     var tempData = data.map((e) => KomikstationAll.fromJson(e)).toList();
     allManga.addAll(tempData);
-    print(allManga[0].latestChapter);
     return allManga;
   }
 

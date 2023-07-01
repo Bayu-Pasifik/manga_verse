@@ -12,13 +12,11 @@ class DetailMangaKomicastController extends GetxController {
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
         var tempData = DetailKomicast.fromJson(data);
-        print(tempData.status);
         return tempData;
       } else {
         throw Exception('Failed to get data from server');
       }
     } catch (error) {
-      print('Error: $error');
       throw Exception('An error occurred');
     }
   }

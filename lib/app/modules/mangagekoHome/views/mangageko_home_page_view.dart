@@ -193,7 +193,6 @@ class MangagekoHomePageView extends GetView<MangagekoHomeController> {
                   height: 150,
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                  // color: Colors.amber,
                   child: FutureBuilder(
                     future: controller.popularManga(),
                     builder: (context, snapshot) {
@@ -303,84 +302,138 @@ class MangagekoHomePageView extends GetView<MangagekoHomeController> {
                       builderDelegate: PagedChildBuilderDelegate<MangagekoAll>(
                         animateTransitions: true,
                         itemBuilder: (context, item, index) => Material(
-                            elevation: 2,
-                            color: const Color(0XFFFFFFFF),
-                            borderRadius: BorderRadius.circular(10),
-                            child: ListTile(
-                              onTap: () => Get.toNamed(Routes.DETAIL_MANGAGEKO,
-                                  arguments: item.endpoint),
-                              leading: ConstrainedBox(
-                                constraints: const BoxConstraints(
-                                  maxHeight: 200,
-                                ),
-                                child: SizedBox(
-                                  width: 50,
-                                  // color: Colors.red,
-                                  child: CachedNetworkImage(
-                                    imageUrl: item.imageUrl!,
-                                    imageBuilder: (context, imageProvider) =>
-                                        Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.cover,
-                                        ),
+                          elevation: 2,
+                          color: const Color(0XFFFFFFFF),
+                          borderRadius: BorderRadius.circular(10),
+                          child: ListTile(
+                            onTap: () => Get.toNamed(Routes.DETAIL_MANGAGEKO,
+                                arguments: item.endpoint),
+                            leading: ConstrainedBox(
+                              constraints: const BoxConstraints(
+                                maxHeight: 200,
+                              ),
+                              child: SizedBox(
+                                width: 50,
+                                child: CachedNetworkImage(
+                                  imageUrl: item.imageUrl!,
+                                  imageBuilder: (context, imageProvider) =>
+                                      Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
-                                    placeholder: (context, url) => const Center(
-                                        child: CircularProgressIndicator()),
-                                    errorWidget: (context, url, error) =>
-                                        Image.asset(
-                                      "assets/images/no-image.png",
-                                      fit: BoxFit.cover,
-                                    ),
+                                  ),
+                                  placeholder: (context, url) => const Center(
+                                      child: CircularProgressIndicator()),
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(
+                                    "assets/images/no-image.png",
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
-                              title: SizedBox(
-                                  width: context.width,
-                                  height: 20,
-                                  child: Text("${item.title}",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 14,
-                                          textStyle: const TextStyle(
-                                              overflow:
-                                                  TextOverflow.ellipsis)))),
-                              subtitle: Text(
-                                "${item.latestChapter}",
+                            ),
+                            title: SizedBox(
+                              width: context.width,
+                              height: 20,
+                              child: Text(
+                                "${item.title}",
                                 style: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    color: const Color(0XFFFF6905)),
+                                  fontSize: 14,
+                                  textStyle: const TextStyle(
+                                      overflow: TextOverflow.ellipsis),
+                                ),
                               ),
-                            )),
+                            ),
+                            subtitle: Text(
+                              "${item.latestChapter}",
+                              style: GoogleFonts.poppins(
+                                fontSize: 12,
+                                color: const Color(0XFFFF6905),
+                              ),
+                            ),
+                          ),
+                        ),
                         firstPageErrorIndicatorBuilder: (_) {
                           return Center(
-                              child: Text(
-                                  "${controller.allmangaController.error}"));
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Ada Masalah Nih",
+                                style: GoogleFonts.inter(fontSize: 18),
+                              ),
+                              const SizedBox(height: 10),
+                              SizedBox(
+                                width: 100,
+                                height: 50,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0XFF54BAB9)),
+                                  onPressed: () => controller.allmangaController
+                                      .retryLastFailedRequest(),
+                                  child: const Row(
+                                    children: [
+                                      Icon(Icons.restart_alt),
+                                      Text("Retry"),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ));
                         },
-                        newPageErrorIndicatorBuilder: (context) =>
-                            Text("${controller.allmangaController.error}"),
+                        newPageErrorIndicatorBuilder: (_) => Center(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Ada Masalah Nih",
+                              style: GoogleFonts.inter(fontSize: 18),
+                            ),
+                            const SizedBox(height: 10),
+                            SizedBox(
+                              width: 100,
+                              height: 50,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0XFF54BAB9)),
+                                onPressed: () => controller.allmangaController
+                                    .retryLastFailedRequest(),
+                                child: const Row(
+                                  children: [
+                                    Icon(Icons.restart_alt),
+                                    Text("Retry"),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        )),
                         firstPageProgressIndicatorBuilder: (context) => Center(
-                          child: LoadingAnimationWidget.prograssiveDots(
-                              color: const Color(0XFF54BAB9), size: 50),
+                          child: LoadingAnimationWidget.hexagonDots(
+                            color: const Color(0XFF54BAB9),
+                            size: 50,
+                          ),
                         ),
                         transitionDuration: const Duration(seconds: 3),
                         newPageProgressIndicatorBuilder: (context) => Center(
                           child: LoadingAnimationWidget.inkDrop(
-                              color: const Color(0XFF54BAB9), size: 50),
+                            color: const Color(0XFF54BAB9),
+                            size: 50,
+                          ),
                         ),
                         noItemsFoundIndicatorBuilder: (_) {
-                          Get.snackbar("Error", "No Data Found");
                           return const Center(
                             child: Text('No data found'),
                           );
                         },
                         noMoreItemsIndicatorBuilder: (_) {
-                          Get.snackbar("Error", "No more Data");
-
                           return const Center(
-                            child: Text('No data found'),
+                            child: Text('No more data'),
                           );
                         },
                       ),
@@ -447,11 +500,60 @@ class MangagekoHomePageView extends GetView<MangagekoHomeController> {
                             )),
                         firstPageErrorIndicatorBuilder: (_) {
                           return Center(
-                              child:
-                                  Text("${controller.allLatestManga.error}"));
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Ada Masalah Nih",
+                                style: GoogleFonts.inter(fontSize: 18),
+                              ),
+                              const SizedBox(height: 10),
+                              SizedBox(
+                                width: 100,
+                                height: 50,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0XFF54BAB9)),
+                                  onPressed: () => controller.allLatestManga
+                                      .retryLastFailedRequest(),
+                                  child: const Row(
+                                    children: [
+                                      Icon(Icons.restart_alt),
+                                      Text("Retry"),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ));
                         },
-                        newPageErrorIndicatorBuilder: (context) =>
-                            Text("${controller.allLatestManga.error}"),
+                        newPageErrorIndicatorBuilder: (context) => Center(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Ada Masalah Nih",
+                              style: GoogleFonts.inter(fontSize: 18),
+                            ),
+                            const SizedBox(height: 10),
+                            SizedBox(
+                              width: 100,
+                              height: 50,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0XFF54BAB9)),
+                                onPressed: () => controller.allLatestManga
+                                    .retryLastFailedRequest(),
+                                child: const Row(
+                                  children: [
+                                    Icon(Icons.restart_alt),
+                                    Text("Retry"),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        )),
                         firstPageProgressIndicatorBuilder: (context) => Center(
                           child: LoadingAnimationWidget.prograssiveDots(
                               color: const Color(0XFF54BAB9), size: 50),

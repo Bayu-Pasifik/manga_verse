@@ -139,7 +139,7 @@ class DetailMangaKomikuView extends GetView<DetailMangaKomikuController> {
                                   Expanded(
                                     child: Column(
                                       children: [
-                                        Container(
+                                        SizedBox(
                                             width: 500,
                                             child: Text(
                                               (detail.title!.contains("Komik"))
