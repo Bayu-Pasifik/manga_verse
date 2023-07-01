@@ -96,7 +96,7 @@ class GenreKomikstationView extends GetView<GenreKomikstationController> {
                                                       const BoxConstraints(
                                                     maxHeight: 200,
                                                   ),
-                                                  child: Container(
+                                                  child: SizedBox(
                                                     width: 50,
                                                     // color: Colors.red,
                                                     child: CachedNetworkImage(
@@ -164,7 +164,9 @@ class GenreKomikstationView extends GetView<GenreKomikstationController> {
                                           shrinkWrap: true,
                                           gridDelegate:
                                               const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2),
+                                                  crossAxisCount: 3,
+                                                  mainAxisExtent: 180,
+                                                  mainAxisSpacing: 10),
                                           itemBuilder: (_, index) {
                                             KomikstationAll manga =
                                                 controller.allManga[index];
@@ -175,7 +177,7 @@ class GenreKomikstationView extends GetView<GenreKomikstationController> {
                                               child: Card(
                                                 child: Column(
                                                   children: [
-                                                    Container(
+                                                    SizedBox(
                                                       width: 150,
                                                       height: 150,
                                                       child: CachedNetworkImage(
@@ -218,11 +220,22 @@ class GenreKomikstationView extends GetView<GenreKomikstationController> {
                                                         ),
                                                       ),
                                                     ),
-                                                    Text(
-                                                      "${manga.title}",
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                                    SizedBox(
+                                                      width: 100,
+                                                      height: 20,
+                                                      child: Text(
+                                                          "${manga.title}",
+                                                          maxLines: 1,
+                                                          style: GoogleFonts.inter(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 14,
+                                                              textStyle:
+                                                                  const TextStyle(
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis))),
                                                     )
                                                   ],
                                                 ),

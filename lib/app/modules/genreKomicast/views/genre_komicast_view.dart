@@ -97,7 +97,7 @@ class GenreKomicastView extends GetView<GenreKomicastController> {
                                                       const BoxConstraints(
                                                     maxHeight: 200,
                                                   ),
-                                                  child: Container(
+                                                  child: SizedBox(
                                                     width: 50,
                                                     // color: Colors.red,
                                                     child: CachedNetworkImage(
@@ -157,7 +157,9 @@ class GenreKomicastView extends GetView<GenreKomicastController> {
                                           shrinkWrap: true,
                                           gridDelegate:
                                               const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2),
+                                                  crossAxisCount: 3,
+                                                  mainAxisExtent: 180,
+                                                  mainAxisSpacing: 10),
                                           itemBuilder: (_, index) {
                                             KomikcastAll manga =
                                                 controller.allManga[index];
@@ -168,12 +170,11 @@ class GenreKomicastView extends GetView<GenreKomicastController> {
                                               child: Card(
                                                 child: Column(
                                                   children: [
-                                                    Container(
+                                                    SizedBox(
                                                       width: 150,
                                                       height: 150,
                                                       child: CachedNetworkImage(
-                                                        imageUrl:
-                                                            manga.imageUrl!,
+                                                        imageUrl: manga.imageUrl!,
                                                         imageBuilder: (context,
                                                                 imageProvider) =>
                                                             Container(
@@ -181,8 +182,7 @@ class GenreKomicastView extends GetView<GenreKomicastController> {
                                                               BoxDecoration(
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(
-                                                                        8),
+                                                                    .circular(8),
                                                             image:
                                                                 DecorationImage(
                                                               image:
@@ -202,11 +202,20 @@ class GenreKomicastView extends GetView<GenreKomicastController> {
                                                         ),
                                                       ),
                                                     ),
-                                                    Text(
-                                                      "${manga.title}",
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                                    SizedBox(
+                                                      width: 100,
+                                                      height: 20,
+                                                      child: Text(
+                                                          "${manga.title}",
+                                                          maxLines: 1,
+                                                          style: GoogleFonts.inter(
+                                                              fontWeight:
+                                                                  FontWeight.w500,
+                                                              fontSize: 14,
+                                                              textStyle: const TextStyle(
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis))),
                                                     )
                                                   ],
                                                 ),
